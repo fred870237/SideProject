@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>環島</title>
+  <meta name="theme-color" content="#5fb4e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="region.css?v=26">
+</head>
+<body>
+  <svg id="map" preserveAspectRatio="xMidYMid meet">
+    <defs id="defs"></defs>
+    <g id="world"></g>
+  </svg>
+
+  <header class="top">
+    <a href="index.html" id="backBtn" class="icon-btn" data-say="回到世界地圖">⬅</a>
+    <h1 id="title"></h1>
+    <button id="passBtn" class="pass-btn" data-say="我的護照">🛂 <b id="passCount">0</b></button>
+  </header>
+
+  <div id="hint" class="hint">👆 點一個車站，搭火車出發！</div>
+
+  <!-- 到站了：這一站的名字和可以認識的東西 -->
+  <section id="stop" class="stop hidden">
+    <button class="close" id="stopClose" data-say="關閉">✕</button>
+    <div class="stop-head">
+      <div class="stamp" id="stopStamp">🎫</div>
+      <div class="stop-names" id="stopNames"></div>
+    </div>
+    <div class="items" id="stopItems"></div>
+    <div class="stop-fact hidden" id="stopFact"></div>
+    <button class="next" id="nextBtn" data-say="下一站">🚂 下一站 ➡️</button>
+  </section>
+
+  <!-- 🛂 護照：每一站一個印章 -->
+  <section id="pass" class="pass hidden">
+    <div class="pass-card">
+      <header><h2>🛂 我的護照 <span id="passTotal"></span></h2><button class="close" id="passClose" data-say="關閉">✕</button></header>
+      <div class="pass-grid" id="passGrid"></div>
+    </div>
+  </section>
+
+  <div id="confetti" class="confetti"></div>
+
+  <script src="timer.js?v=26"></script>
+  <script src="voice-ui.js?v=26"></script>
+  <script src="art/kit.js?v=26"></script>
+  <script src="art/north.js?v=35"></script>
+  <script src="art/south-europe.js?v=26"></script>
+  <script src="art/africa.js?v=35"></script>
+  <script src="art/asia.js?v=35"></script>
+  <script src="art/reptiles.js?v=26"></script>
+  <script src="art/siberia.js?v=26"></script>
+  <script src="art/vehicles.js?v=37"></script>
+  <script src="sounds.js?v=26"></script>
+  <script src="recordings.js?v=26"></script>
+  <script src="region.js?v=28"></script>
+</body>
+</html>

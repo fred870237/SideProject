@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>貼紙小鎮</title>
+  <meta name="theme-color" content="#bfe9ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="town.css?v=26">
+</head>
+<body>
+  <!-- 場景：整個畫面；貼紙放在 #items 裡 -->
+  <svg id="scene" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+    <defs id="defs"></defs>
+    <g id="bg"></g>
+    <g id="items"></g>
+  </svg>
+
+  <!-- 上方：只有圖示，沒有字 -->
+  <div class="top">
+    <a href="index.html" id="backBtn" class="icon-btn" data-say="回到地圖">⬅</a>
+    <div class="scenes" id="scenes"></div>
+    <button id="photoBtn" class="icon-btn" data-say="拍照存起來">📷</button>
+    <button id="clearBtn" class="icon-btn" data-say="全部收起來">🧹</button>
+  </div>
+
+  <!-- 拖到這裡就收起來 -->
+  <div id="trash" class="trash">🗑️</div>
+
+  <!-- 下方：收集到的貼紙，往上拖到場景裡 -->
+  <div class="tray" id="tray"></div>
+
+  <div id="ask" class="ask hidden">
+    <div class="ask-card">
+      <div class="ask-icon">🧹</div>
+      <div class="ask-btns"><button id="askNo" data-say="不要">❌</button><button id="askYes" data-say="好，全部收起來">✅</button></div>
+    </div>
+  </div>
+
+  <script src="timer.js?v=26"></script>
+  <script src="voice-ui.js?v=26"></script>
+  <script src="art/kit.js?v=26"></script>
+  <script src="art/north.js?v=35"></script>
+  <script src="art/south-europe.js?v=29"></script>
+  <script src="art/africa.js?v=35"></script>
+  <script src="art/asia.js?v=35"></script>
+  <script src="art/reptiles.js?v=26"></script>
+  <script src="art/siberia.js?v=26"></script>
+  <script src="art/more.js?v=35"></script>
+  <script src="art/vehicles.js?v=37"></script>
+  <script src="animals.js?v=30"></script>
+  <script src="vehicles.js?v=26"></script>
+  <script src="sounds.js?v=29"></script>
+  <script src="town.js?v=26"></script>
+</body>
+</html>

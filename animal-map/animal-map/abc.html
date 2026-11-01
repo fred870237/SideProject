@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>字母探險</title>
+  <meta name="theme-color" content="#7c5cff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="字母探險">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="abc.css?v=19">
+</head>
+<body>
+  <header class="bar">
+    <a data-say="回到地圖" href="index.html" id="backBtn" class="round-btn" aria-label="回到地圖">⬅</a>
+    <h1 id="title">🔤 字母探險 <span>ABC</span></h1>
+    <div class="mode-tabs" role="tablist">
+      <button data-say="英文字母" class="mode-tab" data-mode="abc">ABC</button>
+      <button data-say="注音符號" class="mode-tab" data-mode="zy">ㄅㄆㄇ</button>
+      <button data-say="日文五十音" class="mode-tab" data-mode="kana">あいう</button>
+    </div>
+    <a data-say="描一描" id="traceLink" href="trace.html" class="game-btn trace-btn">✏️ 描一描</a>
+    <button data-say="考考你" id="gameBtn" class="game-btn">🎯 考考你</button>
+  </header>
+
+  <nav id="letters" class="letters" aria-label="字母"></nav>
+
+  <main class="stage">
+    <!-- 探險：一個字母和它開頭的單字 -->
+    <section id="explore" class="explore">
+      <button id="bigLetter" class="big-letter" aria-label="再唸一次"></button>
+      <div id="cards" class="cards"></div>
+    </section>
+
+    <!-- 考考你：哪一個是 B 開頭？ -->
+    <section id="game" class="game hidden">
+      <button id="gameAsk" class="game-ask" aria-label="再聽一次題目">
+        <span class="quiz-spk">🔊</span>
+        <span id="gameAskText" class="game-ask-text"></span>
+      </button>
+      <p class="game-sub" id="gameSub">哪一個是 B 開頭的？</p>
+      <div id="choices" class="choices"></div>
+      <div class="game-foot">
+        <span id="gameScore" class="game-score"></span>
+        <button id="gameNext" class="game-next hidden">下一題 ➡️</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="confetti" class="confetti"></div>
+
+  <script src="timer.js?v=22"></script>
+  <script src="voice-ui.js?v=23"></script>
+  <script src="art/kit.js?v=15"></script>
+  <script src="art/north.js?v=35"></script>
+  <script src="art/south-europe.js?v=29"></script>
+  <script src="art/africa.js?v=35"></script>
+  <script src="art/asia.js?v=35"></script>
+  <script src="art/reptiles.js?v=15"></script>
+  <script src="art/siberia.js?v=15"></script>
+  <script src="art/more.js?v=35"></script>
+  <script src="art/vehicles.js?v=37"></script>
+  <script src="animals.js?v=30"></script>
+  <script src="vehicles.js?v=15"></script>
+  <script src="zhuyin.js?v=29"></script>
+  <script src="japanese.js?v=2"></script>
+  <script src="recordings.js?v=21"></script>
+  <script src="abc.js?v=19"></script>
+</body>
+</html>

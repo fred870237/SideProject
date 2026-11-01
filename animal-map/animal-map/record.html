@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>家長錄音室</title>
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="record.css?v=18">
+</head>
+<body>
+  <header class="bar">
+    <a href="index.html" id="backBtn" class="back" aria-label="回到地圖">⬅</a>
+    <h1>🎙️ 家長錄音室</h1>
+    <nav class="tabs" id="tabs"></nav>
+    <button id="exportBtn" class="export-btn">📦 匯出全部錄音</button>
+  </header>
+
+  <main class="main">
+    <!-- 正在錄的這一個 -->
+    <section class="focus" id="focus">
+      <div class="focus-art" id="focusArt"></div>
+      <div class="focus-info">
+        <div class="focus-title" id="focusTitle"></div>
+        <div class="focus-sub" id="focusSub"></div>
+        <div class="focus-tip" id="focusTip"></div>
+      </div>
+      <div class="focus-ctrl">
+        <button id="recBtn" class="rec-btn"><span class="dot"></span><b id="recLabel">按一下開始錄音</b></button>
+        <div class="row-btns">
+          <button id="playBtn" class="small-btn">▶ 聽聽看</button>
+          <button id="delBtn" class="small-btn">🗑 刪除</button>
+          <button id="nextBtn" class="small-btn next">下一個沒錄的 ➡️</button>
+        </div>
+        <div class="meter"><i id="meter"></i></div>
+      </div>
+    </section>
+
+    <!-- 全部清單：✅ 已錄、灰色還沒錄；點一下換成那一個 -->
+    <section class="list" id="list"></section>
+  </main>
+
+  <!-- 匯出之後：怎麼讓每台 iPad 都用到 -->
+  <section id="exportDlg" class="dlg hidden">
+    <div class="dlg-card">
+      <h2>📦 錄音匯出好了！</h2>
+      <p id="exportSummary"></p>
+      <ol>
+        <li>把這個 <b>zip 檔</b>傳到電腦（AirDrop、LINE、Email、Google 雲端硬碟都可以）。</li>
+        <li>在電腦上<b>解壓縮</b>，會看到一個 <code>audio</code> 資料夾。</li>
+        <li>把 <code>audio</code> 資料夾放進 <code>animal-map</code> 資料夾裡（和 <code>index.html</code> 同一層），問要不要取代就選<b>取代</b>。</li>
+        <li>把 <code>animal-map</code> 資料夾重新拖到 <b>Netlify</b> 上傳。</li>
+      </ol>
+      <p class="dlg-note">之後每台 iPad 打開 app，都會用這些錄音。這台 iPad 上的錄音還是會優先使用。</p>
+      <button id="exportClose" class="small-btn next">知道了</button>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="art/kit.js?v=18"></script>
+  <script src="art/north.js?v=35"></script>
+  <script src="art/south-europe.js?v=29"></script>
+  <script src="art/africa.js?v=35"></script>
+  <script src="art/asia.js?v=35"></script>
+  <script src="art/reptiles.js?v=18"></script>
+  <script src="art/siberia.js?v=18"></script>
+  <script src="art/more.js?v=35"></script>
+  <script src="art/vehicles.js?v=37"></script>
+  <script src="animals.js?v=30"></script>
+  <script src="vehicles.js?v=18"></script>
+  <script src="zhuyin.js?v=29"></script>
+  <script src="sounds.js?v=29"></script>
+  <script src="regions/taiwan.js?v=28"></script>
+  <script src="recordings.js?v=21"></script>
+  <script src="record.js?v=27"></script>
+</body>
+</html>

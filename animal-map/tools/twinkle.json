@@ -1,0 +1,14 @@
+{
+  "title": "Twinkle Twinkle Little Star",
+  "bpm": 92,
+  "voice": "Microsoft Zira Desktop",
+  "octave": 1,
+  "lines": [
+    { "sing": "twin kul twin kul lit tul star",  "n": "C4 C4 G4 G4 A4 A4 G4:2" },
+    { "sing": "how eye won der what you are",    "n": "F4 F4 E4 E4 D4 D4 C4:2" },
+    { "sing": "up uh buv the world so high",     "n": "G4 G4 F4 F4 E4 E4 D4:2" },
+    { "sing": "like uh die mund in the sky",     "n": "G4 G4 F4 F4 E4 E4 D4:2" },
+    { "sing": "twin kul twin kul lit tul star",  "n": "C4 C4 G4 G4 A4 A4 G4:2" },
+    { "sing": "how eye won der what you are",    "n": "F4 F4 E4 E4 D4 D4 C4:3" }
+  ]
+}

@@ -1,0 +1,131 @@
+:root { --ink: #1f2d3a; --font: -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden;
+  background: #5fb4e8; color: var(--ink); font-family: var(--font);
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; overscroll-behavior: none;
+}
+button { font-family: inherit; cursor: pointer; border: none; padding: 0; color: inherit; }
+.hidden { display: none !important; }
+
+#map { position: fixed; inset: 0; width: 100%; height: 100%; touch-action: manipulation; }
+
+/* ---------- 上方 ---------- */
+.top {
+  position: fixed; left: 0; right: 0; top: 0;
+  display: flex; align-items: center; gap: 12px;
+  padding: calc(10px + env(safe-area-inset-top)) 14px 10px;
+  pointer-events: none;
+}
+.top > * { pointer-events: auto; }
+.top h1 { flex: 1; margin: 0; font-size: 26px; font-weight: 900; color: #fff; text-shadow: 0 2px 0 rgba(0, 0, 0, .2); pointer-events: none; }
+.icon-btn, .pass-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-width: 56px; height: 56px; padding: 0 14px;
+  border-radius: 18px;
+  font-size: 26px; font-weight: 900;
+  text-decoration: none; color: var(--ink);
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .12);
+}
+.pass-btn b { font-size: 20px; }
+.icon-btn:active, .pass-btn:active { transform: translateY(3px); box-shadow: none; }
+
+.hint {
+  position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  padding: 10px 22px; border-radius: 24px;
+  background: #fff; font-size: 20px; font-weight: 700; white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+  pointer-events: none;
+  animation: float 2s ease-in-out infinite;
+}
+@keyframes float { 50% { transform: translateX(-50%) translateY(-6px); } }
+
+/* ---------- 地圖上的東西 ---------- */
+.station { cursor: pointer; }
+.station .ring { fill: #fff; stroke: #e8501a; stroke-width: 4; }
+.station.visited .ring { fill: #fff7d6; stroke: #f59e0b; stroke-width: 6; }
+.station.here .ring { stroke: #22c55e; stroke-width: 7; }
+.station text { text-anchor: middle; dominant-baseline: central; }
+.station .label { font-size: 15px; font-weight: 900; fill: var(--ink); stroke: #fff; stroke-width: 4px; paint-order: stroke; stroke-linejoin: round; }
+.station .check { font-size: 18px; }
+.station:active .ring { fill: #ffe066; }
+.pin { stroke: #fff; stroke-width: 2.4; stroke-dasharray: 3 5; fill: none; stroke-linecap: round; }
+.rail-bed { fill: none; stroke: #8a5a3a; stroke-width: 9; stroke-linejoin: round; opacity: .55; }
+.rail { fill: none; stroke: #fff; stroke-width: 3; stroke-dasharray: 10 8; stroke-linejoin: round; opacity: .9; }
+#train { pointer-events: none; }
+
+/* ---------- 到站卡片 ---------- */
+.stop {
+  position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(760px, calc(100% - 24px)); max-height: 72vh; overflow-y: auto;
+  padding: 18px 20px 16px;
+  border-radius: 28px;
+  background: #fffdf6;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
+  z-index: 20;
+  animation: up .35s ease-out;
+}
+@keyframes up { from { transform: translateX(-50%) translateY(110%); } }
+.close { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; background: #eef2f6; }
+.stop-head { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; padding-right: 50px; }
+.stamp { font-size: 54px; animation: stamp .6s ease-out; }
+@keyframes stamp { 0% { transform: scale(2.6) rotate(-25deg); opacity: 0; } 70% { transform: scale(.9); } }
+.stop-names { display: flex; flex-wrap: wrap; gap: 8px; }
+.name-chip { display: flex; align-items: baseline; gap: 8px; padding: 8px 14px; border-radius: 16px; background: #fff; box-shadow: 0 2px 0 rgba(0, 0, 0, .08); }
+.name-chip .tag { padding: 2px 8px; border-radius: 10px; font-size: 13px; font-weight: 800; color: #fff; }
+.name-chip b { font-size: 24px; }
+.name-chip small { font-size: 14px; color: #6b7c8c; }
+.name-chip.zh .tag { background: #ef4444; }
+.name-chip.en .tag { background: #3b82f6; }
+.name-chip.tw .tag { background: #16a34a; }
+
+.items { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 10px 8px 12px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .08);
+}
+.item svg, .item .emoji { width: 100%; height: 96px; }
+.item .emoji { display: flex; align-items: center; justify-content: center; font-size: 70px; line-height: 1; }
+.item b { font-size: 22px; }
+.item .en { font-size: 15px; color: #3b82f6; font-weight: 800; }
+.item .tw { font-size: 14px; color: #16a34a; font-weight: 700; text-align: center; }
+.item.pop { animation: pop .45s ease-out; }
+@keyframes pop { 40% { transform: scale(1.1); } }
+.stop-fact { margin-top: 12px; padding: 10px 14px; border-radius: 14px; font-size: 17px; font-weight: 700; line-height: 1.5; background: #fff7d6; border: 2px dashed #f5c542; }
+.next { display: block; margin: 14px auto 0; padding: 12px 30px; border-radius: 26px; font-size: 21px; font-weight: 900; color: #fff; background: #22c55e; box-shadow: 0 4px 0 #15803d; }
+.next:active { transform: translateY(3px); box-shadow: none; }
+
+/* ---------- 🛂 護照 ---------- */
+.pass { position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, .45); }
+.pass-card { position: relative; width: min(760px, 100%); max-height: 100%; overflow-y: auto; padding: 18px 20px; border-radius: 28px; background: #fdf4e3; border: 6px solid #1e4f8f; }
+.pass-card header { display: flex; align-items: center; margin-bottom: 12px; }
+.pass-card h2 { margin: 0; font-size: 24px; }
+.pass-card h2 span { font-size: 18px; color: #6b7c8c; }
+.pass-card .close { position: static; margin-left: auto; }
+.pass-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
+.pass-stamp {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  aspect-ratio: 1; border-radius: 50%;
+  border: 4px dashed #cbb48a; color: #b9a37a;
+  font-size: 15px; font-weight: 900;
+}
+.pass-stamp span { font-size: 38px; filter: grayscale(1); opacity: .35; }
+.pass-stamp svg { display: block; }
+.pass-stamp.got { border: 4px solid #e8501a; color: #e8501a; background: #fff; transform: rotate(-6deg); }
+.pass-stamp.got span { filter: none; opacity: 1; }
+
+.confetti { position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden; }
+.confetti i { position: absolute; top: -20px; width: 12px; height: 18px; border-radius: 3px; animation: fall linear forwards; }
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+@media (max-width: 640px) {
+  .top h1 { font-size: 20px; }
+  .items { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  .name-chip b { font-size: 20px; }
+}

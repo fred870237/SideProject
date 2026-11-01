@@ -1,0 +1,42 @@
+{
+  "regions": [
+    { "id": "tw", "name": "台灣", "icon": "🍍" },
+    { "id": "cn", "name": "中國", "icon": "🐼" },
+    { "id": "jp", "name": "日本", "icon": "🗻" },
+    { "id": "uk", "name": "英國", "icon": "💂" },
+    { "id": "us", "name": "美國", "icon": "🗽" },
+    { "id": "eu", "name": "歐洲", "icon": "🏰" }
+  ],
+  "books": [
+    { "id": "momotaro", "region": "jp", "title": "桃太郎", "cover": "🍑", "color": "#ffd6dc", "coverImage": "books/momotaro/cover.svg" },
+    { "id": "kintaro", "region": "jp", "title": "金太郎", "cover": "🐻", "color": "#ffe7a8", "coverImage": "books/kintaro/cover.svg" },
+    { "id": "urashima", "region": "jp", "title": "浦島太郎", "cover": "🐢", "color": "#cdeefd", "coverImage": "books/urashima/cover.svg" },
+    { "id": "issun-boshi", "region": "jp", "title": "一寸法師", "cover": "🥢", "color": "#d9f2d0", "coverImage": "books/issun-boshi/cover.svg" },
+    { "id": "kaguya", "region": "jp", "title": "輝夜姬", "cover": "🌕", "color": "#e3dcff", "coverImage": "books/kaguya/cover.svg" },
+    { "id": "hu-gu-po", "region": "tw", "title": "虎姑婆", "cover": "🐯", "color": "#ffdcb8", "coverImage": "books/hu-gu-po/cover.svg" },
+    { "id": "bai-zei-qi", "region": "tw", "title": "白賊七", "cover": "🤥", "color": "#fff0b3", "coverImage": "books/bai-zei-qi/cover.svg" },
+    { "id": "snake-lord", "region": "tw", "title": "蛇郎君", "cover": "🐍", "color": "#d2f0dc", "coverImage": "books/snake-lord/cover.svg" },
+    { "id": "good-nose", "region": "tw", "title": "好鼻師", "cover": "👃", "color": "#ffe4c4", "coverImage": "books/good-nose/cover.svg" },
+    { "id": "sun-moon-lake", "region": "tw", "title": "日月潭的傳說", "cover": "🌄", "color": "#cdeaf5", "coverImage": "books/sun-moon-lake/cover.svg" },
+    { "id": "kong-rong", "region": "cn", "title": "孔融讓梨", "cover": "🍐", "color": "#e8f5c8", "coverImage": "books/kong-rong/cover.svg" },
+    { "id": "hou-yi", "region": "cn", "title": "后羿射日", "cover": "🏹", "color": "#ffd9a8", "coverImage": "books/hou-yi/cover.svg" },
+    { "id": "nian-beast", "region": "cn", "title": "年獸的故事", "cover": "🧨", "color": "#ffd0c4", "coverImage": "books/nian-beast/cover.svg" },
+    { "id": "cao-chong", "region": "cn", "title": "曹沖稱象", "cover": "🐘", "color": "#dfe6f0", "coverImage": "books/cao-chong/cover.svg" },
+    { "id": "sima-guang", "region": "cn", "title": "司馬光砸缸", "cover": "🏺", "color": "#f2e2cc", "coverImage": "books/sima-guang/cover.svg" },
+    { "id": "three-pigs", "region": "uk", "title": "三隻小豬", "cover": "🐷", "color": "#ffd6e4", "coverImage": "books/three-pigs/cover.svg" },
+    { "id": "jack-beanstalk", "region": "uk", "title": "傑克與魔豆", "cover": "🌱", "color": "#d4f5c4", "coverImage": "books/jack-beanstalk/cover.svg" },
+    { "id": "goldilocks", "region": "uk", "title": "金髮女孩與三隻熊", "cover": "👱‍♀️", "color": "#fff0b3", "coverImage": "books/goldilocks/cover.svg" },
+    { "id": "little-red-hen", "region": "uk", "title": "小紅母雞", "cover": "🐔", "color": "#ffd9c2", "coverImage": "books/little-red-hen/cover.svg" },
+    { "id": "king-arthur", "region": "uk", "title": "亞瑟王與石中劍", "cover": "🗡️", "color": "#d9dff5", "coverImage": "books/king-arthur/cover.svg" },
+    { "id": "wizard-of-oz", "region": "us", "title": "綠野仙蹤", "cover": "🌪️", "color": "#c9f0d8", "coverImage": "books/wizard-of-oz/cover.svg" },
+    { "id": "johnny-appleseed", "region": "us", "title": "強尼蘋果籽", "cover": "🍎", "color": "#ffd4cc", "coverImage": "books/johnny-appleseed/cover.svg" },
+    { "id": "gingerbread-man", "region": "us", "title": "薑餅人", "cover": "🍪", "color": "#f0d2b0", "coverImage": "books/gingerbread-man/cover.svg" },
+    { "id": "rip-van-winkle", "region": "us", "title": "李伯大夢", "cover": "💤", "color": "#dde5d0", "coverImage": "books/rip-van-winkle/cover.svg" },
+    { "id": "paul-bunyan", "region": "us", "title": "保羅班揚", "cover": "🪓", "color": "#c9dcf0", "coverImage": "books/paul-bunyan/cover.svg" },
+    { "id": "red-riding-hood", "region": "eu", "title": "小紅帽", "cover": "👧", "color": "#ffc9c9", "coverImage": "books/red-riding-hood/cover.svg" },
+    { "id": "ugly-duckling", "region": "eu", "title": "醜小鴨", "cover": "🦢", "color": "#d6ecff", "coverImage": "books/ugly-duckling/cover.svg" },
+    { "id": "tortoise-hare", "region": "eu", "title": "龜兔賽跑", "cover": "🐢", "color": "#d8f0c8", "coverImage": "books/tortoise-hare/cover.svg" },
+    { "id": "cinderella", "region": "eu", "title": "灰姑娘", "cover": "👠", "color": "#d6e4ff", "coverImage": "books/cinderella/cover.svg" },
+    { "id": "emperors-new-clothes", "region": "eu", "title": "國王的新衣", "cover": "👑", "color": "#f5dcf0", "coverImage": "books/emperors-new-clothes/cover.svg" }
+  ]
+}

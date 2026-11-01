@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>描一描</title>
+  <meta name="theme-color" content="#0ea5e9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="trace.css?v=17">
+</head>
+<body>
+  <header class="bar">
+    <a data-say="回去" href="abc.html" id="backBtn" class="round-btn" aria-label="回到字母探險">⬅</a>
+    <h1>✏️ 描一描</h1>
+    <div class="mode-tabs">
+      <button data-say="英文字母" class="mode-tab" data-mode="abc">ABC</button>
+      <button data-say="注音符號" class="mode-tab" data-mode="zy">ㄅㄆㄇ</button>
+      <button data-say="日文五十音" class="mode-tab" data-mode="kana">あいう</button>
+    </div>
+  </header>
+
+  <nav id="picker" class="picker" aria-label="選一個字"></nav>
+
+  <main class="desk">
+    <div class="paper" id="paper">
+      <canvas id="guide"></canvas>
+      <canvas id="ink"></canvas>
+      <div id="doneStamp" class="stamp hidden">⭐</div>
+    </div>
+
+    <aside class="side">
+      <button id="sayBtn" class="side-btn big" aria-label="唸一次"><span id="sayGlyph">A</span>🔊</button>
+      <button id="demoBtn" class="side-btn">👀 看示範</button>
+      <div class="crayons" id="crayons"></div>
+      <button data-say="擦掉重來" id="clearBtn" class="side-btn">🧽 擦掉重來</button>
+      <button id="nextBtn" class="side-btn next">下一個 ➡️</button>
+    </aside>
+  </main>
+
+  <div id="hint" class="hint hidden"></div>
+  <div id="confetti" class="confetti"></div>
+
+  <script src="timer.js?v=22"></script>
+  <script src="voice-ui.js?v=23"></script>
+  <script src="zhuyin.js?v=17"></script>
+  <script src="japanese.js?v=2"></script>
+  <script src="recordings.js?v=21"></script>
+  <script src="trace.js?v=24"></script>
+</body>
+</html>

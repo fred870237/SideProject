@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>小小日語樂園</title>
+  <meta name="description" content="給小朋友的互動式日語學習：五十音、單字卡、描字練習、小測驗與翻牌遊戲。">
+  <meta name="theme-color" content="#ff8fab">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="#/" aria-label="返回" hidden>⬅</a>
+    <h1 class="title">小小日語樂園</h1>
+    <a class="stars" href="#/progress" aria-label="我的星星">⭐ <span id="star-count">0</span></a>
+  </header>
+  <main id="app"></main>
+  <div id="modal" class="modal" hidden></div>
+  <script src="data.js"></script>
+  <script src="strokes.js"></script>
+  <script src="strokes-extra.js"></script>
+  <script src="n5.js"></script>
+  <script src="grammar.js"></script>
+  <script src="adult.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-Hant" class="city">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>車子城市</title>
+  <meta name="theme-color" content="#a6dc74">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="動物地圖">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css?v=30">
+</head>
+<body>
+  <header class="topbar">
+    <div class="title">🏙️ 車子城市<small class="credit">Powered by Fred</small></div>
+    <nav class="langs" id="langs">
+      <button data-say="英文" data-mode="en" class="lang en">English</button>
+      <button data-say="中文" data-mode="zh" class="lang zh">中文</button>
+      <button data-say="台語" data-mode="tw" class="lang tw">台語</button>
+      <button data-say="日文" data-mode="ja" class="lang ja">日本語</button>
+      <button data-say="全部的語言" data-mode="all" class="lang all">全部</button>
+    </nav>
+    <button data-say="兒歌" id="songsBtn" class="songs-btn">🎵 兒歌</button>
+    <a data-say="動物世界" href="index.html" class="songs-btn switch-btn">🐾 動物</a>
+    <a data-say="畫畫" href="draw.html?set=vehicles" class="songs-btn draw-btn">🎨 畫畫</a>
+    <button id="parentBtn" class="parent-btn" aria-label="家長模式（按住 2 秒）">⚙️<span class="hold-ring"></span></button>
+  </header>
+
+  <div id="parentBanner" class="parent-banner hidden">
+    🎙️ 家長模式：點車子後可以幫每種語言錄音
+    <a href="record.html?from=city" class="studio-link">🎙️ 錄音室（台語、注音、字母）</a>
+    <button id="voiceBtn" class="time-btn">🔈 按鈕會說話</button>
+    <button id="timeBtn" class="time-btn">⏰ 遊戲時間</button>
+    <button id="parentExit">完成</button>
+  </div>
+
+  <main class="map-wrap">
+    <svg id="map" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+      <defs id="mapDefs"></defs>
+      <g id="world"></g>
+    </svg>
+
+    <div class="zoom-ctrl">
+      <button data-say="放大" id="zoomIn" aria-label="放大">＋</button>
+      <button data-say="縮小" id="zoomOut" aria-label="縮小">－</button>
+      <button data-say="看全部的地圖" id="zoomReset" aria-label="回到全圖">🏙️</button>
+      <button id="mapLang" class="map-lang" aria-label="地圖改成英文">EN</button>
+    </div>
+
+    <!-- 🔍 找找看、📒 貼紙 -->
+    <div class="fun-ctrl">
+      <button data-say="找找看" id="quizBtn" class="fun-btn" aria-label="找找看">🔍<small>找找看</small></button>
+      <a data-say="字母探險" href="abc.html?from=city" class="fun-btn abc-btn" aria-label="字母探險">🔤<small>ABC</small></a>
+      <a href="town.html?from=city" class="fun-btn abc-btn" data-say="貼紙小鎮" aria-label="貼紙小鎮">🧸<small>小鎮</small></a>
+      <a href="region.html?r=taiwan&from=city" class="fun-btn abc-btn" data-say="台灣環島" aria-label="台灣環島">🚂<small>環島</small></a>
+      <button data-say="我的貼紙" id="bookBtn" class="fun-btn" aria-label="我的貼紙">📒<small>貼紙</small><b id="bookCount" class="badge">0</b></button>
+    </div>
+
+    <div id="quiz" class="quiz hidden">
+      <button id="quizSay" class="quiz-q" aria-label="再聽一次題目">
+        <span class="quiz-spk">🔊</span>
+        <span class="quiz-text"><b id="quizMain"></b><small id="quizSub"></small></span>
+      </button>
+      <span id="quizScore" class="quiz-score"></span>
+      <button id="quizNext" class="quiz-next hidden">下一題 ➡️</button>
+      <button data-say="不玩了" id="quizStop" class="quiz-stop" aria-label="結束找找看">✕</button>
+    </div>
+
+    <div id="hint" class="hint">👆 點點看城市裡的車子！</div>
+  </main>
+
+  <section id="card" class="card hidden" aria-live="polite">
+    <button data-say="關閉" class="card-close" id="cardClose" aria-label="關閉">✕</button>
+    <div class="card-head">
+      <svg class="big-art" id="cardArt" viewBox="-50 -50 100 100"><use id="cardArtUse" href="" x="-50" y="-50" width="100" height="100"/></svg>
+      <div class="card-side">
+        <div class="card-place" id="cardPlace"></div>
+        <div class="card-btns">
+          <button id="cardSound" class="card-sound">🔊 叫聲</button>
+          <button id="cardSay" class="card-say">🎤 說說看</button>
+        </div>
+      </div>
+    </div>
+    <div id="cardFact" class="card-fact hidden"></div>
+    <div id="sayPanel" class="say-panel hidden">
+      <div id="sayFace" class="say-face">🎤</div>
+      <div id="sayText" class="say-text"></div>
+      <button id="sayAgain" class="say-again hidden">🔁 再說一次</button>
+      <button id="sayClose" class="say-close" aria-label="關閉">✕</button>
+    </div>
+    <div class="rows" id="cardRows"></div>
+  </section>
+
+  <section id="songs" class="songs hidden">
+    <div class="songs-panel">
+      <header class="songs-head">
+        <h2>🎵 英文兒歌</h2>
+        <button data-say="關閉" id="songsClose" class="card-close" aria-label="關閉">✕</button>
+      </header>
+      <div id="songList" class="song-list"></div>
+      <div id="songPlayer" class="song-player hidden">
+        <div class="song-title" id="songTitle"></div>
+        <div class="song-lyrics" id="songLyrics"></div>
+        <div class="song-ctrl">
+          <button id="songBack">⬅ 歌單</button>
+          <button id="songPlay" class="song-play">▶ 播放</button>
+          <button id="songInst">🎹 鋼琴</button>
+          <button id="songSpeed">🐇 正常</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" class="songs hidden">
+    <div class="songs-panel book-panel">
+      <header class="songs-head">
+        <h2>📒 我的貼紙 <span id="bookTotal" class="book-total"></span></h2>
+        <button data-say="關閉" id="bookClose" class="card-close" aria-label="關閉">✕</button>
+      </header>
+      <p class="book-tip">⭐ 找找看找到的　🎨 著色本畫好的　🗣️ 說說看說對的</p>
+      <div id="bookGrid" class="book-grid"></div>
+    </div>
+  </section>
+
+  <div id="confetti" class="confetti"></div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="timer.js?v=22"></script>
+  <script src="voice-ui.js?v=23"></script>
+  <script src="map-shapes.js"></script>
+  <script src="art/kit.js?v=12"></script>
+  <script src="art/vehicles.js?v=37"></script>
+  <script src="vehicles.js?v=12"></script>
+  <script src="city-map.js?v=12"></script>
+  <script src="songs.js"></script>
+  <script src="song-player.js"></script>
+  <script src="sounds.js?v=21"></script>
+  <script src="japanese.js?v=2"></script>
+  <script src="app.js?v=28"></script>
+</body>
+</html>

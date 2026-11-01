@@ -1,0 +1,16 @@
+{
+  "name": "經典故事書",
+  "short_name": "故事書",
+  "description": "給小朋友點擊翻頁、聽朗讀的經典故事書",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff4e0",
+  "theme_color": "#fff4e0",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

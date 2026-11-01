@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "animal-map",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8765", "-d", "animal-map/animal-map"],
+      "port": 8765
+    },
+    {
+      "name": "nihongo",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8766", "-d", "nihongo/public"],
+      "port": 8766
+    },
+    {
+      "name": "storybook",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8767", "-d", "storybook/public"],
+      "port": 8767
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>著色本</title>
+  <meta name="theme-color" content="#ffc21a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="動物著色">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="draw.css?v=13">
+</head>
+<body>
+  <div class="studio">
+    <!-- 左邊：選動物 -->
+    <aside class="side left">
+      <div class="side-top">
+        <a data-say="回到地圖" href="index.html" id="backBtn" class="round-btn back" aria-label="回到地圖">⬅</a>
+        <button data-say="拍照存起來" id="saveBtn" class="round-btn camera" aria-label="存成照片">📷</button>
+      </div>
+      <div class="set-tabs">
+        <button data-say="動物" class="set-tab" data-set="animals">🐾 動物</button>
+        <button data-say="車子" class="set-tab" data-set="vehicles">🚒 車子</button>
+      </div>
+      <div id="pages" class="pages"></div>
+    </aside>
+
+    <!-- 中間：畫紙 -->
+    <main class="easel">
+      <button id="word" class="word" aria-label="再唸一次">
+        <span class="word-en" id="wordEn">Blank</span>
+        <span class="word-zh" id="wordZh">白紙</span>
+        <span class="word-spk">🔊</span>
+      </button>
+      <div class="paper" id="paper">
+        <canvas id="paint"></canvas>
+        <canvas id="lines"></canvas>
+      </div>
+      <div class="easel-leg"></div>
+      <div class="spell" id="spell"></div>
+    </main>
+
+    <!-- 右邊：顏料盒和工具 -->
+    <aside class="side right">
+      <div class="tools-top">
+        <button data-say="看範例" id="ref" class="ref hidden" aria-label="看原本的顏色"><span id="refArt"></span><small>👀 範例</small></button>
+        <div class="tools-btns">
+          <button id="spellBtn" class="round-btn" aria-label="拼拼看">🔤</button>
+          <button id="doneBtn" class="round-btn" aria-label="畫好了">⭐</button>
+        </div>
+      </div>
+      <div class="palette" id="palette"></div>
+      <div class="tools" id="tools">
+        <button data-say="油漆桶" data-tool="fill" class="tool on" aria-label="油漆桶">🪣</button>
+        <button data-say="細細的筆" data-tool="brush" data-size="10" class="tool brush s" aria-label="細畫筆"><i></i></button>
+        <button data-say="中等的筆" data-tool="brush" data-size="24" class="tool brush m" aria-label="中畫筆"><i></i></button>
+        <button data-say="粗粗的筆" data-tool="brush" data-size="48" class="tool brush l" aria-label="粗畫筆"><i></i></button>
+        <button data-say="橡皮擦" data-tool="eraser" class="tool" aria-label="橡皮擦">🧽</button>
+        <button data-say="上一步" id="undoBtn" class="tool" aria-label="上一步">↩️</button>
+        <button data-say="全部擦掉" id="clearBtn" class="tool" aria-label="全部擦掉">🗑️</button>
+        <button data-say="不會畫到外面" id="inside" class="tool toggle on" aria-label="不會畫出線">✨<small>不出界</small></button>
+      </div>
+    </aside>
+  </div>
+
+  <div id="refBig" class="ref-big hidden"><div class="ref-big-card"><span id="refBigArt"></span><b id="refBigName"></b></div></div>
+  <div id="bubble" class="bubble hidden"></div>
+  <div id="confetti" class="confetti"></div>
+
+  <script src="timer.js?v=22"></script>
+  <!-- 著色本不載入 voice-ui.js：按鈕不唸名字，切換比較快 -->
+  <script src="art/kit.js?v=13"></script>
+  <script src="art/north.js?v=35"></script>
+  <script src="art/south-europe.js?v=29"></script>
+  <script src="art/africa.js?v=35"></script>
+  <script src="art/asia.js?v=35"></script>
+  <script src="art/reptiles.js?v=13"></script>
+  <script src="art/siberia.js?v=13"></script>
+  <script src="art/more.js?v=35"></script>
+  <script src="art/vehicles.js?v=37"></script>
+  <script src="animals.js?v=30"></script>
+  <script src="vehicles.js?v=13"></script>
+  <script src="draw.js?v=15"></script>
+</body>
+</html>
