@@ -1,0 +1,16 @@
+{
+  "name": "機關書",
+  "short_name": "機關書",
+  "description": "給小朋友點點看的機關書",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#fff8e6",
+  "theme_color": "#ffcf3f",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

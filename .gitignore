@@ -1,2 +1,4 @@
 node_modules/
 storybook/tools/scenes/_preview/
+# 參考照片（實體書的照片有版權，不放上公開的 repo）
+datas/

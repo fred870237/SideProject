@@ -4,19 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This folder holds three **independent** children's/learning web apps. Each is plain HTML/CSS/JS with no build step, no framework and no bundler, and each is an offline-capable PWA aimed at iPad/phone. They share no code. All UI text, comments and docs are in Traditional Chinese (zh-Hant, Taiwan); keep new comments and copy in that style.
+This folder holds four **independent** children's/learning web apps. Each is plain HTML/CSS/JS with no build step, no framework and no bundler, and each is an offline-capable PWA aimed at iPad/phone. They share no code. All UI text, comments and docs are in Traditional Chinese (zh-Hant, Taiwan); keep new comments and copy in that style.
 
 | Folder | App | Served root | Local port |
 |---|---|---|---|
 | `animal-map/` | 動物世界地圖 — animal world map (multilingual: EN / 中文 / 台語 / 日本語) | `animal-map/` | 8765 |
 | `nihongo/` | 小小日語樂園 — Japanese learning (kids mode + JLPT N5 adult mode) | `public/` | 8766 |
 | `storybook/` | 經典故事書 — classic storybook reader with zhuyin and TTS | `public/` | 8767 |
+| `popup-book/` | 機關書 — tap-to-animate pop-up book (themes → pages → scenes) | `public/` | 8768 |
 
 `nihongo/README.md` and `storybook/README.md` are detailed and authoritative. Read them before larger changes to those apps.
 
 ## Running
 
-There are no tests or linters. To preview, start the static server from `.claude/launch.json` (configs `animal-map`, `nihongo`, `storybook`) or run it by hand from the app folder:
+There are no tests or linters. To preview, start the static server from `.claude/launch.json` (configs `animal-map`, `nihongo`, `storybook`, `popup-book`) or run it by hand from the app folder:
 
 ```bash
 python -m http.server 8767 -d public
@@ -24,14 +25,14 @@ python -m http.server 8767 -d public
 
 The apps must be served over HTTP. The storybook `fetch`es JSON, so opening `index.html` from disk does not work.
 
-Deployment: `.github/workflows/pages.yml` deploys all three apps to GitHub Pages on push to `main`, copying them to `/animal-map/`, `/nihongo/` and `/storybook/`, with `.github/pages-index.html` as the landing page. Each app also still has a `netlify.toml` for standalone Netlify hosting (publishes `public/`, with no build command). Keep all asset paths relative, because the apps run under a subpath on Pages.
+Deployment: `.github/workflows/pages.yml` deploys all four apps to GitHub Pages (https://fred870237.github.io/SideProject/) on push to `main`, copying them to `/animal-map/`, `/nihongo/`, `/storybook/` and `/popup-book/`, with `.github/pages-index.html` as the landing page. Each app also still has a `netlify.toml` for standalone Netlify hosting (publishes `public/`, with no build command). Keep all asset paths relative, because the apps run under a subpath on Pages.
 
 ## Cross-cutting conventions
 
 - **Service worker caches share one origin.** The apps may be hosted side by side on one domain (e.g. GitHub Pages subpaths), so each `sw.js` deletes only old caches with its own name prefix on activate. Keep that prefix filter when touching `sw.js`.
-- **Service worker cache versions.** Each app has a `sw.js` with a `CACHE` name (`animal-map-vNN`, `nihongo-kids-vN`, `storybook-vN`) and a precache list. When you add a file, add it to that list. Bump the version when you change cached assets.
+- **Service worker cache versions.** Each app has a `sw.js` with a `CACHE` name (`animal-map-vNN`, `nihongo-kids-vN`, `storybook-vN`, `popup-book-vN`) and a precache list. When you add a file, add it to that list. Bump the version when you change cached assets.
   - The animal map uses **stale-while-revalidate**, so a stale cache really bites there. In `animal-map/index.html` (and the other pages), scripts and styles are loaded with `?v=N` query strings, and `sw.js` treats a changed `?v=` as a must-fetch. After editing a JS/CSS file, bump its `?v=` in every HTML page that includes it, and bump `CACHE` in `sw.js`.
-  - The other two apps are network-first, so a version bump matters less there, but the precache list must still be complete.
+  - The other three apps are network-first, so a version bump matters less there, but the precache list must still be complete.
 - **Speech** uses the browser Web Speech API. There is no system voice for Taiwanese (台語); the animal map relies on recordings or mp3 files for it.
 - **Storage** is `localStorage`, always wrapped in try/catch so private browsing doesn't break. Recordings and drawings go in IndexedDB.
 - **Emoji**: the storybook README says to use only Emoji 12 (2019) or older, and no flag emoji, because Windows 10 renders newer ones as boxes. Follow the same rule in the other apps.
@@ -60,3 +61,13 @@ All code is in `public/`. `app.js` holds shared utilities and the kids mode; `ad
   - `node tools/scenes/link-images.mjs`: links generated images into the book JSON files and `index.json`.
 - Illustration constraints: the canvas is 800×600, and the top ~30% (y < 180) is covered by the text box, so keep characters below it. Backgrounds must bleed past the canvas (`BX`/`BW`/`BY`), and the root `<svg>` uses `preserveAspectRatio="xMidYMax meet"`.
 - `開啟故事書.bat` is saved in Big5 encoding so `cmd` reads it correctly. Don't re-save it as UTF-8.
+
+## popup-book (機關書)
+
+A single-page app in `public/` with hash routes: `#/` is the bookshelf of themes, `#/<theme>` is a book's table of contents, and `#/<theme>/<page>` is a scene. Tapping a vehicle speaks its English name (en-US TTS), shows an EN/中文 name label, then runs its animation. The book's look comes from a real pop-up book (*The Ultimate Book of Vehicles*), but every illustration is drawn in code. Never trace or copy the book's artwork.
+
+- `themes.js` defines `THEMES` (themes → pages) and the empty `SCENES` registry. A page with no `SCENES[id]`, and a theme with no ready pages, shows as 敬請期待.
+- **Adding a page:** create `art/<page-id>.js` that assigns `SCENES['<page-id>'] = { w, h, bg(), front(), items: [...] }`, wrap the file in `{ }` so its top-level names don't clash with other pages, then add the script to `index.html` and to `CORE` in `sw.js`.
+- Each item is `{ id, en, zh, x, y, s, hint, label?, pivots, art(p), setup?(c), act(c) }`. `art` draws in local coordinates (ground at y = 0, facing right), and moving parts are `<g id="<item id>-<part>">`. `act` animates them through the ctx from `makeCtx` in `app.js`: `c.anim(ms, { part: { r, tx, ty, sx, sy, o } }, onStep)`, `c.set`, `c.wheels(deg)` (spins every `.wheel` group around its `data-cx`/`data-cy`), `c.burst(part, x, y, opts)` for particles, and `c.state` for state that persists between taps (e.g. where the crane left the beam). Items are drawn in array order, back row first.
+- Drawing helpers and the outline style live in `art/kit.js` (`K.rect`, `K.wheel`, `K.win`, `K.head`, `K.worker`, …).
+- Animations use `requestAnimationFrame`, so they pause while the browser pane is hidden. Verify them with the pane visible.

@@ -18,6 +18,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8767", "-d", "storybook/public"],
       "port": 8767
+    },
+    {
+      "name": "popup-book",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8768", "-d", "popup-book/public"],
+      "port": 8768
     }
   ]
 }

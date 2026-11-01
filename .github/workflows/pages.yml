@@ -1,5 +1,5 @@
-# 把三個 App 組成一個網站部署到 GitHub Pages
-# 網址：/animal-map/、/nihongo/、/storybook/，首頁是 .github/pages-index.html
+# 把所有 App 組成一個網站部署到 GitHub Pages
+# 網址：/animal-map/、/nihongo/、/storybook/、/popup-book/，首頁是 .github/pages-index.html
 name: Deploy to GitHub Pages
 
 on:
@@ -31,6 +31,7 @@ jobs:
           cp -r animal-map/animal-map _site/animal-map
           cp -r nihongo/public _site/nihongo
           cp -r storybook/public _site/storybook
+          cp -r popup-book/public _site/popup-book
           cp .github/pages-index.html _site/index.html
           touch _site/.nojekyll
 
