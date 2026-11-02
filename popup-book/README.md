@@ -48,6 +48,18 @@
 | Crop Duster 農藥噴灑機 | 一路噴霧從右邊飛出去，再從左邊飛回來 |
 | Windmill 風車 | 風扇轉三圈 |
 
+### 🚛 貨運卡車（Trucks）
+
+| 車子 | 點了會怎樣 |
+|---|---|
+| Semi Truck 聯結車 | 叭叭兩聲（Honk honk），排氣管冒煙，往前開一小段再倒回來 |
+| Garbage Truck 垃圾車 | 把垃圾桶舉起來倒進車斗，再放回地上 |
+| Delivery Van 送貨車 | 側門滑開，一個包裹跳出來落到地上 |
+| Ice Cream Truck 冰淇淋車 | 車頂的冰淇淋跳起來搖一搖，噴出彩色糖粒 |
+| Car Carrier 汽車運輸車 | 上層車架往後傾斜，紅色小車滑下去一點再開回來 |
+| Monster Truck 怪獸卡車 | 蹲下去用力跳起來，落地彈兩下 |
+| Street Sweeper 掃街車 | 圓刷轉起來揚起灰塵，往前掃一段再倒回來 |
+
 ## 檔案結構
 
 ```
@@ -64,6 +76,7 @@ popup-book/
    │  ├─ construction.js  # 🏗️ 工地這一頁
    │  ├─ rescue.js        # 🚒 消防救援這一頁
    │  ├─ farm.js          # 🚜 農場這一頁
+   │  ├─ trucks.js        # 🚛 貨運卡車這一頁
    │  └─ img/<頁面 id>/    # 每一頁的 AI 插畫（WebP，去背）
    ├─ sw.js               # 離線快取（網路優先）
    ├─ manifest.webmanifest
@@ -73,7 +86,7 @@ popup-book/
 
 ## 新增一頁
 
-1. 在 `themes.js` 對應主題的 `pages` 加一筆（例如 `{ id: 'trucks', icon: '🚛', en: 'Trucks', zh: '貨運卡車' }`，交通工具這本已經預留好了）
+1. 在 `themes.js` 對應主題的 `pages` 加一筆（例如 `{ id: 'sea', icon: '🚢', en: 'Sea', zh: '海上' }`，交通工具這本已經預留好了）
 2. 新增 `art/<頁面 id>.js`，照 `construction.js` 或 `rescue.js` 的寫法用 `SCENES['<頁面 id>'] = { ... }` 畫場景、寫每台車的動作
 3. 在 `index.html` 加上 `<script src="art/<頁面 id>.js"></script>`，在 `sw.js` 的 `CORE` 加上檔名（包含 `art/img/<頁面 id>/` 的圖片），並把 `CACHE` 版本號 +1
 4. 插畫照 `tools/ai-art/README.md` 的流程生成

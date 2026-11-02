@@ -1,0 +1,9 @@
+{
+  "semi": ["D:/AI/ComfyUI/output/t1/semi_7_00001_.png", true],
+  "carrier": ["D:/AI/ComfyUI/output/t1/carrier_7_00001_.png", false],
+  "garbage": ["D:/AI/ComfyUI/output/t1/garbage_7_00001_.png", false],
+  "van": ["D:/AI/ComfyUI/output/t1/van_8_00001_.png", false],
+  "icecream": ["D:/AI/ComfyUI/output/t1/icecream_61_00001_.png", false],
+  "sweeper": ["D:/AI/ComfyUI/output/t1/sweeper_62_00001_.png", true],
+  "monster": ["D:/AI/ComfyUI/output/t1/monster_7_00001_.png", false]
+}

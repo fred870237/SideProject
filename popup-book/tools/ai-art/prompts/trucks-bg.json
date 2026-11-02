@@ -1,0 +1,9 @@
+{
+  "name": "t1bg",
+  "seeds": [51, 52, 53, 54],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A town road seen from the side with NO vehicles and NO people: on the left a big grey warehouse with three closed orange roller shutter doors and a few stacked wooden pallets, in the middle a row of small green trees and a couple of low hills far away, on the right a few small colourful shop fronts with awnings, a grey sidewalk, and a light grey asphalt road with white dashed lines across the whole bottom third of the picture. The upper part of the picture is plain white paper (no sky colour)."
+  }
+}

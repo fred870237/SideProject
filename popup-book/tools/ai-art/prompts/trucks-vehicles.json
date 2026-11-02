@@ -1,0 +1,15 @@
+{
+  "name": "t1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about trucks. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as bolts, pipes, grilles, lights and mirrors. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "semi": "A single long articulated lorry: a red truck cab with two tall chrome exhaust stacks pulling a long plain blue shipping container trailer, many black tyres with silver hubs, a driver in the cab",
+    "carrier": "A single car transporter truck: an orange cab pulling a two-level open steel trailer carrying four small colourful cars (red, blue, yellow, purple), two on the top deck and two on the bottom deck, black tyres",
+    "garbage": "A single orange garbage truck with a big boxy rear body, a small grey wheelie bin lifter at the back, black tyres with silver hubs, a worker in a yellow vest riding on the back step",
+    "van": "A single white delivery van with a tall box body, a sliding side door, a few cardboard parcels visible through the side window, black tyres with silver hubs, a driver",
+    "icecream": "A single cheerful pink and white ice cream van with a big serving window on its side, a giant ice cream cone model on the roof, a striped awning, black tyres with silver hubs",
+    "sweeper": "A single small yellow street sweeper truck with a big round orange spinning brush under the front, a water tank on the back, orange lights on the roof, black tyres, a driver",
+    "monster": "A single purple monster truck with four gigantic black tyres with deep chunky treads, a small pickup body lifted high on big springs, roll bar, a driver in a helmet"
+  }
+}
