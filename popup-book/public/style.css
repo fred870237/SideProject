@@ -79,6 +79,7 @@ small { display: block; font-size: .55em; font-weight: 700; opacity: .65; }
   display: flex; flex-direction: column;
   height: 100vh; height: 100dvh;
   background: var(--c);
+  overflow: hidden; /* 翻書時紙會立起來超出書本，不要讓網頁跑出捲軸 */
 }
 .stage {
   flex: 1; min-height: 0;
@@ -95,6 +96,20 @@ small { display: block; font-size: .55em; font-weight: 700; opacity: .65; }
   background: #fff;
 }
 .book svg { display: block; width: 100%; height: 100%; }
+
+/* 翻書特效（app.js 的 pageTurn）：翻的時候紙會稍微超出書的邊框，所以先不裁切 */
+.book.turning { overflow: visible; perspective: 2600px; }
+.turn-half { position: absolute; inset: 0; pointer-events: none; }
+.turn-half.left { clip-path: inset(0 50% 0 0); }
+.turn-half.right { clip-path: inset(0 0 0 50%); }
+/* 翻起來的紙：一條一條接起來，每一條有正面（舊頁）和背面（新頁） */
+.turn-strip { position: absolute; top: 0; height: 100%; z-index: 3; pointer-events: none; transform-style: preserve-3d; }
+.turn-face {
+  position: absolute; inset: 0 -1px 0 0; overflow: hidden; background: #fff; /* 多 1px 蓋住條與條之間的細縫 */
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+}
+.turn-face.back { transform: rotateY(180deg); }
+.turn-face .shade { position: absolute; inset: 0; background: #000; opacity: 0; }
 .item { cursor: pointer; }
 
 /* 還沒點過的車子：一顆會閃的點點 */

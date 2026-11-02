@@ -316,14 +316,148 @@ function showLabel(it, el) {
   labelTimer = setTimeout(() => lab.classList.add('hidden'), 2600);
 }
 
+// ---------- 翻書特效 ----------
+// 同一本書換頁時：新的一頁先畫好放在最下面，舊的那一頁做成一張紙，繞著中間的書縫翻過去
+// dir = 1 下一頁（右半頁往左翻），-1 上一頁（左半頁往右翻）
+// 紙切成 TURN_STRIPS 條直條，一條接在上一條的邊上（巢狀的 3D 轉軸）：外側的紙邊先被掀起來、靠書縫的慢一點跟上，
+// 每一條的角度都不一樣，整張紙看起來就是彎的，像真的用手翻書
+// 每一條的正面是舊頁的那一小條，背面是新頁對應的那一小條；還沒被紙蓋到的舊半邊先留著，紙落下來才拿掉
+// TURN_LAG 越大紙捲得越彎（0.55 會捲成圓筒，0.4 比較像真的紙）
+const TURN_STRIPS = 10, TURN_MS = 1000, TURN_LAG = 0.4;
+
+// 翻頁的聲音：用 Web Audio 現場合成（不用音檔）
+// 紙張摩擦的「刷——」是一段雜訊，通過一個頻率從高往低滑的帶通濾波器；最後紙落下來加一聲很輕的「啪」
+function playFlip(ms = TURN_MS) {
+  const c = audioCtx();
+  if (!c) return;
+  const t0 = c.currentTime, dur = ms / 1000;
+  const noise = c.createBuffer(1, Math.ceil(c.sampleRate * dur), c.sampleRate);
+  const d = noise.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  const src = c.createBufferSource();
+  src.buffer = noise;
+  const band = c.createBiquadFilter();
+  band.type = 'bandpass';
+  band.Q.value = 0.8;
+  band.frequency.setValueAtTime(3800, t0);
+  band.frequency.exponentialRampToValueAtTime(900, t0 + dur * 0.85);
+  const vol = c.createGain();
+  vol.gain.setValueAtTime(0.0001, t0);
+  vol.gain.exponentialRampToValueAtTime(0.22, t0 + dur * 0.25);
+  vol.gain.setValueAtTime(0.22, t0 + dur * 0.55);
+  vol.gain.exponentialRampToValueAtTime(0.0001, t0 + dur * 0.9);
+  src.connect(band).connect(vol).connect(c.destination);
+  src.start(t0);
+  src.stop(t0 + dur);
+  // 紙落下來：低頻、很短的一聲
+  const thump = c.createBufferSource();
+  thump.buffer = noise;
+  const low = c.createBiquadFilter();
+  low.type = 'lowpass';
+  low.frequency.value = 500;
+  const tv = c.createGain();
+  const tt = t0 + dur * 0.88;
+  tv.gain.setValueAtTime(0.0001, tt);
+  tv.gain.exponentialRampToValueAtTime(0.35, tt + 0.015);
+  tv.gain.exponentialRampToValueAtTime(0.0001, tt + 0.12);
+  thump.connect(low).connect(tv).connect(c.destination);
+  thump.start(tt, 0, 0.15);
+}
+function pageTurn(book, oldSvg, dir) {
+  const fwd = dir > 0, N = TURN_STRIPS;
+  const newSvg = book.querySelector('svg');
+  const div = (cls) => Object.assign(document.createElement('div'), { className: cls });
+  // 大小都用百分比（一條 = 書寬的 1/2N），剛換頁還沒排版好、或轉向改變書的大小時也不會跑掉
+  // svg 的一小條：整頁的 svg 寬 2N 條，往左移 i 條，只露出第 i 條
+  const face = (svg, i, cls) => {
+    const d = div(`turn-face ${cls}`);
+    const s = svg.cloneNode(true);
+    s.removeAttribute('id');
+    s.style.cssText = `position:absolute;top:0;left:${-i * 100}%;width:${2 * N * 100}%;height:100%`;
+    d.append(s, div('shade'));
+    return d;
+  };
+  const under = div(`turn-half ${fwd ? 'left' : 'right'}`);
+  const u = oldSvg.cloneNode(true);
+  u.removeAttribute('id');
+  under.append(u);
+  book.append(under);
+
+  const strips = [];
+  let parent = book;
+  for (let k = 0; k < N; k++) {
+    const s = div('turn-strip');
+    // 第一條貼著書縫，之後每一條接在上一條的外側（子元素的百分比是相對上一條的寬度）
+    const left = k ? (fwd ? '100%' : '-100%') : (fwd ? '50%' : `${50 - 50 / N}%`);
+    s.style.cssText = `left:${left};width:${k ? '100%' : `${50 / N}%`};transform-origin:${fwd ? 'left' : 'right'} center`;
+    const fi = fwd ? N + k : N - 1 - k; // 舊頁上是第幾條
+    const bi = fwd ? N - 1 - k : N + k; // 翻過去以後落在新頁上的第幾條
+    s.append(face(oldSvg, fi, 'front'), face(newSvg, bi, 'back'));
+    parent.append(s);
+    parent = s;
+    strips.push({ s, f: s.firstChild.lastChild, b: s.lastChild.lastChild });
+  }
+  book.classList.add('turning');
+  playFlip();
+  const smooth =(x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+  return tween(TURN_MS, (t) => {
+    let prev = 0;
+    strips.forEach(({ s, f, b }, k) => {
+      // 外側的條先動（lag 小），靠書縫的晚一點；每一條自己的絕對角度 0 → 180
+      const lag = TURN_LAG * (1 - k / (TURN_STRIPS - 1));
+      const a = 180 * smooth((t * (1 + TURN_LAG) - lag));
+      s.style.transform = `rotateY(${(fwd ? -1 : 1) * (a - prev)}deg)`;
+      prev = a;
+      // 紙越立起來越暗，翻過去以後背面從暗慢慢變亮
+      const dark = Math.sin((a * Math.PI) / 180) * 0.32;
+      f.style.opacity = a < 90 ? dark : 0;
+      b.style.opacity = a >= 90 ? dark : 0;
+    });
+  }, (t) => t).then(() => {
+    under.remove();
+    strips[0].s.remove();
+    book.classList.remove('turning');
+  });
+}
+
+// 在場景上左右滑也可以翻頁（滑動不算點車子）
+let swipe = null;
+document.addEventListener('pointerdown', (e) => {
+  swipe = e.target.closest('.stage') ? { x: e.clientX, y: e.clientY, moved: false } : null;
+});
+document.addEventListener('pointerup', (e) => {
+  if (!swipe) return;
+  const dx = e.clientX - swipe.x, dy = e.clientY - swipe.y;
+  if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    swipe.moved = true;
+    const link = document.querySelector(`.bar a[aria-label="${dx < 0 ? '下一頁' : '上一頁'}"]`);
+    if (link) location.hash = link.getAttribute('href');
+  }
+});
+document.addEventListener('click', (e) => {
+  if (swipe && swipe.moved) { e.stopPropagation(); e.preventDefault(); swipe = null; }
+}, true);
+
 // ---------- 換頁 ----------
+let shown = null; // 目前顯示的 { theme, page }
 function route() {
   const [themeId, pageId] = location.hash.replace(/^#\/?/, '').split('/');
   const theme = THEMES.find((t) => t.id === themeId);
   const page = theme && theme.pages.find((p) => p.id === pageId);
-  if (page && isReady(page)) showScene(theme, page);
-  else if (theme && theme.pages.some(isReady)) showTheme(theme);
-  else showHome();
+  if (page && isReady(page)) {
+    const last = shown;
+    const oldSvg = last && last.theme === theme && last.page && last.page !== page ? document.getElementById('scene') : null;
+    showScene(theme, page);
+    if (oldSvg && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const ready = theme.pages.filter(isReady);
+      pageTurn(document.querySelector('.book'), oldSvg, ready.indexOf(page) > ready.indexOf(last.page) ? 1 : -1);
+    }
+    shown = { theme, page };
+  } else {
+    if (theme && theme.pages.some(isReady)) showTheme(theme);
+    else showHome();
+    shown = { theme };
+  }
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
