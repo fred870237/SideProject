@@ -1,0 +1,9 @@
+{
+  "firetruck": ["D:/AI/ComfyUI/output/r1/firetruck_7_00001_.png", false],
+  "ambulance": ["D:/AI/ComfyUI/output/r1/ambulance_8_00001_.png", false],
+  "police": ["D:/AI/ComfyUI/output/r1/police_8_00001_.png", false],
+  "motorbike": ["D:/AI/ComfyUI/output/r1/motorbike_61_00001_.png", false],
+  "helicopter": ["D:/AI/ComfyUI/output/r1/helicopter_7_00001_.png", false, [], {"erode": false}],
+  "towtruck": ["D:/AI/ComfyUI/output/r1/towtruck_7_00001_.png", false],
+  "hydrant": ["D:/AI/ComfyUI/output/r1/hydrant_7_00001_.png", false]
+}

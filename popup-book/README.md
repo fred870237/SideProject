@@ -24,6 +24,18 @@
 | Forklift 堆高機 | 把一疊磚頭舉高再放下 |
 | Road Roller 壓路機 | 倒車壓一段路再開回來 |
 
+### 🚒 消防救援（Rescue）
+
+| 車子 | 點了會怎樣 |
+|---|---|
+| Fire Engine 消防車 | 雲梯升起、伸長，噴水把公寓窗戶的火澆熄；再點一次火會先燒起來 |
+| Rescue Helicopter 救援直升機 | 螺旋槳轉起來，放下救援吊籃再收回來 |
+| Ambulance 救護車 | 警示燈閃，開出去再倒回來 |
+| Tow Truck 拖吊車 | 吊臂舉起來，吊鉤晃一晃 |
+| Police Car 警車 | 紅藍燈閃，喔咿喔咿（Wee-woo） |
+| Police Motorcycle 警用機車 | 翹孤輪往前衝，再倒回來 |
+| Fire Hydrant 消防栓 | 搖一搖，兩邊噴出水來 |
+
 ## 檔案結構
 
 ```
@@ -38,7 +50,8 @@ popup-book/
    ├─ art/
    │  ├─ kit.js           # 共用畫圖工具（外框、輪子、車窗、工人…）
    │  ├─ construction.js  # 🏗️ 工地這一頁
-   │  └─ img/construction/ # 工地的 AI 插畫（WebP，去背）
+   │  ├─ rescue.js        # 🚒 消防救援這一頁
+   │  └─ img/<頁面 id>/    # 每一頁的 AI 插畫（WebP，去背）
    ├─ sw.js               # 離線快取（網路優先）
    ├─ manifest.webmanifest
    ├─ icon.svg
@@ -47,8 +60,8 @@ popup-book/
 
 ## 新增一頁
 
-1. 在 `themes.js` 對應主題的 `pages` 加一筆（例如 `{ id: 'rescue', icon: '🚒', en: 'Rescue', zh: '消防救援' }`，現在已經預留好了）
-2. 新增 `art/<頁面 id>.js`，照 `construction.js` 的寫法用 `SCENES['<頁面 id>'] = { ... }` 畫場景、寫每台車的動作
+1. 在 `themes.js` 對應主題的 `pages` 加一筆（例如 `{ id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' }`，交通工具這本已經預留好了）
+2. 新增 `art/<頁面 id>.js`，照 `construction.js` 或 `rescue.js` 的寫法用 `SCENES['<頁面 id>'] = { ... }` 畫場景、寫每台車的動作
 3. 在 `index.html` 加上 `<script src="art/<頁面 id>.js"></script>`，在 `sw.js` 的 `CORE` 加上檔名（包含 `art/img/<頁面 id>/` 的圖片），並把 `CACHE` 版本號 +1
 4. 插畫照 `tools/ai-art/README.md` 的流程生成
 

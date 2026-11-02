@@ -1,0 +1,15 @@
+{
+  "name": "r1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about rescue vehicles. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as bolts, lockers, hoses, lights and grilles. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "firetruck": "A single long red fire engine with a silver extending ladder lying flat along its roof, rolled white hoses and silver lockers on the side, blue lights on the cab roof, black tyres with silver hubs, a firefighter in a yellow helmet in the cab",
+    "ambulance": "A single white ambulance van with a red stripe along the side, red and blue lights on the roof, two rear doors at the back, black tyres with silver hubs",
+    "police": "A single small white and dark blue police car with a red and blue light bar on the roof, a police officer in the driver seat, black tyres with silver hubs",
+    "motorbike": "A single white police motorcycle with blue panels and a blue light, ridden by a police officer in a white helmet",
+    "helicopter": "A single red and white rescue helicopter flying, with one long thin main rotor blade on top seen edge-on, a small tail rotor, landing skids under the body, a big round cockpit window with a pilot",
+    "towtruck": "A single yellow tow truck with a short crane boom at the back, a hook and chain hanging from the boom, orange lights on the cab roof, black tyres with silver hubs, a worker in blue overalls in the cab",
+    "hydrant": "A single short red fire hydrant standing on the ground, round cap on top and two side outlets with silver caps. Not a vehicle, no wheels"
+  }
+}
