@@ -1,0 +1,10 @@
+﻿{
+  "excavator": ["D:/AI/ComfyUI/output/b6/excavator_8_00001_.png", true],
+  "dumptruck": ["D:/AI/ComfyUI/output/b6/dumptruck_7_00001_.png", false],
+  "mixer": ["D:/AI/ComfyUI/output/b6/mixer_8_00001_.png", true],
+  "bulldozer": ["D:/AI/ComfyUI/output/b6/bulldozer_7_00001_.png", false],
+  "crane": ["D:/AI/ComfyUI/output/b7/crane_75_00001_.png", false, [[0, 222, 312, 1024], [295, 222, 332, 805], [0, 953, 1024, 1024]], {"erode": false}],
+  "forklift": ["D:/AI/ComfyUI/output/b6/forklift_7_00001_.png", true],
+  "roller": ["D:/AI/ComfyUI/output/b6/roller_7_00001_.png", true],
+  "toilet": ["D:/AI/ComfyUI/output/b6/toilet_61_00001_.png", false]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "b6",
+  "seeds": [7, 8, 61],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a construction site. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, grilles, lights and hoses. No green anywhere on the subject. Unbranded, no logos, no text, no ground, no shadow, no scenery.",
+  "items": {
+    "excavator": "A single yellow crawler excavator with one long boom arm ending in one dark grey bucket, dark grey caterpillar track, a worker in an orange hard hat and blue overalls inside the cab",
+    "dumptruck": "A single big orange-red dump truck, its tipping bed heaped with brown earth, huge black tyres with orange hubs",
+    "mixer": "A single cement mixer truck with a white cab and a big drum with diagonal orange and white stripes",
+    "bulldozer": "A single yellow bulldozer with a big front blade, dark grey caterpillar track and a worker in blue overalls in the cab",
+    "crane": "A stationary yellow tower crane: one tall straight vertical lattice tower standing on a grey concrete base block, at the top a long horizontal lattice jib pointing right and a short counter-jib with grey concrete counterweights pointing left, a small operator cabin at the top of the tower, a thick dark steel cable with a red hook hanging from the jib. No wheels, no truck",
+    "forklift": "A single small orange forklift with two forks raised slightly, carrying a pallet of red bricks, a worker in blue overalls driving",
+    "roller": "A single orange road roller with a big smooth steel drum at the front and a worker in blue overalls in the cab",
+    "toilet": "A single blue plastic portable toilet booth standing directly on the ground, tall narrow box with a white rounded roof, one door with a small vent and a red occupied sign. No wheels, not a vehicle"
+  }
+}

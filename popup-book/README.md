@@ -7,7 +7,7 @@
 - **場景**：點車子會先唸英文名字、跳出英文＋中文名牌，然後像機關書一樣動起來。還沒點過的車子上有一顆會閃的紅點
 - **加到主畫面（PWA）**：iPad 用 Safari「分享 → 加入主畫面」，開過一次以後沒有網路也能用
 
-插畫全部是用程式畫的 SVG，參考機關書的玩法，但沒有照描任何書的圖。
+車子和背景是用本機的開源 AI（ComfyUI＋FLUX.1 schnell）以文字提示詞生成的扁平插畫。會動的零件用 SVG clipPath 從圖上裁出來單獨轉動，塔吊的鋼索、吊鉤和鋼樑則是用程式畫的。玩法參考機關書，但沒有照描、也沒有拿任何書的圖去給 AI 當參考。生成和去背的工具在 `tools/ai-art/`。
 
 ## 目前的頁面
 
@@ -15,20 +15,21 @@
 
 | 車子 | 點了會怎樣 |
 |---|---|
-| Tower Crane 塔式起重機 | 把地上的鋼樑吊到大樓頂；再點一次吊回地面 |
-| Cement Mixer 水泥攪拌車 | 滾筒轉起來，滑槽倒出水泥 |
+| Tower Crane 塔式起重機 | 把地上的鋼樑吊起來，搬到另一邊放下；再點一次搬回來 |
+| Cement Mixer 水泥攪拌車 | 滾筒搖搖晃晃轉起來，後面倒出水泥 |
 | Bulldozer 推土機 | 鏟子放下，把土堆往前推 |
 | Portable Toilet 流動廁所 | 門打開，裡面的工人揮手說 Hello |
 | Excavator 挖土機 | 伸到土堆挖一口，舉起來倒掉 |
 | Dump Truck 砂石車 | 車斗舉起來，把土倒在後面 |
 | Forklift 堆高機 | 把一疊磚頭舉高再放下 |
-| Road Roller 壓路機 | 往前壓一段路再倒回來 |
+| Road Roller 壓路機 | 倒車壓一段路再開回來 |
 
 ## 檔案結構
 
 ```
 popup-book/
 ├─ netlify.toml
+├─ tools/ai-art/          # AI 生成＋去背的腳本和提示詞（不會部署）
 └─ public/
    ├─ index.html
    ├─ style.css
@@ -36,7 +37,8 @@ popup-book/
    ├─ themes.js           # 書架：主題和頁面清單
    ├─ art/
    │  ├─ kit.js           # 共用畫圖工具（外框、輪子、車窗、工人…）
-   │  └─ construction.js  # 🏗️ 工地這一頁
+   │  ├─ construction.js  # 🏗️ 工地這一頁
+   │  └─ img/construction/ # 工地的 AI 插畫（WebP，去背）
    ├─ sw.js               # 離線快取（網路優先）
    ├─ manifest.webmanifest
    ├─ icon.svg
@@ -47,7 +49,8 @@ popup-book/
 
 1. 在 `themes.js` 對應主題的 `pages` 加一筆（例如 `{ id: 'rescue', icon: '🚒', en: 'Rescue', zh: '消防救援' }`，現在已經預留好了）
 2. 新增 `art/<頁面 id>.js`，照 `construction.js` 的寫法用 `SCENES['<頁面 id>'] = { ... }` 畫場景、寫每台車的動作
-3. 在 `index.html` 加上 `<script src="art/<頁面 id>.js"></script>`，在 `sw.js` 的 `CORE` 加上檔名
+3. 在 `index.html` 加上 `<script src="art/<頁面 id>.js"></script>`，在 `sw.js` 的 `CORE` 加上檔名（包含 `art/img/<頁面 id>/` 的圖片），並把 `CACHE` 版本號 +1
+4. 插畫照 `tools/ai-art/README.md` 的流程生成
 
 ## 本機預覽
 

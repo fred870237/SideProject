@@ -110,8 +110,6 @@ function makeFx(layer) {
       const c = document.createElementNS(SVGNS, 'circle');
       c.setAttribute('r', rand(size).toFixed(1));
       c.setAttribute('fill', color);
-      c.setAttribute('stroke', LINE);
-      c.setAttribute('stroke-width', '2');
       layer.appendChild(c);
       list.push({ c, x: pt.x, y: pt.y, vx: rand(vx), vy: rand(vy), g, t0: performance.now(), life });
     }
@@ -207,7 +205,7 @@ function showScene(theme, page) {
               ${scene.bg()}
               ${scene.items.map((it) => `<g id="${it.id}" class="item" transform="translate(${it.x} ${it.y}) scale(${it.s || 1})">
                 ${it.art(it.id)}
-                ${it.hint ? `<circle class="hint" cx="${it.hint[0]}" cy="${it.hint[1]}" r="18"/>` : ''}
+                ${it.hint ? `<circle class="hint" cx="${it.hint[0]}" cy="${it.hint[1]}" r="${18 / (it.s || 1)}" style="stroke-width:${6 / (it.s || 1)}"/>` : ''}
               </g>`).join('')}
               ${scene.front ? scene.front() : ''}
               <g id="fx"></g>

@@ -64,10 +64,17 @@ All code is in `public/`. `app.js` holds shared utilities and the kids mode; `ad
 
 ## popup-book (機關書)
 
-A single-page app in `public/` with hash routes: `#/` is the bookshelf of themes, `#/<theme>` is a book's table of contents, and `#/<theme>/<page>` is a scene. Tapping a vehicle speaks its English name (en-US TTS), shows an EN/中文 name label, then runs its animation. The book's look comes from a real pop-up book (*The Ultimate Book of Vehicles*), but every illustration is drawn in code. Never trace or copy the book's artwork.
+A single-page app in `public/` with hash routes: `#/` is the bookshelf of themes, `#/<theme>` is a book's table of contents, and `#/<theme>/<page>` is a scene. Tapping a vehicle speaks its English name (en-US TTS), shows an EN/中文 name label, then runs its animation. The book's look comes from a real pop-up book (*The Ultimate Book of Vehicles*). The illustrations are generated locally with open-source AI (ComfyUI + FLUX.1 schnell, from text prompts only). Never trace or copy the book's artwork, and never feed the reference photos in `datas/` to the AI (no img2img, style reference or training).
 
 - `themes.js` defines `THEMES` (themes → pages) and the empty `SCENES` registry. A page with no `SCENES[id]`, and a theme with no ready pages, shows as 敬請期待.
 - **Adding a page:** create `art/<page-id>.js` that assigns `SCENES['<page-id>'] = { w, h, bg(), front(), items: [...] }`, wrap the file in `{ }` so its top-level names don't clash with other pages, then add the script to `index.html` and to `CORE` in `sw.js`.
 - Each item is `{ id, en, zh, x, y, s, hint, label?, pivots, art(p), setup?(c), act(c) }`. `art` draws in local coordinates (ground at y = 0, facing right), and moving parts are `<g id="<item id>-<part>">`. `act` animates them through the ctx from `makeCtx` in `app.js`: `c.anim(ms, { part: { r, tx, ty, sx, sy, o } }, onStep)`, `c.set`, `c.wheels(deg)` (spins every `.wheel` group around its `data-cx`/`data-cy`), `c.burst(part, x, y, opts)` for particles, and `c.state` for state that persists between taps (e.g. where the crane left the beam). Items are drawn in array order, back row first.
-- Drawing helpers and the outline style live in `art/kit.js` (`K.rect`, `K.wheel`, `K.win`, `K.head`, `K.worker`, …).
+- **AI-image items** (the construction page): each vehicle is a transparent WebP in `art/img/<page-id>/`, drawn with `<image>` inside `<g transform="translate(0 -imgHeight)">`. Part polygons, pivots and burst points are therefore in **image-pixel coordinates**, while `hint` stays in ground = 0 coordinates.
+  - A moving part is the same image clipped to a polygon (`CLIP`); the body image clips that polygon out (`HOLE`, evenodd).
+  - Hint dots scale by `1 / it.s`, so they keep the same on-screen size.
+  - Things too thin for the AI, like the crane cable, hook and beam, are drawn as flat SVG with no outline.
+- Generating art: `popup-book/tools/ai-art/` (not deployed) holds the prompt JSONs and scripts. The steps are `gen.py` (queue to ComfyUI at 127.0.0.1:8188), `sheet.py` (contact sheet), `cutout.py` (green-screen key + flip + paper grain) and `export.py` (WebP + coordinate grid previews). See its README.
+  - Generate on a chroma-key green background, because cutting white-background images also removes white vehicle bodies.
+  - Add the new images to `CORE` in `sw.js` and bump `CACHE`.
+- `art/kit.js` holds the older outlined SVG drawing helpers (`K.rect`, `K.wheel`, …) and `LINE`. It is still loaded, but the construction page no longer uses its outline style.
 - Animations use `requestAnimationFrame`, so they pause while the browser pane is hidden. Verify them with the pane visible.

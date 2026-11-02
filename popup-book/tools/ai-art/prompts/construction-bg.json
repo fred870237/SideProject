@@ -1,0 +1,9 @@
+{
+  "name": "b5",
+  "seeds": [51, 52, 53, 54],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters.",
+  "items": {
+    "bg": "An empty construction site seen from the side with NO vehicles and NO people: on the left an unfinished brick building with scaffolding and a few red brick walls, in the middle a flat sandy brown dirt ground with a couple of small dirt mounds, a stack of wooden planks and a few orange traffic cones, on the right a plain white page area. The upper half of the picture is plain white paper (no sky colour), the lower third is the brown dirt ground with a light grey paved road strip along the very bottom."
+  }
+}

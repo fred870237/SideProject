@@ -1,0 +1,9 @@
+{
+  "name": "b7",
+  "seeds": [71, 72, 73, 74, 75, 76],
+  "w": 1024, "h": 1024,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a construction site. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its shadow side, giving a simple two-tone shading. Bright saturated colours, bold chunky shapes. No green anywhere on the subject. Unbranded, no logos, no text, no ground, no shadow, no scenery, nothing else in the picture.",
+  "items": {
+    "crane": "One stationary tower crane painted bright golden yellow with thick bold lattice beams: a tall straight vertical lattice tower on a plain grey concrete block, at the top a long thick horizontal lattice jib reaching far to the right, a short counter-jib to the left carrying dark grey concrete counterweight blocks, a small white operator cabin with a blue window just under the jib, a pointed tower top with two tie cables. Nothing hangs from the jib: no hook, no rope"
+  }
+}

@@ -1,13 +1,33 @@
 // 🏗️ 工地：點車子會唸英文名字，然後像機關書一樣動起來
-// 版面 1600×1000（左右兩頁，中間是書縫）；後排地面 y = 720，前排地面 y = 965
-// 每台車：art 畫圖（零件 id 是「<車子id>-<零件名>」）、pivots 零件的轉軸、act 點了以後的動作（用法見 app.js 的 makeCtx）
+// 版面 1600×1000（左右兩頁，中間是書縫）；後排地面 y = 720，前排地面 y = 965～975
+// 車子和背景是 AI 生成的圖（art/img/construction/*.webp，來源和做法見 popup-book/README.md）
+// 會動的零件：用 clipPath 從同一張圖裁出來單獨轉動，車身那張圖再把同一塊挖掉（hole）
+// 每台車的 art 先 translate(0, -圖高)，所以零件、轉軸、clipPath 都直接用「圖片像素座標」；hint 用的是地面 = 0 的座標
 // 整個檔案包在 { } 裡，車子的變數名稱才不會跟其他頁面的檔案撞名
 {
-const PEBBLES = (x, w) => [0.25, 0.5, 0.72].map((f, i) =>
-  `<circle cx="${x + w * f}" cy="${-8 - i * 7}" r="5" fill="#7d5428"/>`).join('');
+const SRC = (name) => `art/img/construction/${name}.webp`;
+const IMG = (name, w, h, clip) =>
+  `<image href="${SRC(name)}" width="${w}" height="${h}"${clip ? ` clip-path="url(#${clip})"` : ''}/>`;
+const PATH = (pts) => 'M' + pts.map((p) => p.join(',')).join('L') + 'Z';
+// 只留下 d 裡面的範圍
+const CLIP = (id, d) => `<clipPath id="${id}"><path d="${d}"/></clipPath>`;
+// 整張圖挖掉 d 的範圍（給車身用）
+const HOLE = (id, w, h, d) => `<clipPath id="${id}"><path clip-rule="evenodd" d="M0,0H${w}V${h}H0Z${d}"/></clipPath>`;
+const CIRCLE = (cx, cy, r) => `M${cx - r},${cy}a${r},${r} 0 1,0 ${2 * r},0a${r},${r} 0 1,0 ${-2 * r},0Z`;
+// 土堆（扁平色塊，跟 AI 圖一樣沒有外框）
+const MOUND = (x0, x1, h, id = '') => {
+  const m = (x0 + x1) / 2, w = x1 - x0;
+  return `<g${id ? ` id="${id}"` : ''}>` +
+    `<path d="M${x0},0 Q${m},${-2 * h} ${x1},0Z" fill="#a8743f"/>` +
+    `<path d="M${x0 + w * 0.08},0 Q${m},${-1.1 * h} ${x1 - w * 0.08},0Z" fill="#8c5c30"/>` +
+    [0.3, 0.52, 0.7].map((f, i) => `<circle cx="${x0 + w * f}" cy="${-h * (0.25 + i * 0.12)}" r="${w * 0.025}" fill="#6e4524"/>`).join('') +
+    '</g>';
+};
 
-// ---------- 塔式起重機（連蓋到一半的大樓）：把鋼樑吊上樓頂，再點一次吊回地面 ----------
-const CRANE_D = 74; // 吊鉤到鋼樑底部的距離
+// ---------- 塔式起重機：把鋼樑吊起來，搬到另一邊放下 ----------
+// 圖 706×884；吊臂底部 y = 130，塔身中心 x = 268；鋼索、小車、吊鉤、鋼樑用程式畫
+const CRANE_D = 110; // 吊鉤頂端到鋼樑底部的距離
+const CRANE_SPOTS = [600, 470]; // 鋼樑放在地上的兩個位置（輪流）
 function craneDraw(c) {
   const s = c.state;
   if (s.carry) { s.bx = s.tx; s.by = s.hy + CRANE_D; }
@@ -21,47 +41,25 @@ function craneDraw(c) {
 }
 
 const towerCrane = {
-  id: 'crane', en: 'Tower Crane', zh: '塔式起重機', x: 1400, y: 720, s: 0.78,
-  hint: [-560, -500],
-  label: [-260, -800],
+  id: 'crane', en: 'Tower Crane', zh: '塔式起重機', x: 1092, y: 720, s: 0.7,
+  hint: [600, -444],
   art(p) {
-    const out = [];
-    // 蓋到一半的大樓
-    out.push('<rect x="-330" y="-430" width="290" height="430" fill="#e4e6ec"/>');
-    for (const [top, bottom] of [[-150, 0], [-290, -150], [-430, -290]]) {
-      for (const [a, b] of [[-312, -195], [-177, -60]]) {
-        out.push(`<rect x="${a + 14}" y="${top + 20}" width="${b - a - 28}" height="${bottom - top - 40}" rx="4" fill="#9aa6ba"/>`);
-      }
-    }
-    for (const x of [-372, -352]) out.push(K.bar(x, 0, x, -440, 3, '#3c7fd1'));
-    for (const y of [-80, -150, -220, -290, -360, -430]) out.push(K.bar(-372, y, -330, y, 3, '#3c7fd1'));
-    for (const x of [-330, -195, -60]) out.push(K.rect(x, -430, 18, 430, '#b8bcc8', 3));
-    for (const y of [-150, -290, -430]) out.push(K.rect(-345, y - 14, 320, 16, '#cfd2da', 3));
-    for (const x of [-325, -315, -190, -180, -55, -45]) out.push(K.line(x, -446, x, -474, 3, '#8a6a4a'));
-    out.push(K.worker(-90, -444, 0.85, '#2ea8ff'));
-
-    // 塔吊：底座、塔身、吊臂、平衡臂
-    out.push(K.rect(-52, -22, 104, 22, '#8d90a0', 4));
-    for (let y = -20; y > -760; y -= 40) out.push(K.line(-22, y, 22, y - 40, 5, '#d9960f'));
-    out.push(K.bar(-22, -20, -22, -764, 6, '#f6b51e') + K.bar(22, -20, 22, -764, 6, '#f6b51e'));
-    out.push(K.line(0, -880, -430, -790, 3) + K.line(0, -880, 165, -790, 3));
-    out.push(K.bar(0, -790, 0, -880, 7, '#f6b51e'));
-    for (let x = -650; x < 160; x += 30) out.push(K.line(x, -764, x + 15, -790, 4, '#d9960f') + K.line(x + 15, -790, x + 30, -764, 4, '#d9960f'));
-    out.push(K.bar(-650, -790, 170, -790, 6, '#f6b51e') + K.bar(-650, -764, 170, -764, 6, '#f6b51e'));
-    out.push(K.rect(104, -764, 64, 54, '#9a9dab', 4) + K.line(112, -740, 160, -740, 3) + K.line(112, -724, 160, -724, 3));
-    out.push(K.rect(24, -764, 56, 48, '#f4f4f6', 6) + K.win(32, -756, 40, 28, 5));
-
-    // 鋼樑、鋼索、小車、吊鉤（位置都由 craneDraw 決定）
-    out.push(`<g id="${p}-beam"><g id="${p}-sling" opacity="0">${K.line(0, -26, -72, -18, 3)}${K.line(0, -26, 72, -18, 3)}</g>` +
-      K.rect(-86, -20, 172, 20, '#e2572a', 4) + K.line(-78, -10, 78, -10, 3, '#b8401c') + '</g>');
-    out.push(`<line id="${p}-cable" x1="0" y1="-752" x2="0" y2="-560" stroke="${LINE}" stroke-width="3"/>`);
-    out.push(`<g id="${p}-trolley">${K.rect(-18, -766, 36, 16, '#77768a', 3, 3)}</g>`);
-    // 吊鉤外面多一圈透明的範圍，小朋友比較好點
-    out.push(`<g id="${p}-hook"><circle cx="2" cy="24" r="46" fill="transparent"/>${K.rect(-15, 0, 30, 24, '#ffcf1f', 4, 3)}${K.path('M0,24 L0,36 Q0,48 10,48 Q19,48 19,39', 'none', 4)}</g>`);
-    return out.join('');
+    return '<g transform="translate(0 -884)">' + IMG('crane', 706, 884) +
+      `<g id="${p}-beam"><g id="${p}-sling" opacity="0">` +
+        `<path d="M0,${56 - CRANE_D} L-70,-26 M0,${56 - CRANE_D} L70,-26" stroke="#3a3f4a" stroke-width="5" fill="none"/></g>` +
+        '<rect x="-82" y="-28" width="164" height="28" fill="#e2572a"/><rect x="-82" y="-12" width="164" height="12" fill="#b9431d"/>' +
+      '</g>' +
+      `<line id="${p}-cable" x1="0" y1="146" x2="0" y2="400" stroke="#3a3f4a" stroke-width="5"/>` +
+      `<g id="${p}-trolley"><rect x="-24" y="130" width="48" height="20" fill="#5b6270"/><rect x="-24" y="143" width="48" height="7" fill="#454b57"/></g>` +
+      // 吊鉤外面多一圈透明的範圍，小朋友比較好點
+      `<g id="${p}-hook"><circle cx="0" cy="30" r="70" fill="transparent"/>` +
+        '<rect x="-20" y="0" width="40" height="28" fill="#f5b400"/><rect x="-20" y="18" width="40" height="10" fill="#d99a00"/>' +
+        '<path d="M0,28 L0,40 Q0,56 14,56 Q27,56 27,43" stroke="#3a3f4a" stroke-width="8" fill="none" stroke-linecap="round"/></g>' +
+      '</g>';
   },
   setup(c) {
-    Object.assign(c.state, { tx: -560, hy: -560, bx: -560, by: 0, carry: false, at: 'ground' });
+    const x = CRANE_SPOTS[0];
+    Object.assign(c.state, { tx: x, hy: 400, bx: x, by: 884, carry: false, spot: 0 });
     craneDraw(c);
   },
   async act(c) {
@@ -70,77 +68,66 @@ const towerCrane = {
       const from = {};
       let dist = 0;
       for (const k in to) { from[k] = s[k]; dist = Math.max(dist, Math.abs(to[k] - s[k])); }
-      return c.tween(350 + dist * 1.7, (t) => { for (const k in to) s[k] = lerp(from[k], to[k], t); craneDraw(c); });
+      return c.tween(350 + dist * 1.6, (t) => { for (const k in to) s[k] = lerp(from[k], to[k], t); craneDraw(c); });
     };
-    const [dx, dy] = s.at === 'ground' ? [-180, -444] : [-560, 0]; // 樓頂 / 地面
+    s.spot = 1 - s.spot;
     await go({ hy: s.by - CRANE_D });
     await c.anim(250, { sling: { o: 1 } });
     s.carry = true;
-    await go({ hy: -660 });
-    await go({ tx: dx });
-    await go({ hy: dy - CRANE_D });
+    await go({ hy: 260 });
+    await go({ tx: CRANE_SPOTS[s.spot] });
+    await go({ hy: 884 - CRANE_D });
     s.carry = false;
     await c.anim(250, { sling: { o: 0 } });
-    await go({ hy: -560 });
-    s.at = s.at === 'ground' ? 'roof' : 'ground';
+    await go({ hy: 400 });
   },
 };
 
-// ---------- 水泥攪拌車：滾筒轉起來，滑槽倒出水泥 ----------
-const MIXER_DRUM = 'M44,-118 Q50,-214 160,-226 L258,-206 Q306,-190 306,-142 Q306,-100 258,-94 L84,-94 Q44,-96 44,-118 Z';
+// ---------- 水泥攪拌車：滾筒搖搖晃晃轉起來，後面倒出水泥 ----------
+// 圖 876×506
+const MIXER_DRUM = PATH([[22, 0], [516, 0], [516, 296], [132, 300], [96, 244], [42, 152], [18, 60]]);
 const mixer = {
-  id: 'mixer', en: 'Cement Mixer', zh: '水泥攪拌車', x: 60, y: 720, s: 0.8,
-  hint: [175, -160],
-  pivots: { chute: [44, -112] },
+  id: 'mixer', en: 'Cement Mixer', zh: '水泥攪拌車', x: 40, y: 720, s: 0.375,
+  hint: [280, -356],
+  pivots: { drum: [270, 150] },
   art(p) {
-    let stripes = '';
-    for (let i = -8; i < 14; i++) stripes += `<path d="M${i * 44},-240 l26,0 l-40,160 l-26,0 Z" fill="#f29c1f"/>`;
-    return K.rect(18, -82, 396, 22, '#3b3a48', 4) +
-      K.rect(118, -98, 14, 20, '#77768a', 2, 3) + K.rect(250, -98, 14, 20, '#77768a', 2, 3) +
-      `<clipPath id="${p}-clip"><path d="${MIXER_DRUM}"/></clipPath>` +
-      `<path d="${MIXER_DRUM}" fill="#eef0f4"/>` +
-      `<g clip-path="url(#${p}-clip)"><g id="${p}-stripes">${stripes}</g></g>` +
-      `<path d="${MIXER_DRUM}" fill="none" stroke="${LINE}" stroke-width="4"/>` +
-      `<g id="${p}-chute">${K.path('M44,-112 L8,-78 L18,-68 L54,-102 Z', '#9a9dab')}</g>` +
-      K.rect(318, -184, 96, 108, '#2f7fd8', 12) + '<rect x="320" y="-120" width="92" height="10" fill="#fff"/>' +
-      K.win(344, -174, 58, 44, 6) + K.head(370, -146, 13) + K.rect(404, -104, 12, 14, '#ffe27a', 3, 3) +
-      K.wheel(`${p}-w1`, 82, -32, 32) + K.wheel(`${p}-w2`, 152, -32, 32) + K.wheel(`${p}-w3`, 356, -32, 32);
+    return '<g transform="translate(0 -506)">' +
+      CLIP(`${p}-cd`, MIXER_DRUM) + HOLE(`${p}-cb`, 876, 506, MIXER_DRUM) +
+      IMG('mixer', 876, 506, `${p}-cb`) +
+      `<g id="${p}-drum">${IMG('mixer', 876, 506, `${p}-cd`)}</g>` +
+      '</g>';
   },
   async act(c) {
-    const spin = c.anim(2600, { stripes: { tx: -44 * 9 } });
-    await c.anim(500, { chute: { r: -28 } });
-    for (let i = 0; i < 7; i++) {
-      c.burst('chute', 12, -72, { n: 5, color: '#a3a6b4', vx: [-1.8, -0.4], vy: [0, 1.2], g: 0.35, life: 700 });
-      await c.wait(200);
+    for (let i = 0; i < 8; i++) {
+      if (i > 1) c.burst('drum', 40, 120, { n: 6, color: '#a3a6b4', vx: [-2.4, -0.6], vy: [-0.5, 1.5], g: 0.35, size: [8, 16], life: 800 });
+      await c.anim(160, { drum: { r: 2.5 } });
+      await c.anim(160, { drum: { r: -2.5 } });
     }
-    await spin;
-    c.set('stripes', { tx: 0 });
-    await c.anim(400, { chute: { r: 0 } });
+    await c.anim(200, { drum: { r: 0 } });
   },
 };
 
 // ---------- 推土機：鏟子放下，把土堆往前推 ----------
+// 圖 840×552
+const DOZER_BLADE = PATH([[632, 238], [840, 238], [840, 552], [632, 552]]);
 const bulldozer = {
-  id: 'dozer', en: 'Bulldozer', zh: '推土機', x: 470, y: 720, s: 0.8,
-  hint: [130, -100],
+  id: 'dozer', en: 'Bulldozer', zh: '推土機', x: 420, y: 720, s: 0.344,
+  hint: [740, -160],
   art(p) {
-    return `<g id="${p}-pile">${K.path('M300,0 Q352,-66 406,0 Z', '#a8743f')}${PEBBLES(300, 106)}</g>` +
-      `<g id="${p}-body">` +
-        K.rect(16, -62, 226, 62, '#3b3a48', 31) +
-        [48, 98, 148, 198].map((x) => K.wheel(`${p}-w${x}`, x + 6, -31, 19)).join('') +
-        K.rect(28, -142, 198, 82, '#f6b51e', 12) + `<rect x="28" y="-100" width="198" height="9" fill="${LINE}"/>` +
-        K.rect(170, -178, 12, 38, '#77768a', 3, 3) +
-        K.rect(40, -234, 94, 94, '#f6b51e', 10) + K.win(52, -224, 70, 60) + K.head(90, -190, 14) +
-        K.bar(204, -96, 270, -66, 10, '#d9960f') +
-        `<g id="${p}-blade">${K.path('M262,-152 Q298,-80 266,-4 L286,-4 Q320,-80 284,-152 Z', '#d9960f')}</g>` +
-      '</g>';
+    return MOUND(850, 1070, 120, `${p}-pile`) +
+      `<g id="${p}-body"><g transform="translate(0 -552)">` +
+        CLIP(`${p}-cl`, DOZER_BLADE) + HOLE(`${p}-cb`, 840, 552, DOZER_BLADE) +
+        IMG('bulldozer', 840, 552, `${p}-cb`) +
+        `<g id="${p}-blade">${IMG('bulldozer', 840, 552, `${p}-cl`)}</g>` +
+      '</g></g>';
   },
-  setup(c) { c.set('blade', { ty: -26 }); },
+  setup(c) { c.set('blade', { ty: -30 }); },
   async act(c) {
     await c.anim(350, { blade: { ty: 0 } });
-    await c.anim(1400, { body: { tx: 110 }, pile: { tx: 110 }, ...c.wheels(330) });
-    await c.anim(350, { blade: { ty: -26 } });
-    await c.anim(1200, { body: { tx: 0 }, ...c.wheels(-330) });
+    // 履帶不會轉，車身一邊前進一邊輕輕上下晃
+    await c.anim(1500, { body: { tx: 300 }, pile: { tx: 300 } }, (t) => c.set('body', { ty: Math.sin(t * Math.PI * 10) * 3 }));
+    await c.anim(350, { blade: { ty: -30 } });
+    await c.anim(1200, { body: { tx: 0, ty: 0 } });
     // 推走的土堆消失，原來的地方再冒出一堆新的
     await c.anim(300, { pile: { o: 0 } });
     c.set('pile', { tx: 0 });
@@ -148,26 +135,34 @@ const bulldozer = {
   },
 };
 
-// ---------- 流動廁所：門打開，裡面的工人揮手 ----------
+// ---------- 流動廁所：門打開，裡面的工人揮手說 Hello ----------
+// 圖 361×565；門在左邊那一面，鉸鍊在左側
+const TOILET_DOOR = PATH([[22, 88], [200, 88], [200, 527], [22, 527]]);
 const toilet = {
-  id: 'toilet', en: 'Portable Toilet', zh: '流動廁所', x: 1462, y: 720, s: 0.85,
-  hint: [42, -60],
-  pivots: { door: [10, 0], arm: [52, -80] },
+  id: 'toilet', en: 'Portable Toilet', zh: '流動廁所', x: 1000, y: 720, s: 0.3,
+  hint: [110, -265],
+  pivots: { door: [22, 300], arm: [150, 300] },
   art(p) {
-    return K.rect(0, -162, 84, 162, '#3c9ad6', 8) + K.rect(-6, -176, 96, 18, '#5bb6ea', 8) +
-      '<rect x="10" y="-146" width="64" height="140" fill="#1d4466"/>' +
-      K.rect(24, -90, 32, 62, '#ff7a1a', 9, 3) + K.head(40, -106, 15) +
-      `<g id="${p}-arm">${K.bar(52, -80, 68, -114, 6, '#ff7a1a')}${K.circle(69, -118, 7, '#f3c9a0', 3)}</g>` +
-      `<g id="${p}-door">${K.rect(10, -146, 64, 140, '#4fb0ea', 4)}` +
-        `<path d="M42,-130 a10,10 0 1,0 9,13 a8,8 0 1,1 -9,-13 Z" fill="${LINE}"/>${K.circle(64, -76, 4, '#fff', 2)}</g>`;
+    return '<g transform="translate(0 -565)">' +
+      CLIP(`${p}-cd`, TOILET_DOOR) + HOLE(`${p}-cb`, 361, 565, TOILET_DOOR) +
+      IMG('toilet', 361, 565, `${p}-cb`) +
+      '<rect x="22" y="88" width="178" height="439" fill="#1d3550"/>' +
+      // 裡面的工人（扁平色塊）
+      '<rect x="58" y="272" width="104" height="255" rx="24" fill="#ff7a1a"/><rect x="58" y="380" width="104" height="22" fill="#ffe04a"/>' +
+      '<circle cx="110" cy="222" r="44" fill="#f2c29b"/><circle cx="96" cy="224" r="5" fill="#2d2a3a"/><circle cx="124" cy="224" r="5" fill="#2d2a3a"/>' +
+      '<path d="M98,244 Q110,254 122,244" stroke="#2d2a3a" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+      '<path d="M62,210 a48,46 0 0,1 96,0Z" fill="#ffcc1a"/><rect x="54" y="204" width="112" height="12" rx="6" fill="#e0a800"/>' +
+      `<g id="${p}-arm"><path d="M150,300 L198,196" stroke="#ff7a1a" stroke-width="28" stroke-linecap="round"/><circle cx="202" cy="186" r="18" fill="#f2c29b"/></g>` +
+      `<g id="${p}-door">${IMG('toilet', 361, 565, `${p}-cd`)}</g>` +
+      '</g>';
   },
   async act(c) {
-    await c.anim(450, { door: { sx: -0.45 } });
+    await c.anim(450, { door: { sx: -0.3 } });
     await c.wait(250);
     speak('Hello!');
     for (let i = 0; i < 3; i++) {
-      await c.anim(170, { arm: { r: -28 } });
-      await c.anim(170, { arm: { r: 16 } });
+      await c.anim(170, { arm: { r: -25 } });
+      await c.anim(170, { arm: { r: 15 } });
     }
     await c.anim(170, { arm: { r: 0 } });
     await c.wait(300);
@@ -176,75 +171,70 @@ const toilet = {
 };
 
 // ---------- 挖土機：伸到土堆挖一口，舉起來倒掉 ----------
+// 圖 824×511；手臂轉軸在臂根，鏟斗轉軸在斗臂末端（正的角度 = 鏟斗往內收）
+const EXC_ARM = PATH([[380, 338], [382, 300], [390, 250], [500, 78], [620, 42], [790, 0], [824, 0], [824, 250], [640, 250], [640, 300], [462, 338]]);
+const EXC_BUCKET = PATH([[640, 250], [824, 250], [824, 365], [640, 365]]);
 const excavator = {
-  id: 'excavator', en: 'Excavator', zh: '挖土機', x: 30, y: 965, s: 1,
-  hint: [170, -125],
-  pivots: { boom: [175, -150], stick: [325, -292], bucket: [392, -146], pile: [420, 0] },
+  id: 'excavator', en: 'Excavator', zh: '挖土機', x: 20, y: 975, s: 0.567,
+  hint: [730, -211],
+  pivots: { arm: [415, 322], bucket: [806, 245], pile: [730, 0] },
   art(p) {
-    return `<g id="${p}-pile">${K.path('M340,0 Q420,-76 500,0 Z', '#a8743f')}${PEBBLES(340, 160)}</g>` +
-      K.rect(10, -64, 252, 64, '#3b3a48', 32) + K.rect(34, -74, 206, 14, '#55546a', 4, 3) +
-      [50, 105, 160, 215].map((x) => K.wheel(`${p}-w${x}`, x, -32, 19)).join('') +
-      K.rect(62, -92, 150, 20, '#3b3a48', 4) +
-      K.rect(8, -156, 56, 66, '#d9960f', 12) +
-      K.rect(22, -166, 200, 80, '#f6b51e', 12) + `<rect x="22" y="-116" width="200" height="10" fill="${LINE}"/>` +
-      K.rect(52, -194, 12, 32, '#77768a', 3, 3) +
-      K.rect(120, -250, 98, 90, '#f6b51e', 12) + K.win(132, -240, 74, 64) + K.head(172, -200, 14) +
-      `<g id="${p}-boom">` +
-        K.poly('160,-138 188,-166 320,-308 340,-284 206,-126', '#f6b51e') +
-        K.bar(200, -152, 282, -246, 7, '#9a9dab') + K.circle(175, -150, 8, '#9a9dab', 3) +
-        `<g id="${p}-stick">` +
-          K.poly('312,-302 340,-304 404,-152 380,-140', '#f6b51e') + K.circle(325, -292, 8, '#9a9dab', 3) +
-          `<g id="${p}-bucket">` +
-            K.path('M392,-150 L430,-134 Q442,-96 414,-70 L382,-80 Q398,-110 392,-150 Z', '#4b4a5c') +
-            K.path('M404,-74 l2,12 l8,-9 M414,-71 l2,12 l7,-11', 'none', 3) +
-            `<g id="${p}-load" opacity="0">${K.path('M384,-82 Q386,-110 406,-104 Q424,-96 414,-70 Z', '#a8743f', 3)}</g>` +
-            K.circle(392, -146, 8, '#9a9dab', 3) +
-          '</g>' +
+    return MOUND(600, 860, 100, `${p}-pile`) +
+      '<g transform="translate(0 -511)">' +
+      CLIP(`${p}-ca`, EXC_ARM) + CLIP(`${p}-ck`, EXC_BUCKET) +
+      HOLE(`${p}-cb`, 824, 511, EXC_ARM + EXC_BUCKET) +
+      IMG('excavator', 824, 511, `${p}-cb`) +
+      `<g id="${p}-arm">${IMG('excavator', 824, 511, `${p}-ca`)}` +
+        `<g id="${p}-bucket">${IMG('excavator', 824, 511, `${p}-ck`)}` +
+          `<g id="${p}-load" opacity="0"><ellipse cx="712" cy="272" rx="62" ry="26" fill="#8c5c30"/><ellipse cx="700" cy="262" rx="40" ry="16" fill="#a8743f"/></g>` +
         '</g>' +
+      '</g>' +
       '</g>';
   },
   async act(c) {
-    await c.anim(800, { boom: { r: 22 }, stick: { r: -10 }, bucket: { r: -22 } }); // 伸到土堆
-    c.burst('bucket', 414, -72, { n: 6, vy: [-3, -1] });
-    await c.anim(550, { bucket: { r: 60 }, load: { o: 1 }, pile: { sy: 0.78 } }); // 挖一口
-    await c.anim(800, { boom: { r: -12 }, stick: { r: -18 } }); // 舉起來
-    c.burst('bucket', 404, -88, { n: 12 });
-    await c.anim(450, { bucket: { r: -45 }, load: { o: 0 } }); // 倒掉
-    c.burst('bucket', 414, -72, { n: 10 });
-    await c.anim(800, { boom: { r: 0 }, stick: { r: 0 }, bucket: { r: 0 }, pile: { sy: 1 } });
+    await c.anim(800, { arm: { r: 10 }, bucket: { r: -20 } }); // 伸到土堆
+    c.burst('bucket', 660, 300, { n: 8, vy: [-3, -1], size: [8, 14] });
+    await c.anim(550, { bucket: { r: 35 }, load: { o: 1 }, pile: { sy: 0.75 } }); // 挖一口
+    await c.anim(800, { arm: { r: -16 } }); // 舉起來
+    await c.anim(450, { bucket: { r: -40 }, load: { o: 0 } }); // 倒掉
+    c.burst('bucket', 670, 300, { n: 14, size: [8, 14] });
+    await c.anim(800, { arm: { r: 0 }, bucket: { r: 0 }, pile: { sy: 1 } });
   },
 };
 
 // ---------- 砂石車：車斗舉起來，把土倒在後面 ----------
+// 圖 866×614；車斗轉軸在後輪上方
+const DUMP_BED = PATH([[0, 0], [706, 0], [706, 150], [612, 158], [548, 172], [548, 318], [470, 345], [330, 332], [180, 302], [60, 294], [0, 222]]);
+const DUMP_LOAD = PATH([[128, 0], [592, 0], [586, 100], [480, 110], [470, 138], [138, 152]]);
+const DUMP_PIVOT = [90, 300];
 const dumpTruck = {
-  id: 'dump', en: 'Dump Truck', zh: '砂石車', x: 540, y: 965, s: 0.95,
-  hint: [140, -130],
-  pivots: { bed: [26, -84] },
+  id: 'dump', en: 'Dump Truck', zh: '砂石車', x: 530, y: 975, s: 0.44,
+  hint: [300, -394],
+  pivots: { bed: DUMP_PIVOT },
   art(p) {
-    return K.rect(18, -82, 352, 22, '#3b3a48', 4) +
-      `<line id="${p}-piston" x1="178" y1="-76" x2="178" y2="-86" stroke="#9a9dab" stroke-width="10" stroke-linecap="round"/>` +
-      `<g id="${p}-bed">` +
-        `<g id="${p}-load">${K.path('M28,-176 Q92,-222 150,-198 Q214,-222 262,-172 Z', '#a8743f')}</g>` +
-        K.poly('22,-84 264,-84 270,-174 16,-180', '#f26b1d') +
-        [70, 120, 170, 220].map((x) => K.line(x, -92, x + 1, -168, 4, '#c94f12')).join('') +
-        K.rect(12, -188, 264, 14, '#f68a45', 5) +
+    return '<g transform="translate(0 -614)">' +
+      CLIP(`${p}-cd`, DUMP_BED) + HOLE(`${p}-cb`, 866, 614, DUMP_BED) + CLIP(`${p}-cl`, DUMP_LOAD) +
+      `<clipPath id="${p}-cr"><path clip-rule="evenodd" d="${DUMP_BED}${DUMP_LOAD}"/></clipPath>` +
+      IMG('dumptruck', 866, 614, `${p}-cb`) +
+      `<line id="${p}-piston" x1="330" y1="350" x2="330" y2="300" stroke="#5a5f6b" stroke-width="18" stroke-linecap="round"/>` +
+      `<g id="${p}-bed">${IMG('dumptruck', 866, 614, `${p}-cr`)}` +
+        `<g id="${p}-load">${IMG('dumptruck', 866, 614, `${p}-cl`)}</g>` +
       '</g>' +
-      K.path('M276,-82 L276,-178 Q276,-188 288,-188 L338,-188 Q352,-188 358,-172 L374,-122 L374,-82 Z', '#f26b1d') +
-      K.win(292, -176, 52, 46, 6) + K.head(318, -150, 13) + K.rect(364, -112, 12, 14, '#ffe27a', 3, 3) +
-      K.wheel(`${p}-w1`, 74, -32, 32) + K.wheel(`${p}-w2`, 146, -32, 32) + K.wheel(`${p}-w3`, 320, -32, 32);
+      '</g>';
   },
   async act(c) {
     const piston = c.el('piston');
     // 頂桿：下端固定在底盤，上端跟著車斗轉
+    const [px, py] = DUMP_PIVOT;
     const upd = () => {
       const r = (c.get('bed').r * Math.PI) / 180;
-      piston.setAttribute('x2', (26 + 152 * Math.cos(r) + 2 * Math.sin(r)).toFixed(1));
-      piston.setAttribute('y2', (-84 + 152 * Math.sin(r) - 2 * Math.cos(r)).toFixed(1));
+      piston.setAttribute('x2', (px + 240 * Math.cos(r)).toFixed(1));
+      piston.setAttribute('y2', (py + 240 * Math.sin(r)).toFixed(1));
     };
-    await c.anim(900, { bed: { r: -40 } }, upd);
-    const pour = c.anim(800, { load: { tx: -150, ty: 30, o: 0 } });
+    await c.anim(900, { bed: { r: -32 } }, upd);
+    const pour = c.anim(800, { load: { tx: -260, ty: 60, o: 0 } });
     for (let i = 0; i < 5; i++) {
-      c.burst('bed', 18, -150 + i * 10, { n: 6, vx: [-2.2, -0.6], vy: [-1, 1] });
+      c.burst('bed', 10, 160 + i * 14, { n: 7, vx: [-3, -0.8], vy: [-1, 1], size: [8, 15] });
       await c.wait(150);
     }
     await pour;
@@ -256,52 +246,43 @@ const dumpTruck = {
 };
 
 // ---------- 堆高機：把一疊磚頭舉高再放下 ----------
+// 圖 720×600；貨叉＋磚頭往上移，原本被擋住的門架用深灰色補起來
+const FORK = PATH([[483, 328], [705, 328], [705, 470], [722, 470], [722, 506], [483, 506]]);
 const forklift = {
-  id: 'forklift', en: 'Forklift', zh: '堆高機', x: 950, y: 965, s: 0.9,
-  hint: [110, -80],
+  id: 'forklift', en: 'Forklift', zh: '堆高機', x: 960, y: 975, s: 0.4,
+  hint: [620, -190],
   art(p) {
-    return K.rect(172, -264, 18, 260, '#77768a', 4) +
-      K.rect(8, -122, 46, 72, '#c23a2e', 10) +
-      K.rect(30, -114, 146, 64, '#e84a3c', 12) +
-      K.rect(100, -152, 28, 42, '#2ea8ff', 8, 3) + K.head(114, -166, 14) +
-      K.bar(66, -112, 66, -216, 4, '#3b3a48') + K.bar(158, -112, 158, -216, 4, '#3b3a48') +
-      K.rect(56, -224, 112, 12, '#3b3a48', 4) +
-      `<g id="${p}-fork">` +
-        K.rect(190, -112, 12, 106, '#55546a', 3, 3) + K.rect(190, -14, 80, 9, '#55546a', 3, 3) +
-        K.rect(198, -32, 68, 18, '#c49a5c', 3, 3) +
-        [[200, -54], [234, -54], [216, -76]].map(([x, y]) => K.rect(x, y, 30, 20, '#d0573c', 3, 3)).join('') +
-      '</g>' +
-      K.wheel(`${p}-w1`, 66, -30, 30) + K.wheel(`${p}-w2`, 156, -26, 26);
+    return '<g transform="translate(0 -600)">' +
+      CLIP(`${p}-cf`, FORK) + HOLE(`${p}-cb`, 720, 600, FORK) +
+      IMG('forklift', 720, 600, `${p}-cb`) +
+      '<rect x="490" y="320" width="28" height="190" fill="#3f4450"/><rect x="552" y="320" width="34" height="190" fill="#4b505c"/>' +
+      `<g id="${p}-fork">${IMG('forklift', 720, 600, `${p}-cf`)}</g>` +
+      '</g>';
   },
   async act(c) {
-    await c.anim(1100, { fork: { ty: -150 } });
+    await c.anim(1100, { fork: { ty: -250 } });
     await c.wait(500);
     await c.anim(1000, { fork: { ty: 0 } });
   },
 };
 
-// ---------- 壓路機：往前壓一段路再倒回來（車頭朝左） ----------
+// ---------- 壓路機：倒車壓一段路再開回來 ----------
+// 圖 767×622；後輪用圓形裁出來，跟著車子轉
+const ROLLER_WHEEL = CIRCLE(115, 505, 100);
 const roller = {
-  id: 'roller', en: 'Road Roller', zh: '壓路機', x: 1250, y: 965, s: 0.9,
-  hint: [200, -100],
+  id: 'roller', en: 'Road Roller', zh: '壓路機', x: 1290, y: 975, s: 0.354,
+  hint: [380, -300],
   art(p) {
-    return `<g id="${p}-body">` +
-      K.rect(36, -130, 92, 34, '#f6b51e', 8) +
-      K.rect(104, -142, 198, 94, '#f6b51e', 14) + `<rect x="104" y="-104" width="198" height="10" fill="${LINE}"/>` +
-      K.rect(206, -182, 40, 42, '#2ea8ff', 8, 3) + K.head(226, -196, 14) +
-      K.bar(184, -246, 184, -142, 4, '#3b3a48') + K.bar(276, -246, 276, -142, 4, '#3b3a48') +
-      K.rect(172, -256, 114, 12, '#3b3a48', 4) +
-      `<g id="${p}-drum" class="wheel" data-cx="80" data-cy="-56">` +
-        K.circle(80, -56, 56, '#9a9dab') + K.circle(80, -56, 20, '#6d7080', 3) +
-        K.line(80, -110, 80, -78, 5) + K.line(80, -34, 80, -2, 5) + K.line(26, -56, 58, -56, 5) + K.line(102, -56, 134, -56, 5) +
-      '</g>' +
-      K.wheel(`${p}-w1`, 254, -40, 40) +
-      '</g>';
+    return `<g id="${p}-body"><g transform="translate(0 -622)">` +
+      CLIP(`${p}-cw`, ROLLER_WHEEL) + HOLE(`${p}-cb`, 767, 622, ROLLER_WHEEL) +
+      IMG('roller', 767, 622, `${p}-cb`) +
+      `<g id="${p}-w" class="wheel" data-cx="115" data-cy="505">${IMG('roller', 767, 622, `${p}-cw`)}</g>` +
+      '</g></g>';
   },
   async act(c) {
-    await c.anim(1500, { body: { tx: -100 }, ...c.wheels(-130) });
+    await c.anim(1300, { body: { tx: -200 }, ...c.wheels(-115) });
     await c.wait(250);
-    await c.anim(1400, { body: { tx: 0 }, ...c.wheels(130) });
+    await c.anim(1200, { body: { tx: 0 }, ...c.wheels(115) });
   },
 };
 
@@ -309,25 +290,10 @@ SCENES.construction = {
   w: 1600,
   h: 1000,
   bg: () => `
-    <defs>
-      <linearGradient id="c-sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#a9dcff"/><stop offset="1" stop-color="#e6f6ff"/>
-      </linearGradient>
-    </defs>
-    <rect width="1600" height="1000" fill="url(#c-sky)"/>
-    <circle cx="700" cy="150" r="56" fill="#ffd84a"/>
-    ${K.cloud(250, 220, 1)}${K.cloud(990, 190, 0.8)}${K.cloud(560, 330, 0.6)}
-    <g fill="#d3e2ef">
-      ${[[30, 540, 90], [140, 480, 70], [230, 570, 110], [370, 510, 80], [700, 530, 100], [820, 470, 70], [950, 560, 90], [1540, 520, 60]]
-        .map(([x, y, w]) => `<rect x="${x}" y="${y}" width="${w}" height="${700 - y}"/>`).join('')}
-    </g>
-    <rect y="690" width="1600" height="310" fill="#f0d49c"/>
-    <path d="M0,905 Q400,888 800,905 T1600,900 L1600,1000 L0,1000 Z" fill="#e5c07c"/>
+    <image href="${SRC('bg')}" width="1600" height="1000"/>
     <text x="56" y="98" font-size="60" font-weight="900" fill="${LINE}">Construction Site</text>
     <text x="58" y="148" font-size="38" font-weight="900" fill="${LINE}" opacity=".7">工地</text>
-    ${K.worker(1070, 722, 0.7, '#2ea8ff')}
   `,
-  front: () => K.worker(920, 968, 0.8) + K.cone(1222, 992, 0.7) + K.cone(1582, 992, 0.7),
   // 先畫後排，再畫前排（後畫的會蓋在上面）
   items: [towerCrane, mixer, bulldozer, toilet, excavator, dumpTruck, forklift, roller],
 };
