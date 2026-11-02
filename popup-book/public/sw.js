@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v5';
+const CACHE = 'popup-book-v6';
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js',
   'art/kit.js', 'art/construction.js', 'art/rescue.js', 'art/farm.js', 'art/trucks.js',

@@ -94,7 +94,7 @@ const pickup = {
     '</g></g>';
   },
   async act(c) {
-    speak('Beep beep!');
+    speak('Beep beep!', { queue: true });
     for (let i = 0; i < 2; i++) {
       await c.anim(160, { bales: { ty: -30 } });
       await c.anim(160, { bales: { ty: 0 } });

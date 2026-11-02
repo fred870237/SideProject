@@ -18,9 +18,10 @@ function pickVoice() {
   const en = voices.filter((v) => /^en[-_]US/i.test(v.lang));
   return en.find((v) => v.localService) || en[0] || voices.find((v) => /^en/i.test(v.lang)) || null;
 }
-function speak(text) {
+// queue: true 是車子動作裡的音效（Honk honk、Ice cream…），排在車名後面唸，不要把還沒唸完的車名切掉
+function speak(text, { queue = false } = {}) {
   if (!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
+  if (!queue) speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'en-US';
   u.rate = 0.85;

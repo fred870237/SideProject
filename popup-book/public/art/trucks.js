@@ -37,7 +37,7 @@ const semi = {
     return `<g id="${p}-body"><g transform="translate(0 -339)">${IMG('semi', 874, 339)}</g></g>`;
   },
   async act(c) {
-    speak('Honk honk!');
+    speak('Honk honk!', { queue: true });
     for (let i = 0; i < 6; i++) {
       c.burst('body', 615, -330, SMOKE);
       c.burst('body', 680, -330, SMOKE);
@@ -116,7 +116,7 @@ const icecream = {
   },
   async act(c) {
     await c.wait(500);
-    speak('Ice cream!');
+    speak('Ice cream!', { queue: true });
     for (let i = 0; i < 3; i++) {
       await c.anim(180, { cone: { ty: -60, r: 12 } });
       ['#ff6b9a', '#6ec3ff', '#ffd23f', '#9be27b'].forEach((color) =>

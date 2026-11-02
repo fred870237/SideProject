@@ -163,7 +163,7 @@ const police = {
   async act(c) {
     const lights = flash(c, 'la', 'lb', 10);
     await c.wait(700);
-    speak('Wee-woo, wee-woo!');
+    speak('Wee-woo, wee-woo!', { queue: true });
     for (let i = 0; i < 6; i++) {
       await c.anim(150, { body: { sy: 0.97 } });
       await c.anim(150, { body: { sy: 1 } });

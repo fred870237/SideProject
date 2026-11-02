@@ -159,7 +159,7 @@ const toilet = {
   async act(c) {
     await c.anim(450, { door: { sx: -0.3 } });
     await c.wait(250);
-    speak('Hello!');
+    speak('Hello!', { queue: true });
     for (let i = 0; i < 3; i++) {
       await c.anim(170, { arm: { r: -25 } });
       await c.anim(170, { arm: { r: 15 } });
