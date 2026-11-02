@@ -34,6 +34,8 @@ LINES = [
     "Crop Duster", "Windmill", "Pickup Truck", "Hay Baler", "Tractor", "Combine Harvester", "Quad Bike",
     # 🚛 貨運卡車
     "Semi Truck", "Garbage Truck", "Delivery Van", "Ice Cream Truck", "Car Carrier", "Monster Truck", "Street Sweeper",
+    # 🏢 蓋大樓
+    "Concrete Pump Truck", "Pile Driver", "Mobile Crane", "Boom Lift", "Skid Steer Loader",
     # 動作音效
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!",
 ]
@@ -73,11 +75,16 @@ def clone(ref):
     import soundfile as sf
     takes = OUT / "takes"
     takes.mkdir(parents=True, exist_ok=True)
+    # 已經生成過的句子跳過（新增一頁時只會生新的車名）
+    todo = [l for l in LINES if not (takes / f"{slug(l)}_{TAKES - 1}.wav").exists()]
+    if not todo:
+        print("nothing to do")
+        return
     m = load(MODELS / "Base")
     prompt = m.create_voice_clone_prompt(ref_audio=str(ref), ref_text=REF_TEXT)
     for t in range(TAKES):
-        wavs, sr = m.generate_voice_clone(text=LINES, language=["English"] * len(LINES), voice_clone_prompt=prompt)
-        for line, w in zip(LINES, wavs):
+        wavs, sr = m.generate_voice_clone(text=todo, language=["English"] * len(todo), voice_clone_prompt=prompt)
+        for line, w in zip(todo, wavs):
             w = trim(np.asarray(w, dtype=np.float32), sr)
             sf.write(takes / f"{slug(line)}_{t}.wav", w, sr)
         print("take", t, "done")

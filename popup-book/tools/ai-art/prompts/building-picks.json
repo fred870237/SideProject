@@ -1,0 +1,7 @@
+{
+  "pump": ["D:/AI/ComfyUI/output/k3/pump_66_00001_.png", false],
+  "boomlift": ["D:/AI/ComfyUI/output/k1/boomlift_61_00001_.png", false],
+  "crane": ["D:/AI/ComfyUI/output/k1/crane_61_00001_.png", true],
+  "piledriver": ["D:/AI/ComfyUI/output/k1/piledriver_62_00001_.png", false, [], {"erode": false}],
+  "skidsteer": ["D:/AI/ComfyUI/output/k1/skidsteer_7_00001_.png", true]
+}

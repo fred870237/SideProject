@@ -9,6 +9,7 @@ const THEMES = [
     id: 'vehicles', icon: '🚚', en: 'Vehicles', zh: '交通工具', color: '#ffcf3f',
     pages: [
       { id: 'construction', icon: '🏗️', en: 'Construction Site', zh: '工地' },
+      { id: 'building', icon: '🏢', en: 'Building Site', zh: '蓋大樓' },
       { id: 'rescue', icon: '🚒', en: 'Rescue', zh: '消防救援' },
       { id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' },
       { id: 'trucks', icon: '🚛', en: 'Trucks', zh: '貨運卡車' },

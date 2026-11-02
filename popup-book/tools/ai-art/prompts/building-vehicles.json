@@ -1,0 +1,13 @@
+{
+  "name": "k1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a construction site. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, lights and hoses. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "pump": "A single concrete pump truck: a white cab at the front, a long truck chassis with many black tyres, and on top a big orange concrete boom made of three long straight flat sections folded back on themselves in a neat flat zig-zag stack lying horizontally along the whole length of the truck, a grey concrete pipe running along the boom, a grey concrete hopper at the very back, folded outrigger legs",
+    "piledriver": "A single crawler pile driving rig: a yellow body with a cab on dark grey caterpillar tracks, a very tall straight vertical steel leader mast standing upright at the front, a heavy grey hammer block hanging high on the mast above a long grey steel pile",
+    "crane": "A single yellow mobile truck crane: a long truck with many black tyres, a small cab, and a long thick telescopic crane boom lying almost flat along the top of the truck pointing forward, a hook hanging at the tip",
+    "boomlift": "A single orange articulated boom lift aerial work platform on four big black tyres, the boom folded down low over the base, a small platform basket at the front with a worker in a yellow hard hat standing in it",
+    "skidsteer": "A single small yellow skid steer loader with a big front bucket lowered to the ground, a cage cab with a worker in a hard hat, four black tyres"
+  }
+}

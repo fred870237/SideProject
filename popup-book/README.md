@@ -28,6 +28,16 @@
 | Forklift 堆高機 | 把一疊磚頭舉高再放下 |
 | Road Roller 壓路機 | 倒車壓一段路再開回來 |
 
+### 🏢 蓋大樓（Building Site）
+
+| 車子 | 點了會怎樣 |
+|---|---|
+| Concrete Pump Truck 混凝土泵浦車 | 前後左右的支撐腳伸出來踩地，四節手臂一節一節展開拱成大弧，最後一節垂直往下，把混凝土打進大樓的樓板 |
+| Pile Driver 打樁機 | 重錘「咚、咚、咚」把樁打進地裡 |
+| Mobile Crane 吊車 | 伸縮吊臂抬高，吊鉤晃一晃 |
+| Boom Lift 高空作業車 | 手臂抬起來，把籃子裡的工人送到高處 |
+| Skid Steer Loader 小山貓 | 鏟斗舉起來，往前衝一下再倒回來 |
+
 ### 🚒 消防救援（Rescue）
 
 | 車子 | 點了會怎樣 |
@@ -78,6 +88,7 @@ popup-book/
    ├─ art/
    │  ├─ kit.js           # 共用畫圖工具（外框、輪子、車窗、工人…）
    │  ├─ construction.js  # 🏗️ 工地這一頁
+   │  ├─ building.js      # 🏢 蓋大樓這一頁
    │  ├─ rescue.js        # 🚒 消防救援這一頁
    │  ├─ farm.js          # 🚜 農場這一頁
    │  ├─ trucks.js        # 🚛 貨運卡車這一頁

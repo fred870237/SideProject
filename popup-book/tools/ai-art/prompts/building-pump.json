@@ -1,0 +1,9 @@
+{
+  "name": "k3",
+  "seeds": [7, 8, 61, 62, 63, 64, 65, 66],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a construction site. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes and hoses. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "pump": "A single long heavy truck with a white cab and four axles of black tyres. Mounted on the truck is a giant folding orange robot arm: a short round grey turret base just behind the cab, and three long thin straight orange arm sections folded flat on top of each other like a closed pocket knife, lying horizontally over the whole length of the truck, each section with a grey pipe on its side and big hydraulic pistons at the joints. At the very back a small grey funnel. Red and white striped support legs folded against the sides. There is NO drum, NO tank, NO barrel and NO hook on this truck"
+  }
+}

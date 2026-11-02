@@ -1,0 +1,9 @@
+{
+  "name": "k1bg",
+  "seeds": [51, 52, 53, 54],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A building site seen from the side with NO vehicles and NO people: on the right half a tall unfinished grey concrete building frame with five open floors made of concrete columns and floor slabs, no walls yet, a little scaffolding on one side, the flat roof slab on top has low wooden formwork edges; on the left a small blue site office container and a stack of steel bars; a flat light brown dirt ground across the whole bottom third of the picture. The upper part of the picture is plain white paper (no sky colour)."
+  }
+}
