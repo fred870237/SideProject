@@ -1,0 +1,9 @@
+{
+  "name": "f1bg",
+  "seeds": [51, 52, 53, 54],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A sunny farm seen from the side with NO vehicles, NO people and NO animals: on the left a big red wooden barn with white trim and a tall round silo, gentle rolling green hills and a golden wheat field in the middle distance, a white wooden fence, and a flat light brown dirt road across the whole bottom third of the picture. The upper part of the picture is plain white paper (no sky colour)."
+  }
+}

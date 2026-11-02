@@ -36,6 +36,18 @@
 | Police Motorcycle 警用機車 | 翹孤輪往前衝，再倒回來 |
 | Fire Hydrant 消防栓 | 搖一搖，兩邊噴出水來 |
 
+### 🚜 農場（Farm）
+
+| 車子 | 點了會怎樣 |
+|---|---|
+| Tractor 拖拉機 | 排氣管噗噗冒煙，往前開再倒回來 |
+| Combine Harvester 聯合收割機 | 前面的撥禾輪轉起來，後面的管子噴出穀子 |
+| Hay Baler 牧草打捆機 | 後門往上打開，滾出一捆圓圓的牧草 |
+| Pickup Truck 小貨車 | 叭叭兩聲，車上的牧草跳一跳，開出去再倒回來 |
+| Quad Bike 四輪越野車 | 前輪抬起來跳一下，往前衝再倒回來 |
+| Crop Duster 農藥噴灑機 | 一路噴霧從右邊飛出去，再從左邊飛回來 |
+| Windmill 風車 | 風扇轉三圈 |
+
 ## 檔案結構
 
 ```
@@ -51,6 +63,7 @@ popup-book/
    │  ├─ kit.js           # 共用畫圖工具（外框、輪子、車窗、工人…）
    │  ├─ construction.js  # 🏗️ 工地這一頁
    │  ├─ rescue.js        # 🚒 消防救援這一頁
+   │  ├─ farm.js          # 🚜 農場這一頁
    │  └─ img/<頁面 id>/    # 每一頁的 AI 插畫（WebP，去背）
    ├─ sw.js               # 離線快取（網路優先）
    ├─ manifest.webmanifest
@@ -60,7 +73,7 @@ popup-book/
 
 ## 新增一頁
 
-1. 在 `themes.js` 對應主題的 `pages` 加一筆（例如 `{ id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' }`，交通工具這本已經預留好了）
+1. 在 `themes.js` 對應主題的 `pages` 加一筆（例如 `{ id: 'trucks', icon: '🚛', en: 'Trucks', zh: '貨運卡車' }`，交通工具這本已經預留好了）
 2. 新增 `art/<頁面 id>.js`，照 `construction.js` 或 `rescue.js` 的寫法用 `SCENES['<頁面 id>'] = { ... }` 畫場景、寫每台車的動作
 3. 在 `index.html` 加上 `<script src="art/<頁面 id>.js"></script>`，在 `sw.js` 的 `CORE` 加上檔名（包含 `art/img/<頁面 id>/` 的圖片），並把 `CACHE` 版本號 +1
 4. 插畫照 `tools/ai-art/README.md` 的流程生成

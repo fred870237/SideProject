@@ -1,0 +1,15 @@
+{
+  "name": "f1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about farm vehicles. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as bolts, pipes, grilles, lights and hoses. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "tractor": "A single red farm tractor with a huge black rear tyre with chunky treads and a small front tyre, yellow hubs, a tall exhaust pipe, a glass cab with a farmer in a straw hat and blue overalls",
+    "combine": "A single big yellow combine harvester with a wide red rotating reel at the front, a long unloading pipe folded along its side, a glass cab on top with a farmer, big black tyres",
+    "quad": "A single small red quad bike all-terrain vehicle with four chunky black tyres, ridden by a farmer in a straw hat",
+    "pickup": "A single blue farm pickup truck with three golden square hay bales in its open back, black tyres with silver hubs, a farmer driving",
+    "baler": "A single orange round hay baler machine with a big rounded back door hinged at the top, two black tyres and a towing bar pointing forward. No tractor, no driver",
+    "windmill": "A single tall farm windmill water pump: a grey metal lattice tower and on top a round fan wheel of many red and white blades with a tail vane, seen from the front so the fan wheel is a full circle. Not a vehicle, no wheels",
+    "plane": "A single small yellow crop duster biplane flying, propeller at the front, two stacked wings, a pilot in an open cockpit, a spray bar under the lower wing"
+  }
+}

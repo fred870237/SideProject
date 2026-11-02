@@ -1,0 +1,9 @@
+{
+  "tractor": ["D:/AI/ComfyUI/output/f1/tractor_61_00001_.png", false],
+  "combine": ["D:/AI/ComfyUI/output/f1/combine_62_00001_.png", true],
+  "quad": ["D:/AI/ComfyUI/output/f1/quad_7_00001_.png", false],
+  "pickup": ["D:/AI/ComfyUI/output/f1/pickup_7_00001_.png", false],
+  "baler": ["D:/AI/ComfyUI/output/f1/baler_7_00001_.png", false],
+  "windmill": ["D:/AI/ComfyUI/output/f1/windmill_61_00001_.png", false, [], {"erode": false}],
+  "plane": ["D:/AI/ComfyUI/output/f1/plane_7_00001_.png", true]
+}
