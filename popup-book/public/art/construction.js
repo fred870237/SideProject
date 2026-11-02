@@ -1,5 +1,5 @@
 // 🏗️ 工地：點車子會唸英文名字，然後像機關書一樣動起來
-// 版面 1600×1000（左右兩頁，中間是書縫）；後排地面 y = 720，前排地面 y = 965～975
+// 版面 1600×1000（左右兩頁，中間是書縫）；車子前後錯開、大小不一、有的斜斜的（r），不要排成兩排整齊的
 // 車子和背景是 AI 生成的圖（art/img/construction/*.webp，來源和做法見 popup-book/README.md）
 // 會動的零件：用 clipPath 從同一張圖裁出來單獨轉動，車身那張圖再把同一塊挖掉（hole）
 // 每台車的 art 先 translate(0, -圖高)，所以零件、轉軸、clipPath 都直接用「圖片像素座標」；hint 用的是地面 = 0 的座標
@@ -41,7 +41,7 @@ function craneDraw(c) {
 }
 
 const towerCrane = {
-  id: 'crane', en: 'Tower Crane', zh: '塔式起重機', x: 1092, y: 720, s: 0.7,
+  id: 'crane', en: 'Tower Crane', zh: '塔式起重機', x: 1110, y: 700, s: 0.74,
   hint: [600, -444],
   art(p) {
     return '<g transform="translate(0 -884)">' + IMG('crane', 706, 884) +
@@ -87,7 +87,7 @@ const towerCrane = {
 // 圖 876×506
 const MIXER_DRUM = PATH([[22, 0], [516, 0], [516, 296], [132, 300], [96, 244], [42, 152], [18, 60]]);
 const mixer = {
-  id: 'mixer', en: 'Cement Mixer', zh: '水泥攪拌車', x: 40, y: 720, s: 0.375,
+  id: 'mixer', en: 'Cement Mixer', zh: '水泥攪拌車', x: 40, y: 705, s: 0.36,
   hint: [280, -356],
   pivots: { drum: [270, 150] },
   art(p) {
@@ -111,7 +111,7 @@ const mixer = {
 // 圖 840×552
 const DOZER_BLADE = PATH([[632, 238], [840, 238], [840, 552], [632, 552]]);
 const bulldozer = {
-  id: 'dozer', en: 'Bulldozer', zh: '推土機', x: 420, y: 720, s: 0.344,
+  id: 'dozer', en: 'Bulldozer', zh: '推土機', x: 520, y: 742, s: 0.36, r: -10,
   hint: [740, -160],
   art(p) {
     return MOUND(850, 1070, 120, `${p}-pile`) +
@@ -137,22 +137,24 @@ const bulldozer = {
 
 // ---------- 流動廁所：門打開，裡面的工人揮手說 Hello ----------
 // 圖 361×565；門在左邊那一面，鉸鍊在左側
+// 裡面的工人也是 AI 生成的圖（worker.webp 375×778，舉起來的手在左上角），揮手的那隻手臂另外裁出來轉
 const TOILET_DOOR = PATH([[22, 88], [200, 88], [200, 527], [22, 527]]);
+const WORKER_ARM = PATH([[0, 40], [112, 40], [126, 210], [112, 292], [58, 282], [28, 200]]);
+const WK = { x: 22, y: 158, s: 0.475 }; // 工人在廁所裡的位置和大小
 const toilet = {
-  id: 'toilet', en: 'Portable Toilet', zh: '流動廁所', x: 1000, y: 720, s: 0.3,
+  id: 'toilet', en: 'Portable Toilet', zh: '流動廁所', x: 1450, y: 800, s: 0.26,
   hint: [110, -265],
-  pivots: { door: [22, 300], arm: [150, 300] },
+  pivots: { door: [22, 300], arm: [WK.x + 100 * WK.s, WK.y + 240 * WK.s] },
   art(p) {
+    const wk = (clip) => `<image href="${SRC('worker')}" width="375" height="778" clip-path="url(#${clip})"/>`;
     return '<g transform="translate(0 -565)">' +
       CLIP(`${p}-cd`, TOILET_DOOR) + HOLE(`${p}-cb`, 361, 565, TOILET_DOOR) +
       IMG('toilet', 361, 565, `${p}-cb`) +
       '<rect x="22" y="88" width="178" height="439" fill="#1d3550"/>' +
-      // 裡面的工人（扁平色塊）
-      '<rect x="58" y="272" width="104" height="255" rx="24" fill="#ff7a1a"/><rect x="58" y="380" width="104" height="22" fill="#ffe04a"/>' +
-      '<circle cx="110" cy="222" r="44" fill="#f2c29b"/><circle cx="96" cy="224" r="5" fill="#2d2a3a"/><circle cx="124" cy="224" r="5" fill="#2d2a3a"/>' +
-      '<path d="M98,244 Q110,254 122,244" stroke="#2d2a3a" stroke-width="4" fill="none" stroke-linecap="round"/>' +
-      '<path d="M62,210 a48,46 0 0,1 96,0Z" fill="#ffcc1a"/><rect x="54" y="204" width="112" height="12" rx="6" fill="#e0a800"/>' +
-      `<g id="${p}-arm"><path d="M150,300 L198,196" stroke="#ff7a1a" stroke-width="28" stroke-linecap="round"/><circle cx="202" cy="186" r="18" fill="#f2c29b"/></g>` +
+      `<g transform="translate(${WK.x} ${WK.y}) scale(${WK.s})">` +
+        CLIP(`${p}-wa`, WORKER_ARM) + HOLE(`${p}-wb`, 375, 778, WORKER_ARM) + wk(`${p}-wb`) +
+      '</g>' +
+      `<g id="${p}-arm"><g transform="translate(${WK.x} ${WK.y}) scale(${WK.s})">${wk(`${p}-wa`)}</g></g>` +
       `<g id="${p}-door">${IMG('toilet', 361, 565, `${p}-cd`)}</g>` +
       '</g>';
   },
@@ -175,7 +177,7 @@ const toilet = {
 const EXC_ARM = PATH([[380, 338], [382, 300], [390, 250], [500, 78], [620, 42], [790, 0], [824, 0], [824, 250], [640, 250], [640, 300], [462, 338]]);
 const EXC_BUCKET = PATH([[640, 250], [824, 250], [824, 365], [640, 365]]);
 const excavator = {
-  id: 'excavator', en: 'Excavator', zh: '挖土機', x: 20, y: 975, s: 0.567,
+  id: 'excavator', en: 'Excavator', zh: '挖土機', x: 10, y: 965, s: 0.62,
   hint: [730, -211],
   pivots: { arm: [415, 322], bucket: [806, 245], pile: [730, 0] },
   art(p) {
@@ -208,7 +210,7 @@ const DUMP_BED = PATH([[0, 0], [706, 0], [706, 150], [612, 158], [548, 172], [54
 const DUMP_LOAD = PATH([[128, 0], [592, 0], [586, 100], [480, 110], [470, 138], [138, 152]]);
 const DUMP_PIVOT = [90, 300];
 const dumpTruck = {
-  id: 'dump', en: 'Dump Truck', zh: '砂石車', x: 530, y: 975, s: 0.44,
+  id: 'dump', en: 'Dump Truck', zh: '砂石車', x: 560, y: 985, s: 0.5, r: -2,
   hint: [300, -394],
   pivots: { bed: DUMP_PIVOT },
   art(p) {
@@ -249,7 +251,7 @@ const dumpTruck = {
 // 圖 720×600；貨叉＋磚頭往上移，原本被擋住的門架用深灰色補起來
 const FORK = PATH([[483, 328], [705, 328], [705, 470], [722, 470], [722, 506], [483, 506]]);
 const forklift = {
-  id: 'forklift', en: 'Forklift', zh: '堆高機', x: 960, y: 975, s: 0.4,
+  id: 'forklift', en: 'Forklift', zh: '堆高機', x: 1010, y: 880, s: 0.38,
   hint: [620, -190],
   art(p) {
     return '<g transform="translate(0 -600)">' +
@@ -268,15 +270,26 @@ const forklift = {
 
 // ---------- 壓路機：倒車壓一段路再開回來 ----------
 // 圖 767×622；後輪用圓形裁出來，跟著車子轉
+// 前面的大滾筒側面是斜著看的橢圓，旁邊緊貼著灰色的滾筒本體，中間又被橘色支架擋住，整塊裁下來轉一定破圖：
+// 所以圖上原本的四顆螺栓已經抹掉（tools/ai-art/erasebolts.py），改由程式畫四顆螺栓繞著輪軸轉，
+// 軌道照透視壓扁成橢圓；支架再疊一張蓋在最上面，螺栓轉到後面會被支架擋住
 const ROLLER_WHEEL = CIRCLE(115, 505, 100);
+const ROLLER_BOLTS = [0, 90, 180, 270].map((a) => {
+  const x = 50 * Math.cos((a * Math.PI) / 180), y = 50 * Math.sin((a * Math.PI) / 180);
+  return `<circle cx="${x}" cy="${y}" r="8" fill="#e35a26"/><circle cx="${x + 1.5}" cy="${y + 1.5}" r="3.5" fill="#8a2000"/>`;
+}).join('');
+const ROLLER_YOKE = PATH([[466, 298], [566, 298], [572, 332], [562, 522], [526, 540], [488, 524], [476, 418]]);
 const roller = {
-  id: 'roller', en: 'Road Roller', zh: '壓路機', x: 1290, y: 975, s: 0.354,
+  id: 'roller', en: 'Road Roller', zh: '壓路機', x: 1280, y: 990, s: 0.37,
   hint: [380, -300],
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -622)">` +
-      CLIP(`${p}-cw`, ROLLER_WHEEL) + HOLE(`${p}-cb`, 767, 622, ROLLER_WHEEL) +
+      CLIP(`${p}-cw`, ROLLER_WHEEL) + CLIP(`${p}-cy`, ROLLER_YOKE) +
+      HOLE(`${p}-cb`, 767, 622, ROLLER_WHEEL) +
       IMG('roller', 767, 622, `${p}-cb`) +
       `<g id="${p}-w" class="wheel" data-cx="115" data-cy="505">${IMG('roller', 767, 622, `${p}-cw`)}</g>` +
+      `<g transform="translate(552 490) scale(0.72 1)"><g id="${p}-d" class="wheel" data-cx="0" data-cy="0">${ROLLER_BOLTS}</g></g>` +
+      IMG('roller', 767, 622, `${p}-cy`) +
       '</g></g>';
   },
   async act(c) {
@@ -291,10 +304,12 @@ SCENES.construction = {
   h: 1000,
   bg: () => `
     <image href="${SRC('bg')}" width="1600" height="1000"/>
+    <path d="M440,775 Q560,670 720,660 Q860,670 960,775Z" fill="#a8743f"/>
+    <path d="M500,775 Q600,705 720,698 Q830,705 900,775Z" fill="#8c5c30"/>
     <text x="56" y="98" font-size="60" font-weight="900" fill="${LINE}">Construction Site</text>
     <text x="58" y="148" font-size="38" font-weight="900" fill="${LINE}" opacity=".7">工地</text>
   `,
-  // 先畫後排，再畫前排（後畫的會蓋在上面）
-  items: [towerCrane, mixer, bulldozer, toilet, excavator, dumpTruck, forklift, roller],
+  // 先畫後排，再畫前排（後畫的會蓋在上面）；推土機斜斜地爬在中間的大土堆上，挖土機的手臂伸到砂石車上方
+  items: [towerCrane, mixer, bulldozer, toilet, forklift, excavator, dumpTruck, roller],
 };
 }

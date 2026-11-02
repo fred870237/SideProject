@@ -1,0 +1,9 @@
+{
+  "name": "t2",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about trucks. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as bolts, pipes, grilles, lights and mirrors. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "garbagetw": "A single Taiwanese city garbage truck: a short white cab at the front and a big bright yellow rounded compactor body behind it, at the very back a wide open loading hopper with a dark opening where people throw rubbish bags, a small grey loudspeaker horn on top of the cab, orange warning lights, black tyres with silver hubs, a worker in an orange safety vest standing on the rear step"
+  }
+}

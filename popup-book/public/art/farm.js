@@ -32,7 +32,7 @@ const BALE = (r) =>
 
 // ---------- 農藥噴灑機：從右邊飛出去，繞一圈從左邊飛回來，一路噴霧 ----------
 // 圖 642×284；螺旋槳在最右邊，用上下縮放假裝在轉（中間的機鼻不裁）
-const PLANE = { x: 760, y: 260, s: 0.4 };
+const PLANE = { x: 700, y: 230, s: 0.42, r: -6 };
 const plane = {
   id: 'plane', en: 'Crop Duster', zh: '農藥噴灑機', ...PLANE,
   hint: [330, -150],
@@ -65,7 +65,7 @@ const plane = {
 // ---------- 風車：風扇轉起來 ----------
 // 圖 334×684；風扇中心 (165, 162)，用圓形裁出來轉；後面補兩條塔頂的鐵架
 const windmill = {
-  id: 'windmill', en: 'Windmill', zh: '風車', x: 1380, y: 610, s: 0.45,
+  id: 'windmill', en: 'Windmill', zh: '風車', x: 1390, y: 620, s: 0.45,
   hint: [165, -522],
   pivots: { fan: [165, 162] },
   art(p) {
@@ -84,7 +84,7 @@ const windmill = {
 // ---------- 小貨車：叭叭兩聲，車上的牧草跳一跳，開出去再倒回來 ----------
 // 圖 869×451
 const pickup = {
-  id: 'pickup', en: 'Pickup Truck', zh: '小貨車', x: 280, y: 705, s: 0.4,
+  id: 'pickup', en: 'Pickup Truck', zh: '小貨車', x: 250, y: 700, s: 0.4, r: 3,
   hint: [560, -290],
   pivots: { bales: [210, 240] },
   art(p) {
@@ -110,7 +110,7 @@ const pickup = {
 // 圖 731×635；後門在左邊，鉸鍊在上面；門後面用深色補上，牧草捆一開始藏在門裡
 const BALER_DOOR = PATH([[70, 70], [150, 30], [245, 22], [262, 40], [238, 120], [226, 210], [236, 300], [252, 382], [160, 384], [78, 372], [62, 250]]);
 const baler = {
-  id: 'baler', en: 'Hay Baler', zh: '牧草打捆機', x: 1010, y: 705, s: 0.32,
+  id: 'baler', en: 'Hay Baler', zh: '牧草打捆機', x: 1000, y: 700, s: 0.32,
   hint: [160, -420],
   pivots: { door: [245, 26] },
   art(p) {
@@ -138,7 +138,7 @@ const baler = {
 // ---------- 四輪越野車：前輪抬起來跳一下，往前衝再倒回來 ----------
 // 圖 713×621
 const quad = {
-  id: 'quad', en: 'Quad Bike', zh: '四輪越野車', x: 1250, y: 975, s: 0.34,
+  id: 'quad', en: 'Quad Bike', zh: '四輪越野車', x: 1260, y: 960, s: 0.36, r: -8,
   hint: [360, -330],
   pivots: { body: [130, 621] },
   art(p) {
@@ -158,13 +158,22 @@ const quad = {
 };
 
 // ---------- 拖拉機：排氣管噗噗冒煙，往前開再倒回來 ----------
-// 圖 928×697；後輪很大，只裁黃色輪框轉（外圈輪胎不是正圓）
+// 圖 928×697；後輪的外圈輪胎是斜著看的（橢圓，不能直接整塊轉）：
+// 黃色輪框照樣裁出來轉，外圈另外畫一圈胎紋（壓扁成同樣的橢圓）跟著轉，看起來就是整個輪胎在滾
+const TREAD = Array.from({ length: 18 }, (_, i) =>
+  `<rect x="-15" y="-192" width="30" height="46" rx="7" fill="#4a4955" transform="rotate(${i * 20}) skewX(-14)"/>`).join('');
 const tractor = {
-  id: 'tractor', en: 'Tractor', zh: '拖拉機', x: 40, y: 975, s: 0.4,
+  id: 'tractor', en: 'Tractor', zh: '拖拉機', x: 30, y: 985, s: 0.46, r: -5,
   hint: [560, -330],
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -697)">` +
-      cut(p, 'tractor', 928, 697, {}, { w1: [205, 440, 98], w2: [826, 506, 104] }) +
+      HOLE(`${p}-cb`, 928, 697, CIRCLE(205, 440, 98) + CIRCLE(826, 506, 104)) + IMG('tractor', 928, 697, `${p}-cb`) +
+      `<clipPath id="${p}-ct"><ellipse cx="205" cy="440" rx="140" ry="188"/></clipPath>` +
+      `<g clip-path="url(#${p}-ct)"><g transform="translate(205 440) scale(0.74 1)">` +
+        `<g id="${p}-tread" class="wheel" data-cx="0" data-cy="0">${TREAD}</g></g></g>` +
+      CLIP(`${p}-cw1`, CIRCLE(205, 440, 98)) + CLIP(`${p}-cw2`, CIRCLE(826, 506, 104)) +
+      `<g id="${p}-w1" class="wheel" data-cx="205" data-cy="440">${IMG('tractor', 928, 697, `${p}-cw1`)}</g>` +
+      `<g id="${p}-w2" class="wheel" data-cx="826" data-cy="506">${IMG('tractor', 928, 697, `${p}-cw2`)}</g>` +
     '</g></g>';
   },
   async act(c) {
@@ -185,7 +194,7 @@ const tractor = {
 // ---------- 聯合收割機：前面的撥禾輪轉起來，後面的管子噴出穀子 ----------
 // 圖 890×509；撥禾輪中心 (790, 355)
 const combine = {
-  id: 'combine', en: 'Combine Harvester', zh: '聯合收割機', x: 580, y: 975, s: 0.55,
+  id: 'combine', en: 'Combine Harvester', zh: '聯合收割機', x: 600, y: 980, s: 0.6,
   hint: [790, -154],
   pivots: { body: [445, 509], reel: [790, 355] },
   art(p) {

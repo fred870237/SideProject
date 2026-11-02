@@ -1,18 +1,18 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v9';
+const CACHE = 'popup-book-v13';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
   ...self.VOICES.map((s) => `audio/en/${s}.mp3`),
   'art/kit.js', 'art/construction.js', 'art/rescue.js', 'art/farm.js', 'art/trucks.js',
-  ...['bg', 'crane', 'mixer', 'bulldozer', 'toilet', 'excavator', 'dumptruck', 'forklift', 'roller']
+  ...['bg', 'crane', 'mixer', 'bulldozer', 'toilet', 'excavator', 'dumptruck', 'forklift', 'roller', 'worker']
     .map((n) => `art/img/construction/${n}.webp`),
-  ...['bg', 'helicopter', 'ambulance', 'towtruck', 'motorbike', 'police', 'firetruck', 'hydrant']
+  ...['bg', 'helicopter', 'ambulance', 'towtruck', 'motorbike', 'police', 'firetruck', 'hydrant', 'rescuer']
     .map((n) => `art/img/rescue/${n}.webp`),
   ...['bg', 'plane', 'windmill', 'pickup', 'baler', 'tractor', 'combine', 'quad']
     .map((n) => `art/img/farm/${n}.webp`),
-  ...['bg', 'semi', 'garbage', 'van', 'icecream', 'carrier', 'monster', 'sweeper']
+  ...['bg', 'semi', 'garbage', 'van', 'icecream', 'carrier', 'monster', 'sweeper', 'courier']
     .map((n) => `art/img/trucks/${n}.webp`),
   'icon.svg', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
 ];

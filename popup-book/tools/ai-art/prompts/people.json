@@ -1,0 +1,12 @@
+{
+  "name": "p1",
+  "seeds": [7, 8, 61, 62],
+  "w": 768, "h": 1024,
+  "style": "Flat 2D illustration of a character from a children's picture book about vehicles. {subject}, the whole body visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Friendly simple face, sturdy slightly chunky proportions. No green anywhere on the subject. No logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "worker": "A single smiling construction worker standing facing the viewer and waving hello with his right hand raised high above his shoulder, yellow hard hat, orange safety vest with yellow stripes over a blue shirt, blue work trousers, brown boots",
+    "courier": "A single smiling delivery man standing facing the viewer holding a brown cardboard parcel in both hands in front of his chest, teal uniform shirt, dark blue trousers, brown cap",
+    "rescuer": "A single smiling rescue worker in a red helmet and red and white rescue suit sitting inside a small orange metal rescue basket, waving one hand, the basket has a rope loop on top",
+    "parcel": "A single brown cardboard delivery parcel box taped with beige tape, seen slightly from the front"
+  }
+}

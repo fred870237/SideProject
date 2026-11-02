@@ -40,7 +40,64 @@ function loadClip(slug) {
     .then((b) => new Promise((ok, bad) => c.decodeAudioData(b, ok, bad)))
     .catch((err) => { delete clipBufs[slug]; throw err; }));
 }
+// ---------- 合成的音效（警笛、垃圾車音樂）：不用音檔，Web Audio 現場產生 ----------
+let sfxNodes = [];
+function stopSfx() {
+  sfxNodes.forEach((n) => { try { n.stop(); } catch { /* 已經停了 */ } });
+  sfxNodes = [];
+}
+// 音量包絡：淡入、維持、淡出
+function envelope(c, t0, dur, vol) {
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(vol, t0 + 0.06);
+  g.gain.setValueAtTime(vol, Math.max(t0 + 0.06, t0 + dur - 0.12));
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  return g;
+}
+// 警笛：高低兩個音交替
+//   ambulance：台灣救護車「歐咿、歐咿」，低音先、每個音約 0.45 秒
+//   police：警車「嗚—嗚—嗚—」，高低音很快地交替（每個音約 0.2 秒），音跟音之間有一點滑音
+function siren(kind, ms) {
+  const c = audioCtx();
+  if (!c) return;
+  const t0 = c.currentTime + 0.03, dur = ms / 1000;
+  const [first, second, step, glide] = kind === 'police' ? [1080, 700, 0.21, 0.05] : [760, 960, 0.45, 0.025];
+  const osc = c.createOscillator();
+  osc.type = 'sawtooth';
+  for (let t = 0, i = 0; t < dur; t += step, i++) osc.frequency.setTargetAtTime(i % 2 ? second : first, t0 + t, glide);
+  const lp = c.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.value = 2400;
+  osc.connect(lp).connect(envelope(c, t0, dur, 0.08)).connect(c.destination);
+  osc.start(t0);
+  osc.stop(t0 + dur + 0.05);
+  sfxNodes.push(osc);
+}
+// 用方波彈一段旋律（像垃圾車喇叭放的電子音樂）：notes = [[第幾拍, MIDI 音高], ...]，每個音延續到下一個音開始
+function playTune(notes, bpm, endBeats = 2) {
+  const c = audioCtx();
+  if (!c) return 0;
+  const beat = 60 / bpm, t0 = c.currentTime + 0.05;
+  notes.forEach(([b, m], i) => {
+    const next = notes[i + 1] ? notes[i + 1][0] : b + endBeats;
+    const start = t0 + b * beat, dur = Math.max(0.08, (next - b) * beat - 0.04);
+    const osc = c.createOscillator();
+    osc.type = 'square';
+    osc.frequency.value = 440 * 2 ** ((m - 69) / 12);
+    const lp = c.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 1800;
+    osc.connect(lp).connect(envelope(c, start, dur, 0.06)).connect(c.destination);
+    osc.start(start);
+    osc.stop(start + dur + 0.02);
+    sfxNodes.push(osc);
+  });
+  return (notes[notes.length - 1][0] + endBeats) * beat * 1000; // 整段要幾毫秒
+}
+
 function stopClips() {
+  stopSfx();
   clipGen++;
   clipSrcs.forEach((s) => { try { s.stop(); } catch { /* 已經停了 */ } });
   clipSrcs = [];
@@ -255,11 +312,13 @@ function showScene(theme, page) {
             </defs>
             <g id="root">
               ${scene.bg()}
-              ${scene.items.map((it) => `<g id="${it.id}" class="item" transform="translate(${it.x} ${it.y}) scale(${it.s || 1})">
+              ${scene.items.map((it) => `<g id="${it.id}" class="item" transform="${baseXf(it)}">
                 ${it.art(it.id)}
                 ${it.hint ? `<circle class="hint" cx="${it.hint[0]}" cy="${it.hint[1]}" r="${18 / (it.s || 1)}" style="stroke-width:${6 / (it.s || 1)}"/>` : ''}
               </g>`).join('')}
               ${scene.front ? scene.front() : ''}
+              <g id="tags">${scene.items.map((it) => `<text class="tag" data-for="${it.id}">${it.en.toLowerCase()}</text>`).join('')}</g>
+              <rect id="dim" width="${scene.w}" height="${scene.h}" opacity="0" pointer-events="none"/>
               <g id="fx"></g>
               <rect x="${scene.w / 2 - 30}" y="0" width="60" height="${scene.h}" fill="url(#fold)" pointer-events="none"/>
             </g>
@@ -276,23 +335,90 @@ function showScene(theme, page) {
     const el = document.getElementById(it.id);
     const c = makeCtx(it, el, fx);
     if (it.setup) it.setup(c);
-    el.addEventListener('click', () => play(it, el, c));
+    el.addEventListener('click', () => play(it, el, c, scene));
   });
+  placeTags(scene);
 }
 
-// 點一台車：唸英文名字、出現名牌，然後動起來（動作還沒做完再點，只唸名字）
-async function play(it, el, c) {
+// 車子在場景裡的位置：可以有傾斜角度 r（例如停在土堆上斜斜的）
+const baseXf = (it) => `translate(${it.x} ${it.y}) rotate(${it.r || 0}) scale(${it.s || 1})`;
+
+// 英文小標籤（像書上印的小字）：預設放在車子正下方，it.tag = [x, y] 可以指定場景座標
+function placeTags(scene) {
+  const root = document.getElementById('root');
+  scene.items.forEach((it) => {
+    const t = root.querySelector(`.tag[data-for="${it.id}"]`);
+    let [x, y] = it.tag || [];
+    if (it.tag === undefined) {
+      const b = sceneBox(document.getElementById(it.id), root);
+      x = (b.x0 + b.x1) / 2;
+      y = Math.min(scene.h - 14, b.y1 + 28);
+    }
+    t.setAttribute('x', x);
+    t.setAttribute('y', y);
+  });
+}
+// 元素在場景座標裡的外框
+function sceneBox(el, root) {
+  const b = el.getBBox();
+  const m = root.getCTM().inverse().multiply(el.getCTM());
+  const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]]
+    .map(([x, y]) => new DOMPoint(x, y).matrixTransform(m));
+  return {
+    x0: Math.min(...pts.map((p) => p.x)), x1: Math.max(...pts.map((p) => p.x)),
+    y0: Math.min(...pts.map((p) => p.y)), y1: Math.max(...pts.map((p) => p.y)),
+  };
+}
+
+// 焦點模式：點到的車子轉正、放大移到畫面中間，其他東西變暗，在前面做動作，做完再回原位
+// 從原位到中間的過程中，車子（外框中心）沿直線移動，同時轉正、放大
+async function focus(it, el, scene, into) {
+  const root = document.getElementById('root');
+  const dim = document.getElementById('dim');
+  const fxLayer = document.getElementById('fx');
+  // it.box = [x, y, 寬, 高]（地面 = 0 的座標）可以指定要放大的範圍；沒指定就用整台車的外框
+  const b = it.box ? { x: it.box[0], y: it.box[1], width: it.box[2], height: it.box[3] } : el.getBBox();
+  const bc = [b.x + b.width / 2, b.y + b.height / 2];
+  const s0 = it.s || 1, r0 = it.r || 0, rad = (r0 * Math.PI) / 180;
+  const c0 = [it.x + s0 * (Math.cos(rad) * bc[0] - Math.sin(rad) * bc[1]), it.y + s0 * (Math.sin(rad) * bc[0] + Math.cos(rad) * bc[1])];
+  const s1 = Math.min(s0 * 3.5, Math.max(s0, Math.min((scene.w * 0.86) / b.width, (scene.h * 0.78) / b.height)));
+  const c1 = [scene.w / 2, scene.h * 0.54];
+  const xf = (t) => `translate(${lerp(c0[0], c1[0], t)} ${lerp(c0[1], c1[1], t)}) rotate(${lerp(r0, 0, t)}) scale(${lerp(s0, s1, t)}) translate(${-bc[0]} ${-bc[1]})`;
+  if (into) {
+    el._home = el.nextSibling; // 記住原本的前後順序
+    root.insertBefore(el, fxLayer); // 移到最上層（變暗的那一層上面）
+  }
+  await tween(into ? 600 : 550, (t) => {
+    const k = into ? t : 1 - t;
+    el.setAttribute('transform', xf(k));
+    dim.setAttribute('opacity', (k * 0.55).toFixed(3));
+  });
+  if (!into) {
+    el.setAttribute('transform', baseXf(it));
+    root.insertBefore(el, el._home);
+  }
+}
+
+// 點一台車：唸英文名字、出現名牌，跑到前面放大，然後動起來（動作還沒做完再點，只唸名字）
+async function play(it, el, c, scene) {
+  const busy = document.querySelector('.item[data-busy]');
+  if (busy && busy !== el) return; // 別台車正在前面表演，點到後面變暗的車子不理它
   speak(it.en);
-  showLabel(it, el);
-  if (el.dataset.busy) return;
-  el.dataset.busy = '1';
+  if (busy) { showLabel(it, el); return; }
+  el.dataset.busy = 'focus';
   el.querySelector('.hint')?.remove();
-  await wait(350);
+  // focus: false 的車子在原地表演（例如消防車要對著背景裡著火的公寓噴水，放大以後就看不到公寓了）
+  const zoom = it.focus !== false;
   try {
+    if (zoom) await focus(it, el, scene, true);
+    showLabel(it, el);
+    await wait(zoom ? 150 : 350);
     await it.act(c);
+    if (zoom) await wait(350);
   } catch (err) {
     console.error(err);
   } finally {
+    if (zoom) await focus(it, el, scene, false);
     delete el.dataset.busy;
   }
 }
@@ -444,6 +570,7 @@ function route() {
   const [themeId, pageId] = location.hash.replace(/^#\/?/, '').split('/');
   const theme = THEMES.find((t) => t.id === themeId);
   const page = theme && theme.pages.find((p) => p.id === pageId);
+  stopSfx(); // 換頁的時候停掉還在響的警笛、垃圾車音樂
   if (page && isReady(page)) {
     const last = shown;
     const oldSvg = last && last.theme === theme && last.page && last.page !== page ? document.getElementById('scene') : null;

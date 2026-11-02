@@ -41,17 +41,15 @@ const WATER = '#6ec3ff';
 // ---------- 救援直升機：螺旋槳轉起來，放下救援吊籃再收回來 ----------
 // 圖 783×366；主旋翼是側面看的一條線，用左右縮放假裝在轉
 const heli = {
-  id: 'heli', en: 'Rescue Helicopter', zh: '救援直升機', x: 540, y: 380, s: 0.4,
+  id: 'heli', en: 'Rescue Helicopter', zh: '救援直升機', x: 620, y: 330, s: 0.46, r: -8,
   hint: [430, -230],
-  pivots: { rotor: [436, 58], tail: [55, 62] },
+  pivots: { rotor: [436, 58], tail: [55, 62], basket: [430, 300] },
+  box: [0, -366, 783, 716], // 焦點模式的範圍要包含放下來的吊籃（300 + 190 + 226）
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -366)">` +
       `<line id="${p}-rope" x1="430" y1="250" x2="430" y2="300" stroke="#3a3f4a" stroke-width="8"/>` +
-      `<g id="${p}-basket" opacity="0">` +
-        '<circle cx="430" cy="282" r="30" fill="#f2c29b"/><path d="M398,276 a32,32 0 0,1 64,0Z" fill="#e2302a"/>' +
-        '<circle cx="420" cy="284" r="4" fill="#2d2a3a"/><circle cx="440" cy="284" r="4" fill="#2d2a3a"/>' +
-        '<path d="M370,300 H490 L476,360 H384Z" fill="#ff8a1a"/><rect x="370" y="300" width="120" height="16" fill="#d96a00"/>' +
-      '</g>' +
+      // 吊籃裡的救難員（AI 生成的 rescuer.webp 489×752，頂端的吊環在 (232, 8)），吊環掛在繩子末端 (430, 300)
+      `<g id="${p}-basket" opacity="0"><image href="${SRC('rescuer')}" x="${430 - 232 * 0.3}" y="${300 - 8 * 0.3}" width="${489 * 0.3}" height="${752 * 0.3}"/></g>` +
       cut(p, 'helicopter', 783, 366, { rotor: RECT(85, 36, 783, 80), tail: CIRCLE(55, 62, 52) }) +
     '</g></g>';
   },
@@ -66,7 +64,7 @@ const heli = {
     const upd = () => rope.setAttribute('y2', 300 + c.get('basket').ty);
     await c.anim(700, { body: { ty: -60 } });
     c.set('basket', { o: 1 });
-    await c.anim(1300, { basket: { ty: 380 } }, upd);
+    await c.anim(1300, { basket: { ty: 190 } }, upd); // 焦點模式會放大，放太長吊籃會跑出畫面
     for (let i = 0; i < 3; i++) {
       await c.anim(200, { basket: { r: 4 } });
       await c.anim(200, { basket: { r: -4 } });
@@ -82,7 +80,7 @@ const heli = {
 // ---------- 救護車：警示燈閃，開出去再倒回來 ----------
 // 圖 919×440
 const ambulance = {
-  id: 'ambulance', en: 'Ambulance', zh: '救護車', x: 480, y: 712, s: 0.36,
+  id: 'ambulance', en: 'Ambulance', zh: '救護車', x: 430, y: 735, s: 0.4,
   hint: [440, -280],
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -440)">` +
@@ -92,6 +90,7 @@ const ambulance = {
   },
   async act(c) {
     const lights = flash(c, 'la', 'lb', 9);
+    siren('ambulance', 9 * 360);
     await c.anim(1300, { body: { tx: 420 }, ...c.wheels(400) });
     await c.wait(300);
     await c.anim(1300, { body: { tx: 0 }, ...c.wheels(-400) });
@@ -102,7 +101,7 @@ const ambulance = {
 // ---------- 拖吊車：吊臂舉起來，吊鉤晃一晃 ----------
 // 圖 827×439；吊臂轉軸在後面的支架上，吊鉤掛在吊臂尖端，吊臂轉的時候吊鉤反過來轉，才會一直往下垂
 const towtruck = {
-  id: 'tow', en: 'Tow Truck', zh: '拖吊車', x: 1020, y: 712, s: 0.36,
+  id: 'tow', en: 'Tow Truck', zh: '拖吊車', x: 1060, y: 712, s: 0.34,
   hint: [180, -330],
   pivots: { boom: [340, 180], hook: [20, 60] },
   art(p) {
@@ -132,7 +131,7 @@ const towtruck = {
 // ---------- 警用機車：前輪抬起來（翹孤輪），往前衝一下再回來 ----------
 // 圖 649×528
 const motorbike = {
-  id: 'moto', en: 'Police Motorcycle', zh: '警用機車', x: 30, y: 975, s: 0.32,
+  id: 'moto', en: 'Police Motorcycle', zh: '警用機車', x: 60, y: 990, s: 0.36, r: -6,
   hint: [330, -300],
   pivots: { body: [97, 528] },
   art(p) {
@@ -149,10 +148,10 @@ const motorbike = {
   },
 };
 
-// ---------- 警車：紅藍燈一直閃，喔咿喔咿 ----------
+// ---------- 警車：紅藍燈一直閃，警笛「嗚—嗚—嗚—」 ----------
 // 圖 885×456
 const police = {
-  id: 'police', en: 'Police Car', zh: '警車', x: 270, y: 975, s: 0.42,
+  id: 'police', en: 'Police Car', zh: '警車', x: 230, y: 950, s: 0.46, r: -2,
   hint: [450, -250],
   pivots: { body: [440, 456] },
   art(p) {
@@ -162,9 +161,9 @@ const police = {
   },
   async act(c) {
     const lights = flash(c, 'la', 'lb', 10);
-    await c.wait(700);
-    speak('Wee-woo, wee-woo!', { queue: true });
-    for (let i = 0; i < 6; i++) {
+    await c.wait(300); // 等車名唸完
+    siren('police', 10 * 360 - 300);
+    for (let i = 0; i < 9; i++) {
       await c.anim(150, { body: { sy: 0.97 } });
       await c.anim(150, { body: { sy: 1 } });
     }
@@ -172,8 +171,9 @@ const police = {
   },
 };
 
-// ---------- 消防車：雲梯升起、伸長，噴水把公寓的火澆熄 ----------
+// ---------- 雲梯消防車：雲梯升起、伸長，梯子頂端的水砲噴水把公寓的火澆熄 ----------
 // 圖 896×340；雲梯是圖上方那一條，轉軸在後面；伸長的那一節是同一塊圖，在雲梯裡往前滑
+// 真的雲梯車就是這樣：水帶沿著梯子拉上去，從頂端的噴嘴噴水
 const FT = { x: 720, y: 975, s: 0.7, h: 340 };
 // 場景座標 → 消防車的圖片座標（火在公寓的窗戶上，但要畫在消防車這個零件裡才能一起動）
 const ftLocal = (X, Y) => [(X - FT.x) / FT.s, (Y - FT.y) / FT.s + FT.h];
@@ -184,12 +184,25 @@ const FLAME = (x, y, k, c1, c2) =>
 const [WX, WY] = ftLocal(1354, 437);
 const [WX2, WY2] = ftLocal(1441, 484);
 const WFX = (WX + WX2) / 2;
+// 公寓的一小塊（場景座標 1300～1500, 385～545，著火的窗戶附近）：直接從背景圖裁下來放進消防車這一組
+// 平常跟背景完全重疊看不出來；焦點模式放大時，這塊牆和火會跟著消防車一起出來（裁太大的話消防車就放不大）
+const [AX, AY] = ftLocal(1300, 385);
+const [AX2, AY2] = ftLocal(1500, 545);
+// 雲梯上的水帶（紅色），伸出去那一節的前端有水砲噴嘴，水從噴嘴噴出來
+const HOSE = (x0, x1) => `<path d="M${x0},40 H${x1}" stroke="#c62f2a" stroke-width="11" stroke-linecap="round"/><path d="M${x0},37 H${x1}" stroke="#e8564e" stroke-width="4" stroke-linecap="round"/>`;
+const NOZZLE = '<path d="M598,26 L646,14 L646,30 L598,46Z" fill="#c9a227"/><path d="M598,36 L646,26 L646,30 L598,46Z" fill="#a8851a"/><rect x="586" y="22" width="16" height="28" rx="4" fill="#5a5f6b"/>';
 const firetruck = {
   id: 'fire', en: 'Fire Engine', zh: '消防車', ...FT,
   hint: [300, -315],
+  // 焦點模式放大的範圍：消防車＋那一小塊公寓（巢狀 svg 的 getBBox 會算成整張背景，所以自己指定）
+  box: [0, AY - 340, Math.max(896, AX2), 340 - AY],
   art(p) {
     const ladder = RECT(0, 0, 615, 50);
     return '<g transform="translate(0 -340)">' +
+      // 用巢狀 <svg> 當小視窗（getBBox 只算視窗大小；如果用整張圖加 clip-path，外框會變成整張背景那麼大，焦點模式就放不大）
+      `<svg x="${AX}" y="${AY}" width="${AX2 - AX}" height="${AY2 - AY}" viewBox="1300 385 200 160" preserveAspectRatio="none">` +
+        `<clipPath id="${p}-cw"><rect x="1300" y="385" width="200" height="160" rx="16"/></clipPath>` +
+        `<image href="${SRC('bg')}" width="1600" height="1000" clip-path="url(#${p}-cw)"/></svg>` +
       // 公寓窗戶裡的火（火焰以底部為中心一直在跳）
       `<g id="${p}-flame" data-cx="${WFX}" data-cy="${WY2}">` +
         `<rect x="${WX}" y="${WY}" width="${WX2 - WX}" height="${WY2 - WY}" fill="#ff9a2e"/>` +
@@ -200,7 +213,8 @@ const firetruck = {
       '</g>' +
       HOLE(`${p}-cb`, 896, 340, ladder) + IMG('firetruck', 896, 340, `${p}-cb`) +
       CLIP(`${p}-cl`, ladder) +
-      `<g id="${p}-ladder"><g id="${p}-ext">${IMG('firetruck', 896, 340, `${p}-cl`)}</g>${IMG('firetruck', 896, 340, `${p}-cl`)}</g>` +
+      `<g id="${p}-ladder"><g id="${p}-ext">${IMG('firetruck', 896, 340, `${p}-cl`)}${HOSE(0, 600)}${NOZZLE}</g>` +
+        `${IMG('firetruck', 896, 340, `${p}-cl`)}${HOSE(36, 600)}</g>` +
     '</g>';
   },
   pivots: { ladder: [40, 25] },
@@ -217,7 +231,7 @@ const firetruck = {
       await c.anim(1300, { flame: { o: 0, sy: 0.3 } });
     })();
     for (let i = 0; i < 18; i++) {
-      c.burst('ext', 612, 18, { n: 5, color: WATER, vx: [4.5, 6.5], vy: [-3.4, -2.2], g: 0.14, size: [5, 10], life: 800 });
+      c.burst('ext', 646, 22, { n: 5, color: WATER, vx: [4.5, 6.5], vy: [-3.4, -2.2], g: 0.14, size: [5, 10], life: 800 });
       if (i > 10) c.burst('flame', WFX, WY2 - 80, { n: 2, color: '#c8ccd6', vx: [-0.6, 0.6], vy: [-2.4, -1.2], g: -0.02, size: [12, 20], life: 1100 });
       await c.wait(120);
     }

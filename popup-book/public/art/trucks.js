@@ -31,7 +31,7 @@ const BOX = (x, y, w, h) =>
 // ---------- 聯結車：叭叭兩聲，排氣管冒煙，往前開一小段再倒回來 ----------
 // 圖 874×339；兩根排氣管頂端在 (615, 10)、(680, 10)
 const semi = {
-  id: 'semi', en: 'Semi Truck', zh: '聯結車', x: 20, y: 720, s: 0.55,
+  id: 'semi', en: 'Semi Truck', zh: '聯結車', x: 10, y: 715, s: 0.58,
   hint: [730, -200],
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -339)">${IMG('semi', 874, 339)}</g></g>`;
@@ -49,66 +49,101 @@ const semi = {
   },
 };
 
-// ---------- 垃圾車：把垃圾桶舉起來倒進車斗，再放回地上 ----------
-// 圖 841×485；車斗在左邊（車尾），垃圾桶畫在車尾後面的地上
+// ---------- 垃圾車（台灣的）：放「少女的祈禱」，大家把垃圾袋丟進後面的車斗 ----------
+// 圖 775×518；白色車頭在右，黃色車身，車頂有擴音喇叭；車斗開口在最左邊 (70, 230)
+// 音樂：Bądarzewska《少女的祈禱》（1856，公共領域）的主題，音符從 Wikimedia Commons 的公共領域 MIDI 讀出來，
+// 用 app.js 的 playTune 以方波合成（像垃圾車喇叭的電子音），不是任何錄音
+// [第幾拍, MIDI 音高]：先一串往上的分解和弦，然後「G～ F F Eb｜Eb D C C～」，最後收在 Eb
+const MAIDENS_PRAYER = [
+  [0, 70], [0.33, 75], [0.67, 79], [1, 82], [1.33, 87], [1.67, 91], [3.17, 89], [3.67, 89], [4.42, 87], [4.67, 87], [5, 86], [5.33, 84], [5.67, 84],
+  [8, 62], [8.33, 65], [8.67, 70], [9, 74], [9.33, 77], [9.67, 86], [11.17, 84], [11.67, 84], [12.42, 82], [12.67, 82], [13, 80], [13.33, 79], [13.67, 79],
+  [16, 62], [16.33, 65], [16.67, 68], [17, 74], [17.33, 77], [18, 67], [18.33, 70], [18.67, 75], [19, 79], [19.33, 82],
+  [19.67, 70], [19.83, 72], [20, 70], [20.17, 72], [20.33, 69], [20.5, 70], [20.67, 79], [21.42, 77], [21.67, 75],
+];
+// 垃圾袋（扁平色塊），底部中心在 (0, 0)
+const BAG = (fill, tie) =>
+  `<path d="M-34,0 Q-42,-44 -14,-60 L-8,-74 L8,-74 L14,-60 Q42,-44 34,0Z" fill="${fill}"/>` +
+  `<path d="M-34,0 Q-38,-20 -30,-30 L30,-30 Q38,-20 34,0Z" fill="#000" opacity=".12"/><rect x="-10" y="-80" width="20" height="10" rx="4" fill="${tie}"/>`;
+const BAGS = [['#2f3240', '#ffcf3f'], ['#e9eef2', '#ff6b6b'], ['#ff9fb8', '#2f3240'], ['#7cc4ff', '#2f3240']];
 const garbage = {
-  id: 'garbage', en: 'Garbage Truck', zh: '垃圾車', x: 600, y: 720, s: 0.36,
-  hint: [500, -260],
-  pivots: { bin: [-40, 485] },
+  id: 'garbage', en: 'Garbage Truck', zh: '垃圾車', x: 560, y: 730, s: 0.4,
+  hint: [380, -300],
+  pivots: { body: [400, 518] },
   art(p) {
-    return '<g transform="translate(0 -485)">' + IMG('garbage', 841, 485) +
-      `<g id="${p}-bin">` +
-        '<path d="M-150,335 H-40 L-48,485 H-142Z" fill="#3f6fb5"/><path d="M-150,335 H-95 L-99,485 H-142Z" fill="#4f82cc"/>' +
-        '<rect x="-158" y="320" width="126" height="20" rx="6" fill="#2f568f"/><circle cx="-58" cy="470" r="16" fill="#2d2a3a"/>' +
-      '</g>' +
+    return '<g transform="translate(0 -518)">' +
+      `<g id="${p}-body">${IMG('garbage', 775, 518)}</g>` +
+      // 垃圾袋一開始放在車尾後面的地上（看不到），丟的時候才出現
+      BAGS.map(([f, t], k) => `<g transform="translate(${-110 - k * 70} 518)"><g id="${p}-bag${k}" opacity="0">${BAG(f, t)}</g></g>`).join('') +
     '</g>';
   },
   async act(c) {
-    await c.anim(900, { bin: { tx: 70, ty: -330, r: 115 } });
-    for (let i = 0; i < 4; i++) {
-      c.burst('bin', -95, 335, { n: 4, color: ['#8a6a4a', '#d9534f', '#f0c419', '#6b7280'][i], vx: [0.5, 2], vy: [0, 2], g: 0.3, size: [5, 10], life: 600 });
-      await c.anim(150, { bin: { r: 125 } });
-      await c.anim(150, { bin: { r: 115 } });
+    const ms = playTune(MAIDENS_PRAYER, 110);
+    const t0 = performance.now();
+    // 音樂播放的時候車子輕輕晃（引擎在動）
+    const idle = c.tween(ms, (t) => c.set('body', { ty: Math.sin(t * Math.PI * 60) * 1.5 }), (t) => t);
+    for (let k = 0; k < BAGS.length; k++) {
+      await c.wait(Math.max(0, 1200 + k * 2000 - (performance.now() - t0)));
+      // 從地上拋到車斗開口：橫向等速，高度走拋物線
+      const dx = 70 - (-110 - k * 70), top = -330;
+      c.set(`bag${k}`, { o: 1, tx: 0, ty: 0, r: 0 });
+      await c.anim(750, { [`bag${k}`]: { tx: dx, r: 200 } }, (t) => c.set(`bag${k}`, { ty: top * 4 * t * (1 - t) + (230 - 518 + 60) * t * t }));
+      c.set(`bag${k}`, { o: 0 });
+      c.burst('body', 70, 230, { n: 6, color: BAGS[k][0], vx: [0.5, 2.5], vy: [-2, 0.5], size: [5, 10], life: 500 });
+      await c.anim(120, { body: { r: -1 } });
+      await c.anim(160, { body: { r: 0 } });
     }
-    await c.anim(900, { bin: { tx: 0, ty: 0, r: 0 } });
+    await idle;
+    c.set('body', { ty: 0 });
   },
 };
 
 // ---------- 送貨車：側門滑開，一個包裹跳出來落到地上 ----------
 // 圖 925×506；側門 (290, 42)～(460, 305)，門後面補一個放滿紙箱的車廂
+// 原圖門上的窗戶畫了半個送貨員，門一滑開人就被切成半截：所以窗戶改蓋成玻璃，
+// 車廂裡放一個完整的送貨員（AI 生成的 courier.webp 371×858，捧著包裹），門打開以後他跳到車子前面的地上
 const VAN_DOOR = RECT(290, 42, 460, 305);
+const VAN_GLASS =
+  '<rect x="298" y="46" width="156" height="154" rx="6" fill="#cfe2ea"/>' +
+  '<path d="M330,46 L298,90 L298,120 L352,46Z M392,46 L298,175 L298,196 L412,46Z" fill="#e8f2f6"/>';
+const CR = { s: 0.29, w: 371, h: 858 }; // 送貨員：高 249，站在車廂地板 (y = 305) 上
 const van = {
-  id: 'van', en: 'Delivery Van', zh: '送貨車', x: 1000, y: 720, s: 0.36,
+  id: 'van', en: 'Delivery Van', zh: '送貨車', x: 990, y: 715, s: 0.36,
   hint: [375, -320],
+  pivots: { man: [375, 305] },
   art(p) {
     return '<g transform="translate(0 -506)">' +
       HOLE(`${p}-cb`, 925, 506, VAN_DOOR) + IMG('van', 925, 506, `${p}-cb`) +
       '<rect x="290" y="42" width="170" height="263" fill="#3d4250"/><rect x="290" y="170" width="170" height="10" fill="#5a6070"/>' +
-      BOX(300, 100, 70, 70) + BOX(378, 115, 60, 55) + BOX(305, 235, 60, 70) +
-      `<g id="${p}-box">${BOX(375, 235, 70, 70)}</g>` +
+      BOX(296, 115, 60, 55) + BOX(390, 112, 62, 58) +
+      `<g id="${p}-man"><image href="${SRC('courier')}" x="${375 - (CR.w * CR.s) / 2}" y="${305 - CR.h * CR.s}" width="${CR.w * CR.s}" height="${CR.h * CR.s}"/></g>` +
       CLIP(`${p}-cd`, VAN_DOOR) +
-      `<g id="${p}-door">${IMG('van', 925, 506, `${p}-cd`)}</g>` +
+      `<g id="${p}-door">${IMG('van', 925, 506, `${p}-cd`)}${VAN_GLASS}</g>` +
     '</g>';
   },
   async act(c) {
-    c.set('box', { tx: 0, ty: 0, r: 0, o: 1 });
     await c.anim(600, { door: { tx: -175 } });
-    await c.anim(300, { box: { ty: -50, tx: 20 } });
-    await c.anim(400, { box: { ty: 506 - 305, tx: 60, r: 15 } });
-    await c.anim(150, { box: { ty: 506 - 315, r: 0 } });
-    await c.anim(150, { box: { ty: 506 - 305 } });
-    await c.wait(500);
+    // 跳下車：往前一點、落到地上（y 506），人也稍微變大（離我們比較近）
+    const down = 506 - 305 + 6;
+    await c.anim(550, { man: { tx: 40, sx: 1.2, sy: 1.2 } }, (t) => c.set('man', { ty: -90 * 4 * t * (1 - t) + down * t * t }));
+    await c.anim(120, { man: { sy: 1.1 } });
+    await c.anim(150, { man: { sy: 1.2 } });
+    // 開心地左右搖一搖（把包裹拿給你）
+    for (let i = 0; i < 3; i++) {
+      await c.anim(180, { man: { r: -6 } });
+      await c.anim(180, { man: { r: 6 } });
+    }
+    await c.anim(150, { man: { r: 0 } });
+    await c.wait(250);
+    // 跳回車上，關門
+    await c.anim(550, { man: { tx: 0, sx: 1, sy: 1 } }, (t) => c.set('man', { ty: down * (1 - t) * (1 - t) - 90 * 4 * t * (1 - t) }));
     await c.anim(600, { door: { tx: 0 } });
-    await c.anim(400, { box: { o: 0 } });
-    c.set('box', { tx: 0, ty: 0 });
-    await c.anim(300, { box: { o: 1 } });
   },
 };
 
 // ---------- 冰淇淋車：車頂的冰淇淋跳起來搖一搖，噴出彩色糖粒 ----------
 // 圖 647×500；冰淇淋插在車頂 (195, 150)
 const icecream = {
-  id: 'icecream', en: 'Ice Cream Truck', zh: '冰淇淋車', x: 1380, y: 720, s: 0.3,
+  id: 'icecream', en: 'Ice Cream Truck', zh: '冰淇淋車', x: 1370, y: 735, s: 0.32, r: 2,
   hint: [330, -260],
   pivots: { cone: [195, 150] },
   art(p) {
@@ -130,7 +165,7 @@ const icecream = {
 // ---------- 汽車運輸車：上層的車架往後傾斜，紅色小車滑下去一點再開回來 ----------
 // 圖 847×352；上層車架和上面兩台車一起轉，轉軸在車架前端
 const carrier = {
-  id: 'carrier', en: 'Car Carrier', zh: '汽車運輸車', x: 40, y: 975, s: 0.6,
+  id: 'carrier', en: 'Car Carrier', zh: '汽車運輸車', x: 30, y: 985, s: 0.62,
   hint: [200, -310],
   pivots: { deck: [620, 85] },
   art(p) {
@@ -156,7 +191,7 @@ const carrier = {
 // ---------- 怪獸卡車：蹲下去，用力跳起來，落地彈兩下 ----------
 // 圖 865×621；輪胎疊在一起不是正圓，所以整台一起跳
 const monster = {
-  id: 'monster', en: 'Monster Truck', zh: '怪獸卡車', x: 640, y: 975, s: 0.42,
+  id: 'monster', en: 'Monster Truck', zh: '怪獸卡車', x: 660, y: 975, s: 0.44, r: -9,
   hint: [430, -470],
   pivots: { body: [430, 621] },
   art(p) {
@@ -178,7 +213,7 @@ const monster = {
 // ---------- 掃街車：前面的圓刷轉起來，揚起灰塵，往前掃一段再倒回來 ----------
 // 圖 747×432；圓刷中心 (665, 312)
 const sweeper = {
-  id: 'sweeper', en: 'Street Sweeper', zh: '掃街車', x: 1170, y: 975, s: 0.44,
+  id: 'sweeper', en: 'Street Sweeper', zh: '掃街車', x: 1190, y: 990, s: 0.44,
   hint: [660, -140],
   pivots: { brush: [665, 312] },
   art(p) {

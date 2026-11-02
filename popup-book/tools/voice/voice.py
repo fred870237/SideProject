@@ -35,7 +35,7 @@ LINES = [
     # 🚛 貨運卡車
     "Semi Truck", "Garbage Truck", "Delivery Van", "Ice Cream Truck", "Car Carrier", "Monster Truck", "Street Sweeper",
     # 動作音效
-    "Hello!", "Beep beep!", "Wee-woo, wee-woo!", "Honk honk!", "Ice cream!",
+    "Hello!", "Beep beep!", "Honk honk!", "Ice cream!",
 ]
 
 

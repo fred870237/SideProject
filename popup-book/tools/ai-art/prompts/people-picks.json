@@ -1,0 +1,5 @@
+{
+  "worker": ["D:/AI/ComfyUI/output/p1/worker_7_00001_.png", false],
+  "courier": ["D:/AI/ComfyUI/output/p1/courier_7_00001_.png", false],
+  "rescuer": ["D:/AI/ComfyUI/output/p1/rescuer_8_00001_.png", false]
+}

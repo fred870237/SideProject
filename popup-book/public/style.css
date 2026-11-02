@@ -111,6 +111,13 @@ small { display: block; font-size: .55em; font-weight: 700; opacity: .65; }
 .turn-face.back { transform: rotateY(180deg); }
 .turn-face .shade { position: absolute; inset: 0; background: #000; opacity: 0; }
 .item { cursor: pointer; }
+/* 車子旁邊的英文小標籤（像書上印的小字），白邊讓它在任何背景上都看得清楚 */
+.tag {
+  font-size: 25px; font-weight: 800; fill: #3a3a46; text-anchor: middle; pointer-events: none;
+  paint-order: stroke; stroke: #fff; stroke-width: 6px; stroke-linejoin: round;
+}
+/* 焦點模式：其他東西變暗 */
+#dim { fill: #1d1b24; }
 
 /* 還沒點過的車子：一顆會閃的點點 */
 .hint {
