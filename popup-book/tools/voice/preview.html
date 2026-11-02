@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>語音試聽</title>
+<style>
+  :root { --bg: #fffaf0; --fg: #2d2a3a; --card: #fff; --line: #e8e0cc; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #1d1b24; --fg: #f2efe8; --card: #2a2733; --line: #3d3948; } }
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, "Microsoft JhengHei", sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p { margin: 0 0 16px; opacity: .75; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  button { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 14px; border: 1px solid var(--line);
+    border-radius: 12px; background: var(--card); color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  button.on { outline: 3px solid #ffb703; }
+  small { opacity: .6; }
+  #all { margin-bottom: 16px; width: auto; }
+</style>
+</head>
+<body>
+<h1>機關書語音試聽</h1>
+<p>點一下播放（Qwen3-TTS 生成，跟 public/audio/en/ 裡的 mp3 一樣）。哪一句唸得怪，記下名字告訴 Claude 換別的版本。</p>
+<button id="all">▶ 全部依序播放</button>
+<div class="grid" id="grid"></div>
+<script>
+  // 這是範本：voice.py pick 會把音檔嵌進下面的 CLIPS，輸出成 out/preview.html
+  const CLIPS = /*CLIPS*/{};
+  const grid = document.getElementById('grid');
+  let cur = null;
+  const play = (btn) => new Promise((done) => {
+    if (cur) cur.pause();
+    document.querySelectorAll('button.on').forEach((b) => b.classList.remove('on'));
+    btn.classList.add('on');
+    cur = new Audio(CLIPS[btn.dataset.s]);
+    cur.onended = done; cur.onerror = done;
+    cur.play().catch(done);
+  });
+  for (const s of Object.keys(CLIPS)) {
+    const b = document.createElement('button');
+    b.dataset.s = s;
+    b.innerHTML = `<span>${s.replace(/-/g, ' ')}</span><small>${s}</small>`;
+    b.onclick = () => play(b);
+    grid.appendChild(b);
+  }
+  document.getElementById('all').onclick = async () => {
+    for (const b of grid.children) { await play(b); await new Promise((r) => setTimeout(r, 400)); }
+  };
+</script>
+</body>
+</html>

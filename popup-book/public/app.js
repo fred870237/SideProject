@@ -18,10 +18,61 @@ function pickVoice() {
   const en = voices.filter((v) => /^en[-_]US/i.test(v.lang));
   return en.find((v) => v.localService) || en[0] || voices.find((v) => /^en/i.test(v.lang)) || null;
 }
+// 預先錄好的語音（Qwen3-TTS 生成，見 tools/voice/）：清單在 voices.js，檔名 audio/en/<slug>.mp3
+// 用 Web Audio 播：第一次點的時候解鎖，之後動作裡晚一點才唸的音效也能播（iOS 的 <audio> 離開點擊就不讓播）
+const voiceSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const recorded = new Set(self.VOICES || []);
+let actx = null, clipEnd = 0, clipGen = 0, clipSrcs = [];
+const clipBufs = {};
+// iPhone 靜音鍵打開時 Web Audio 預設不出聲，設成 playback 跟瀏覽器語音一樣照樣唸
+if (navigator.audioSession) navigator.audioSession.type = 'playback';
+function audioCtx() {
+  const C = window.AudioContext || window.webkitAudioContext;
+  if (!actx && C) actx = new C();
+  if (actx && actx.state === 'suspended') actx.resume();
+  return actx;
+}
+function loadClip(slug) {
+  const c = audioCtx();
+  if (!c) return Promise.reject(new Error('no Web Audio'));
+  return (clipBufs[slug] ||= fetch(`audio/en/${slug}.mp3`)
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+    .then((b) => new Promise((ok, bad) => c.decodeAudioData(b, ok, bad)))
+    .catch((err) => { delete clipBufs[slug]; throw err; }));
+}
+function stopClips() {
+  clipGen++;
+  clipSrcs.forEach((s) => { try { s.stop(); } catch { /* 已經停了 */ } });
+  clipSrcs = [];
+  clipEnd = 0;
+}
 // queue: true 是車子動作裡的音效（Honk honk、Ice cream…），排在車名後面唸，不要把還沒唸完的車名切掉
 function speak(text, { queue = false } = {}) {
+  if (!queue) {
+    stopClips();
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+  }
+  const slug = voiceSlug(text);
+  if (recorded.has(slug) && audioCtx()) {
+    const gen = clipGen;
+    loadClip(slug).then((buf) => {
+      if (gen !== clipGen) return; // 等載入的時候又點了別的車
+      const c = audioCtx();
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      src.connect(c.destination);
+      const t = Math.max(c.currentTime, clipEnd);
+      src.start(t);
+      clipEnd = t + buf.duration;
+      clipSrcs.push(src);
+      src.onended = () => { clipSrcs = clipSrcs.filter((s) => s !== src); };
+    }).catch(() => { if (gen === clipGen) speakTTS(text); }); // 沒網路又沒快取到：退回瀏覽器語音
+    return;
+  }
+  speakTTS(text);
+}
+function speakTTS(text) {
   if (!('speechSynthesis' in window)) return;
-  if (!queue) speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'en-US';
   u.rate = 0.85;
@@ -219,6 +270,8 @@ function showScene(theme, page) {
     </div>`;
 
   const fx = makeFx(document.getElementById('fx'));
+  // 先把這一頁的車名語音載進來，第一次點才不會慢半拍
+  scene.items.forEach((it) => { if (recorded.has(voiceSlug(it.en))) loadClip(voiceSlug(it.en)).catch(() => {}); });
   scene.items.forEach((it) => {
     const el = document.getElementById(it.id);
     const c = makeCtx(it, el, fx);

@@ -2,3 +2,6 @@ node_modules/
 storybook/tools/scenes/_preview/
 # 參考照片（實體書的照片有版權，不放上公開的 repo）
 datas/
+# 機關書語音的生成過程（每句 3 個版本的 wav），只留選定的旁白參考聲音
+popup-book/tools/voice/out/*
+!popup-book/tools/voice/out/ref_chosen.wav

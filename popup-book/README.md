@@ -9,6 +9,8 @@
 
 車子和背景是用本機的開源 AI（ComfyUI＋FLUX.1 schnell）以文字提示詞生成的扁平插畫。會動的零件用 SVG clipPath 從圖上裁出來單獨轉動，塔吊的鋼索、吊鉤和鋼樑則是用程式畫的。玩法參考機關書，但沒有照描、也沒有拿任何書的圖去給 AI 當參考。生成和去背的工具在 `tools/ai-art/`。
 
+英文語音（車名和 Honk honk 之類的音效）是用開源的 Qwen3-TTS 預先生成的 mp3（`public/audio/en/`，清單在 `public/voices.js`），沒有音檔的句子會退回瀏覽器語音。做法見 `tools/voice/README.md`。
+
 ## 目前的頁面
 
 ### 🏗️ 工地（Construction Site）
