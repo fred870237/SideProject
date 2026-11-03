@@ -1,0 +1,9 @@
+{
+  "airliner": ["D:/AI/ComfyUI/output/a1/airliner_7_00001_.png", false],
+  "airship": ["D:/AI/ComfyUI/output/a1/airship_7_00001_.png", false],
+  "balloon": ["D:/AI/ComfyUI/output/a1/balloon_7_00001_.png", false, [], {"erode": false}],
+  "biplane": ["D:/AI/ComfyUI/output/a1/biplane_8_00001_.png", true, [], {"erode": false}],
+  "glider": ["D:/AI/ComfyUI/output/a1/glider_61_00001_.png", false, [], {"erode": false}],
+  "jet": ["D:/AI/ComfyUI/output/a1/jet_61_00001_.png", false],
+  "tower": ["D:/AI/ComfyUI/output/a1/tower_7_00001_.png", false, [], {"erode": false}]
+}

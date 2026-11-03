@@ -1,0 +1,15 @@
+{
+  "name": "a1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about things that fly. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as windows, rivets, lights and panels. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no clouds, no scenery.",
+  "items": {
+    "airliner": "A single white passenger jet airliner facing right, standing on its landing gear wheels: a long white body with a row of small round windows, a blue tail fin, blue stripe along the body, two big engines under the wings, cockpit windows at the nose",
+    "balloon": "A single big hot air balloon: a round balloon envelope with bright vertical stripes in red, yellow, orange and blue, ropes going down to a small brown wicker basket with a grey burner above the basket",
+    "biplane": "A single small red biplane facing right, two stacked wings with struts between them, a wooden two-blade propeller at the nose, an open cockpit with a pilot in leather helmet and goggles, two black wheels",
+    "airship": "A single big silver grey blimp airship facing right, a long smooth oval balloon body with red tail fins, a small red gondola cabin with windows under the middle, two small propellers on the sides of the gondola",
+    "glider": "A single white glider sailplane facing right, very long thin straight wings, a slim white body, a clear bubble canopy, a T-shaped tail with red tips",
+    "jet": "A single small aerobatic display jet plane facing right, painted bright blue with white and red stripes, swept wings, a pointed nose, a bubble canopy with a pilot, no weapons",
+    "tower": "A single airport control tower: a tall white and grey concrete tower, at the top a wide glass cab with many blue windows and a flat roof with a small red beacon light and a small radar dish. Not a vehicle"
+  }
+}

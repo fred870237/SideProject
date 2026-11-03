@@ -38,8 +38,10 @@ LINES = [
     "Concrete Pump Truck", "Pile Driver", "Mobile Crane", "Boom Lift", "Skid Steer Loader",
     # 🚢 海上
     "Container Ship", "Sailboat", "Tugboat", "Fishing Boat", "Speedboat", "Submarine", "Lighthouse",
+    # ✈️ 天空
+    "Airplane", "Hot Air Balloon", "Biplane", "Airship", "Glider", "Jet Plane", "Helicopter", "Control Tower",
     # 動作音效
-    "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!",
+    "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",
 ]
 
 

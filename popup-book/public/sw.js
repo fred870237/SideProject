@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v17';
+const CACHE = 'popup-book-v18';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -18,6 +18,9 @@ const CORE = [
   'art/sea.js',
   ...['bg', 'cargo', 'sailboat', 'tugboat', 'fishing', 'speedboat', 'submarine', 'lighthouse']
     .map((n) => `art/img/sea/${n}.webp`),
+  'art/sky.js',
+  ...['bg', 'airliner', 'balloon', 'biplane', 'airship', 'glider', 'jet', 'helicopter', 'tower']
+    .map((n) => `art/img/sky/${n}.webp`),
   'icon.svg', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
 ];
 

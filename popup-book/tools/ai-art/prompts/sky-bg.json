@@ -1,0 +1,9 @@
+{
+  "name": "a2bg",
+  "seeds": [71, 72, 73, 74, 75, 76],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of an airport, like a stage set seen straight from the front with no perspective, with NO planes, NO vehicles and NO people: a pale light blue sky with a few big soft white fluffy clouds fills the top three quarters of the picture, low rolling green hills along the horizon, and across the whole bottom of the picture a straight horizontal band of dark grey runway tarmac with a thin white dashed line along it, lying on a strip of green grass. The runway runs from the left edge to the right edge, it does not go into the distance."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "a3",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about things that fly. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as windows, rivets, lights and panels. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no clouds, no scenery.",
+  "items": {
+    "helicopter": "A single small cute yellow and blue sightseeing helicopter facing right, a round bubble glass cockpit at the front with a pilot inside, a long thin straight main rotor blade lying flat and horizontal on top, a slim tail boom with a small round tail rotor at the end, two grey landing skids underneath"
+  }
+}
