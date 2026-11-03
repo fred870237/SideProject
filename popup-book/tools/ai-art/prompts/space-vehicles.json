@@ -1,0 +1,15 @@
+{
+  "name": "p1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about outer space. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as rivets, panels, windows, antennas and lights. No green anywhere on the subject. Unbranded, no logos, no flags, no text, no letters, no numbers, no flames, no smoke, no ground, no shadow, no stars, no scenery.",
+  "items": {
+    "rocket": "A single tall white space rocket standing upright pointing straight up, a red pointed nose cone, a round porthole window, red and blue stripes, four red fins at the bottom and a grey engine nozzle at the very bottom",
+    "saucer": "A single cute round flying saucer UFO seen from the side, a shiny silver disc with a ring of small yellow and red lights around the rim, a clear glass dome on top with a small friendly purple alien inside, a round hatch underneath",
+    "astronaut": "A single cute chibi astronaut floating, a puffy white space suit, a big round helmet with a golden visor, a white backpack life support pack, one arm raised waving hello",
+    "rover": "A single six-wheeled moon rover vehicle facing right, a white and orange boxy body with a solar panel on top, a small camera mast and a dish antenna, six big grey wire mesh wheels on legs",
+    "satellite": "A single space satellite: a gold foil covered box body in the middle, two long blue solar panel wings sticking out to the left and right, a white dish antenna on top",
+    "lander": "A single lunar lander spacecraft: a gold foil covered lower stage with four thin spider legs and round footpads, a silver and white upper cabin with a triangular window and small antennas, a grey engine nozzle underneath",
+    "station": "A single space station: long white cylinder modules joined together in a row, with four large blue solar panel wings on a long truss, small radiator panels and docking ports"
+  }
+}

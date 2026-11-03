@@ -1,0 +1,9 @@
+{
+  "name": "p1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean simple shapes. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of the surface of the Moon like a stage set seen straight from the front with no perspective, with NO spaceships, NO vehicles and NO people: the bottom third of the picture is flat pale grey moon ground with a few shallow round craters and small rocks, running from the left edge to the right edge; above it a deep dark navy blue space sky with many small white and yellow stars, a small blue and green planet Earth in the top right corner and a little ringed planet far away on the left."
+  }
+}

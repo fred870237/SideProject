@@ -1,0 +1,9 @@
+{
+  "astronaut": ["D:/AI/ComfyUI/output/p1/astronaut_7_00001_.png", false],
+  "lander": ["D:/AI/ComfyUI/output/p1/lander_7_00001_.png", false, [], {"erode": false}],
+  "rocket": ["D:/AI/ComfyUI/output/p1/rocket_61_00001_.png", false],
+  "rover": ["D:/AI/ComfyUI/output/p1/rover_62_00001_.png", false, [], {"erode": false}],
+  "satellite": ["D:/AI/ComfyUI/output/p1/satellite_7_00001_.png", false, [], {"erode": false}],
+  "saucer": ["D:/AI/ComfyUI/output/p1/saucer_7_00001_.png", false],
+  "station": ["D:/AI/ComfyUI/output/p1/station_7_00001_.png", false, [], {"erode": false}]
+}

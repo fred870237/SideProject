@@ -40,7 +40,10 @@ LINES = [
     "Container Ship", "Sailboat", "Tugboat", "Fishing Boat", "Speedboat", "Submarine", "Lighthouse",
     # ✈️ 天空
     "Airplane", "Hot Air Balloon", "Biplane", "Airship", "Glider", "Jet Plane", "Helicopter", "Control Tower",
+    # 🚀 太空
+    "Rocket", "Flying Saucer", "Astronaut", "Moon Rover", "Satellite", "Lunar Lander", "Space Station",
     # 動作音效
+    "Three, two, one, blast off!", "Beep boop!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",
 ]
 
