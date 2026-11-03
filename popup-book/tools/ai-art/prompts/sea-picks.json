@@ -1,0 +1,9 @@
+{
+  "cargo": ["D:/AI/ComfyUI/output/s1/cargo_62_00001_.png", false],
+  "sailboat": ["D:/AI/ComfyUI/output/s1/sailboat_7_00001_.png", false, [], {"erode": false}],
+  "tugboat": ["D:/AI/ComfyUI/output/s1/tugboat_7_00001_.png", false],
+  "fishing": ["D:/AI/ComfyUI/output/s1/fishing_62_00001_.png", false, [], {"erode": false}],
+  "speedboat": ["D:/AI/ComfyUI/output/s1/speedboat_62_00001_.png", false],
+  "submarine": ["D:/AI/ComfyUI/output/s1/submarine_62_00001_.png", false],
+  "lighthouse": ["D:/AI/ComfyUI/output/s1/lighthouse_7_00001_.png", false]
+}

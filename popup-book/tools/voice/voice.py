@@ -36,8 +36,10 @@ LINES = [
     "Semi Truck", "Garbage Truck", "Delivery Van", "Ice Cream Truck", "Car Carrier", "Monster Truck", "Street Sweeper",
     # 🏢 蓋大樓
     "Concrete Pump Truck", "Pile Driver", "Mobile Crane", "Boom Lift", "Skid Steer Loader",
+    # 🚢 海上
+    "Container Ship", "Sailboat", "Tugboat", "Fishing Boat", "Speedboat", "Submarine", "Lighthouse",
     # 動作音效
-    "Hello!", "Beep beep!", "Honk honk!", "Ice cream!",
+    "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!",
 ]
 
 

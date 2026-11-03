@@ -1,0 +1,15 @@
+{
+  "name": "s1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about boats and the sea. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small details such as portholes, railings, ropes, lights and ladders. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no water, no waves, no shadow, no scenery.",
+  "items": {
+    "cargo": "A single big container ship facing right: a long dark blue hull with a red bottom, many colourful stacked shipping containers in red, yellow, blue and orange on the deck, a white bridge tower with windows at the back, a tall funnel with a red band",
+    "sailboat": "A single small sailing yacht facing right: a white hull with a blue stripe, one tall mast with a big white triangular mainsail and a red triangular jib sail, a small cabin with round windows",
+    "tugboat": "A single small chunky red tugboat facing right: a red hull with black rubber tyre bumpers hanging on the side, a white wheelhouse with windows, a big black and yellow funnel, a towing hook at the back",
+    "fishing": "A single blue fishing boat facing right: a blue wooden hull with a white stripe, a small white wheelhouse, a tall mast with a crane arm at the back, coiled ropes and orange buoys on the deck",
+    "speedboat": "A single sleek red and white speedboat facing right, a pointed hull, a small windscreen, an outboard motor at the back",
+    "submarine": "A single cute round yellow submarine facing right, a small conning tower on top with a periscope, round portholes along the side, a propeller at the back, small fins",
+    "lighthouse": "A single tall lighthouse tower with red and white stripes, a black lantern room with a yellow glowing lamp and a small balcony railing at the top, standing on a small pile of grey rocks. Not a vehicle"
+  }
+}

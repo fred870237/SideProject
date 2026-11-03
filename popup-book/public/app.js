@@ -74,6 +74,27 @@ function siren(kind, ms) {
   osc.stop(t0 + dur + 0.05);
   sfxNodes.push(osc);
 }
+// 船笛「嗚——」：兩個低音（差五度）疊在一起，blasts 是每一聲的 [開始秒數, 長度秒數]
+function horn(blasts, pitch = 110) {
+  const c = audioCtx();
+  if (!c) return;
+  const t0 = c.currentTime + 0.03;
+  blasts.forEach(([at, dur]) => {
+    const lp = c.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 900;
+    lp.connect(envelope(c, t0 + at, dur, 0.12)).connect(c.destination);
+    [pitch, pitch * 1.5].forEach((f) => {
+      const osc = c.createOscillator();
+      osc.type = 'sawtooth';
+      osc.frequency.value = f;
+      osc.connect(lp);
+      osc.start(t0 + at);
+      osc.stop(t0 + at + dur + 0.05);
+      sfxNodes.push(osc);
+    });
+  });
+}
 // 用方波彈一段旋律（像垃圾車喇叭放的電子音樂）：notes = [[第幾拍, MIDI 音高], ...]，每個音延續到下一個音開始
 function playTune(notes, bpm, endBeats = 2) {
   const c = audioCtx();
@@ -180,8 +201,8 @@ function makeCtx(it, el, fx) {
     el: (name) => part(name).e,
     get: part,
     set(name, props) { const p = part(name); Object.assign(p, props); apply(p); },
-    // anim(毫秒, { 零件: { r: 30, tx: 100 } }, 每一格要額外做的事)
-    async anim(ms, spec, onStep) {
+    // anim(毫秒, { 零件: { r: 30, tx: 100 } }, 每一格要額外做的事, 速度曲線（預設慢－快－慢）)
+    async anim(ms, spec, onStep, easing = ease) {
       const keys = Object.keys(spec);
       const from = {};
       keys.forEach((k) => { const p = part(k); from[k] = {}; for (const prop in spec[k]) from[k][prop] = p[prop]; });
@@ -192,7 +213,7 @@ function makeCtx(it, el, fx) {
           apply(p);
         });
         if (onStep) onStep(t);
-      });
+      }, easing);
     },
     // 這台車所有輪子再轉 deg 度（給 anim 用）
     wheels(deg) {
