@@ -42,8 +42,10 @@ LINES = [
     "Airplane", "Hot Air Balloon", "Biplane", "Airship", "Glider", "Jet Plane", "Helicopter", "Control Tower",
     # 🚀 太空
     "Rocket", "Flying Saucer", "Astronaut", "Moon Rover", "Satellite", "Lunar Lander", "Space Station",
+    # 🦁 動物：草原
+    "Lion", "Elephant", "Giraffe", "Zebra", "Hippo", "Rhino", "Meerkat",
     # 動作音效
-    "Three, two, one, blast off!", "Beep boop!",
+    "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",
 ]
 

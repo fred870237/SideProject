@@ -18,7 +18,18 @@ const THEMES = [
       { id: 'space', icon: '🚀', en: 'Space', zh: '太空' },
     ],
   },
-  { id: 'animals', icon: '🦁', en: 'Animals', zh: '動物', color: '#9be27b', pages: [] },
+  {
+    id: 'animals', icon: '🦁', en: 'Animals', zh: '動物', color: '#9be27b',
+    pages: [
+      { id: 'savanna', icon: '🦁', en: 'Savanna', zh: '草原' },
+      { id: 'jungle', icon: '🐒', en: 'Jungle', zh: '叢林' },
+      { id: 'farm-animals', icon: '🐮', en: 'Farm Animals', zh: '農場動物' },
+      { id: 'ocean', icon: '🐳', en: 'Ocean', zh: '海洋' },
+      { id: 'polar', icon: '🐧', en: 'Polar', zh: '極地' },
+      { id: 'forest', icon: '🦉', en: 'Forest', zh: '森林' },
+      { id: 'pets', icon: '🐶', en: 'Pets', zh: '寵物' },
+    ],
+  },
   { id: 'dinosaurs', icon: '🦕', en: 'Dinosaurs', zh: '恐龍', color: '#8fd3ff', pages: [] },
   { id: 'body', icon: '🦷', en: 'My Body', zh: '我的身體', color: '#ffb3c7', pages: [] },
 ];

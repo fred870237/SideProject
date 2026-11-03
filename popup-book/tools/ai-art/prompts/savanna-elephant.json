@@ -1,0 +1,19 @@
+{
+  "name": "z2",
+  "seeds": [
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen exactly from the side, the whole animal visible standing on all its legs, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "elephant": "A single big grey African elephant facing right, realistic adult proportions: a long wide barrel body that is clearly longer than it is tall, four thick pillar legs, a big head with large flapping ears, small white tusks and a long trunk hanging straight down almost to the ground, a thin tail"
+  }
+}

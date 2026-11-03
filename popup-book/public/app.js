@@ -32,13 +32,33 @@ function audioCtx() {
   if (actx && actx.state === 'suspended') actx.resume();
   return actx;
 }
-function loadClip(slug) {
+// dir：en 是英文語音，sound 是動物叫聲
+function loadClip(slug, dir = 'en') {
   const c = audioCtx();
   if (!c) return Promise.reject(new Error('no Web Audio'));
-  return (clipBufs[slug] ||= fetch(`audio/en/${slug}.mp3`)
+  const key = `${dir}/${slug}`;
+  return (clipBufs[key] ||= fetch(`audio/${key}.mp3`)
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
     .then((b) => new Promise((ok, bad) => c.decodeAudioData(b, ok, bad)))
-    .catch((err) => { delete clipBufs[slug]; throw err; }));
+    .catch((err) => { delete clipBufs[key]; throw err; }));
+}
+// 接在前一段語音後面播（gen 對不上表示中間又點了別的東西，就不播了）
+function queueBuf(buf, gen) {
+  if (gen !== clipGen) return;
+  const c = audioCtx();
+  const src = c.createBufferSource();
+  src.buffer = buf;
+  src.connect(c.destination);
+  const t = Math.max(c.currentTime, clipEnd);
+  src.start(t);
+  clipEnd = t + buf.duration;
+  clipSrcs.push(src);
+  src.onended = () => { clipSrcs = clipSrcs.filter((s) => s !== src); };
+}
+// 動物叫聲（audio/sound/<name>.mp3），排在動物名字後面
+function playSound(name) {
+  const gen = clipGen;
+  loadClip(name, 'sound').then((buf) => queueBuf(buf, gen)).catch(() => {});
 }
 // ---------- 合成的音效（警笛、垃圾車音樂）：不用音檔，Web Audio 現場產生 ----------
 let sfxNodes = [];
@@ -133,18 +153,8 @@ function speak(text, { queue = false } = {}) {
   const slug = voiceSlug(text);
   if (recorded.has(slug) && audioCtx()) {
     const gen = clipGen;
-    loadClip(slug).then((buf) => {
-      if (gen !== clipGen) return; // 等載入的時候又點了別的車
-      const c = audioCtx();
-      const src = c.createBufferSource();
-      src.buffer = buf;
-      src.connect(c.destination);
-      const t = Math.max(c.currentTime, clipEnd);
-      src.start(t);
-      clipEnd = t + buf.duration;
-      clipSrcs.push(src);
-      src.onended = () => { clipSrcs = clipSrcs.filter((s) => s !== src); };
-    }).catch(() => { if (gen === clipGen) speakTTS(text); }); // 沒網路又沒快取到：退回瀏覽器語音
+    loadClip(slug).then((buf) => queueBuf(buf, gen)) // 等載入的時候又點了別的車，就不播了
+      .catch(() => { if (gen === clipGen) speakTTS(text); }); // 沒網路又沒快取到：退回瀏覽器語音
     return;
   }
   speakTTS(text);

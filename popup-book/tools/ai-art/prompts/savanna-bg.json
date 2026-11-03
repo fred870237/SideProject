@@ -1,0 +1,9 @@
+{
+  "name": "z1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright warm saturated colours, clean simple shapes, lots of calm space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of the African savanna like a stage set seen straight from the front with no perspective, with NO animals and NO people: a big warm orange and yellow sky with a large pale sun, two flat-topped acacia trees, one on the left and one on the right, far away low purple hills, and across the bottom third of the picture flat golden yellow grassland running from the left edge to the right edge with a small round blue watering hole pond in the middle."
+  }
+}

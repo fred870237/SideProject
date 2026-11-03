@@ -1,0 +1,42 @@
+{
+  "lion": [
+    "D:/AI/ComfyUI/output/z1/lion_7_00001_.png",
+    false
+  ],
+  "elephant": [
+    "D:/AI/ComfyUI/output/z2/elephant_77_00001_.png",
+    false
+  ],
+  "giraffe": [
+    "D:/AI/ComfyUI/output/z1/giraffe_7_00001_.png",
+    false,
+    [],
+    {
+      "erode": false
+    }
+  ],
+  "zebra": [
+    "D:/AI/ComfyUI/output/z1/zebra_7_00001_.png",
+    false,
+    [],
+    {
+      "erode": false
+    }
+  ],
+  "hippo": [
+    "D:/AI/ComfyUI/output/z1/hippo_7_00001_.png",
+    false
+  ],
+  "rhino": [
+    "D:/AI/ComfyUI/output/z1/rhino_7_00001_.png",
+    false
+  ],
+  "meerkat": [
+    "D:/AI/ComfyUI/output/z1/meerkat_7_00001_.png",
+    false,
+    [],
+    {
+      "erode": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "z1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen exactly from the side, the whole animal visible standing on all its legs, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "lion": "A single male lion facing right with a big fluffy orange brown mane, a golden body and a long tail with a dark tuft at the end",
+    "elephant": "A single grey African elephant facing right with big ears, small white tusks and a long trunk hanging down",
+    "giraffe": "A single tall giraffe facing right with a very long neck held up high, orange brown patches on a cream body, small horns",
+    "zebra": "A single zebra facing right with bold black and white stripes, a short black and white mane and a tail",
+    "hippo": "A single round chubby purple grey hippopotamus facing right with its big mouth closed, small ears and short legs",
+    "rhino": "A single grey rhinoceros facing right with two horns on its nose, thick skin folds and short legs",
+    "meerkat": "A single small tan meerkat standing upright on its back legs facing right, with dark eye patches and a thin tail"
+  }
+}
