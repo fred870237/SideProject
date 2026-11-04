@@ -1,0 +1,15 @@
+{
+  "name": "o1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen from the side, the whole animal visible, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no water, no bubbles, no sand, no shadow, no scenery.",
+  "items": {
+    "whale": "A single big friendly blue whale swimming facing right, a long blue body with a pale grooved belly, a small dorsal fin, a side flipper and a wide tail fluke",
+    "dolphin": "A single smiling grey-blue dolphin swimming facing right, a long beak, a curved dorsal fin, a pale belly and a tail fluke",
+    "shark": "A single friendly grey shark swimming facing right, a tall triangle dorsal fin, a white belly, side fins and a crescent tail, its mouth closed in a smile",
+    "turtle": "A single sea turtle swimming facing right, a brown and golden-yellow patterned shell, tan scaly skin, four wide flippers and a small head",
+    "octopus": "A single round purple-pink octopus facing the viewer, a big round head with two big eyes and eight curly tentacles spread out below",
+    "crab": "A single bright red crab seen from the front, two big raised claws, small eyes on stalks and six thin legs",
+    "clownfish": "A single orange clownfish swimming facing right, three white stripes edged in black, rounded orange fins"
+  }
+}

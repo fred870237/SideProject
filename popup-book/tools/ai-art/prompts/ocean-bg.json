@@ -1,0 +1,9 @@
+{
+  "name": "o1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean simple shapes, lots of calm open space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view cross-section of the sea like a stage set seen straight from the front with no perspective, with NO animals, NO fish and NO people: a thin strip of light blue sky with one soft white cloud at the very top, a wavy sea surface line just below it, then a big area of calm blue water getting deeper blue towards the bottom, a few pink and orange corals and swaying seaweed at the sides, and a flat sandy sea floor across the bottom of the picture running from the left edge to the right edge."
+  }
+}

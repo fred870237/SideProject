@@ -1,0 +1,9 @@
+{
+  "whale": ["D:/AI/ComfyUI/output/o1/whale_7_00001_.png", false],
+  "dolphin": ["D:/AI/ComfyUI/output/o1/dolphin_61_00001_.png", true],
+  "shark": ["D:/AI/ComfyUI/output/o1/shark_8_00001_.png", false],
+  "turtle": ["D:/AI/ComfyUI/output/o1/turtle_62_00001_.png", false],
+  "octopus": ["D:/AI/ComfyUI/output/o1/octopus_61_00001_.png", false],
+  "crab": ["D:/AI/ComfyUI/output/o1/crab_8_00001_.png", false],
+  "clownfish": ["D:/AI/ComfyUI/output/o1/clownfish_62_00001_.png", false]
+}

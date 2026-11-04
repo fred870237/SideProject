@@ -19,4 +19,6 @@
 | sheep | sheep.mp3（剪 11.8 秒起的 2.5 秒） | [Sheep bleating by freesound_community](https://pixabay.com/sound-effects/nature-sheep-bleating-31117/) |
 | horse | horse.mp3（剪 22.8 秒起的 2.5 秒） | [delicate horse by freesound_community](https://pixabay.com/sound-effects/nature-delicate-horse-69688/) |
 | rooster | rooster.mp3（剪 chicken.mp3 32.8 秒起的公雞啼 3 秒） | [Chickens clucking and rooster by freesound_community](https://pixabay.com/sound-effects/nature-chickens-clucking-and-rooster-with-cockadoodledoo-31734/) |
+| whale | whale.mp3 | [whale sound - type 2 by RibhavAgrawal](https://pixabay.com/sound-effects/nature-whale-sound-type-2-235983/) |
+| dolphin | dolphin.mp3 | [Dolphin Noise by freesound_community](https://pixabay.com/sound-effects/nature-dolphin-noise-6968/) |
 | gorilla（叢林） | chimpanzee.mp3 | [chimpanzee by freesound_community](https://pixabay.com/sound-effects/nature-chimpanzee-101055/) |
