@@ -55,6 +55,9 @@ LINES = [
     # 🦉 動物：森林
     "Brown Bear", "Deer", "Owl", "Squirrel", "Rabbit", "Hedgehog", "Woodpecker", "Wolf",
     "Peck peck peck!", "Hop hop hop!", "Sniff sniff!",
+    # 🐶 動物：寵物
+    "Shiba Inu and Bichon Frise", "Cat", "Hamster", "Goldfish", "Budgie", "Guinea Pig", "Tortoise",
+    "Squeak squeak!", "Tweet tweet!", "Wheek wheek!", "Munch munch!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

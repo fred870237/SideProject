@@ -1,0 +1,15 @@
+{
+  "name": "pt1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen from the side, the whole animal visible, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no furniture, no bowl, no cage, no ground, no shadow, no scenery.",
+  "items": {
+    "dog": "A single happy golden retriever puppy standing on four legs facing right, golden yellow fur, floppy ears, a wagging tail and a red collar",
+    "cat": "A single cute orange tabby cat standing on four legs facing right, orange fur with darker orange stripes, a white chest and paws, a long tail curled up",
+    "hamster": "A single round chubby golden hamster standing on four tiny feet facing right, golden orange and white fur, small round ears, pink nose, full cheeks",
+    "goldfish": "A single cute orange goldfish swimming facing right, bright orange body, big flowing fan tail and fins, a big round eye",
+    "budgie": "A single cute blue budgie parakeet perched facing right, sky blue belly, a white face with small black spots, black and white wavy striped wings, a long blue tail, small grey feet",
+    "guineapig": "A single cute round guinea pig standing facing right, patches of white, ginger and brown fur, small round ears, tiny feet, no tail",
+    "tortoise": "A single cute tortoise walking facing right, a high domed brown shell with golden yellow plates, a tan head and legs, a friendly smile"
+  }
+}

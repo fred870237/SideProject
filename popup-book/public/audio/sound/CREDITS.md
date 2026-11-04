@@ -29,3 +29,5 @@
 | brown bear | brown-bear.mp3 | [Bear Growl by Universfield](https://pixabay.com/sound-effects/nature-bear-growl-191995/) |
 | squirrel | squirrel.mp3 | [Squirrel by freesound_community](https://pixabay.com/sound-effects/nature-squirrel-89831/) |
 | wolf | wolf.mp3（剪 1.4 秒起的 3.5 秒） | [Wolf howl by freesound_community](https://pixabay.com/sound-effects/nature-wolf-howl-6310/) |
+| dog | dog.mp3（剪 8.9 秒起的 2 秒） | [Dog Barking by freesound_community](https://pixabay.com/sound-effects/nature-dog-barking-70772/) |
+| cat | cat.mp3 | [Cat meow by freesound_community](https://pixabay.com/sound-effects/nature-cat-meow-85175/) |

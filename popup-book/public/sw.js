@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v25';
+const CACHE = 'popup-book-v26';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -42,9 +42,12 @@ const CORE = [
   'art/forest.js',
   ...['bg', 'bear', 'deer', 'owl', 'squirrel', 'rabbit', 'hedgehog', 'woodpecker', 'wolf']
     .map((n) => `art/img/forest/${n}.webp`),
+  'art/pets.js',
+  ...['bg', 'bichon', 'shiba', 'cat', 'hamster', 'goldfish', 'budgie', 'guineapig', 'tortoise']
+    .map((n) => `art/img/pets/${n}.webp`),
   ...['lion', 'elephant', 'rhino', 'macaque', 'parrot', 'tiger', 'anaconda', 'frog', 'chimpanzee',
     'cow', 'pig', 'sheep', 'horse', 'rooster', 'whale', 'dolphin', 'polar-bear', 'seal', 'fox', 'snowy-owl',
-    'brown-bear', 'squirrel', 'wolf']
+    'brown-bear', 'squirrel', 'wolf', 'dog', 'cat']
     .map((n) => `audio/sound/${n}.mp3`),
   'icon.svg', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
 ];

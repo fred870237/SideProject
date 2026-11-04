@@ -1,0 +1,10 @@
+{
+  "name": "pt2",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen from the side, the whole animal visible, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no furniture, no ground, no shadow, no scenery.",
+  "items": {
+    "bichon": "A single cute Bichon Frise dog standing on four legs facing right, a fluffy round cloud of pure white curly fur with light grey shading, a round fluffy head, small black eyes and black nose, a fluffy tail curled over its back, a blue collar",
+    "shiba": "A single cute Shiba Inu dog standing on four legs facing right, red orange fur with a cream white chest, cheeks and belly, pointed upright ears, a fluffy tail curled over its back, a red collar"
+  }
+}
