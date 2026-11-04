@@ -9,3 +9,9 @@
 | lion | lion.mp3 | [lion roar by freesound_community](https://pixabay.com/sound-effects/nature-lion-roar-6011/) |
 | elephant | elephant.mp3 | [Elephant Trumpets Growls by freesound_community](https://pixabay.com/sound-effects/nature-elephant-trumpets-growls-6047/) |
 | rhino | rhino.mp3 | [Indian rhinoceros by freesound_community](https://pixabay.com/sound-effects/nature-indian-rhinoceros-rhinoceros-unicornis-95946/) |
+| monkey（叢林） | macaque.mp3 | [monkey2 by freesound_community](https://pixabay.com/sound-effects/nature-monkey2-75003/) |
+| parrot | parrot.mp3 | [Parrot by freesound_community](https://pixabay.com/sound-effects/nature-parrot-80775/) |
+| tiger | tiger.mp3 | [Tiger Roar by freesound_community](https://pixabay.com/sound-effects/nature-tiger-roar-104166/) |
+| snake（叢林） | anaconda.mp3 | [Snake hissing by freesound_community](https://pixabay.com/sound-effects/nature-snake-hissing-6092/) |
+| frog | frog.mp3 | [frog croak by freesound_community](https://pixabay.com/sound-effects/nature-frog-croak-80816/) |
+| gorilla（叢林） | chimpanzee.mp3 | [chimpanzee by freesound_community](https://pixabay.com/sound-effects/nature-chimpanzee-101055/) |

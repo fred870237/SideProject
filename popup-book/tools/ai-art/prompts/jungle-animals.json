@@ -1,0 +1,15 @@
+{
+  "name": "j1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen from the side, the whole animal visible, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the subject, no leaves. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "monkey": "A single brown monkey with a light tan face and belly hanging down from a short brown jungle vine, holding the vine above its head with one hand, its long curly tail hanging down, facing right",
+    "parrot": "A single bright red scarlet macaw parrot with blue and yellow wings and a long red tail, perched on a short bare brown branch, facing right",
+    "tiger": "A single orange tiger with black stripes and a white belly, standing on all four legs, facing right, a long striped tail",
+    "snake": "A single friendly yellow and orange python snake coiled up in a pile with its head raised up looking right",
+    "frog": "A single small bright blue and orange poison dart frog sitting, facing right, big round eyes",
+    "sloth": "A single cute brown sloth hanging upside down below a short bare horizontal brown branch, holding the branch with its long curved claws, its smiling face looking at us",
+    "gorilla": "A single big dark grey gorilla with a silver grey back, standing on its knuckles, facing right, a friendly face"
+  }
+}

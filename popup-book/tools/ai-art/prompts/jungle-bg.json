@@ -1,0 +1,9 @@
+{
+  "name": "j1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean simple shapes, calm open space in the middle. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of a lush tropical rainforest like a stage set seen straight from the front with no perspective, with NO animals and NO people: tall tree trunks on the left and right edges with big leafy branches across the top of the picture and a few long hanging vines, big tropical leaves and ferns along the bottom, a small blue river running across the lower part of the picture, a soft light green and yellow open clearing in the middle."
+  }
+}

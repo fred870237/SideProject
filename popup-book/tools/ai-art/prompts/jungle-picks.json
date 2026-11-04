@@ -1,0 +1,9 @@
+{
+  "monkey": ["D:/AI/ComfyUI/output/j1/monkey_61_00001_.png", false, [], {"erode": false}],
+  "parrot": ["D:/AI/ComfyUI/output/j1/parrot_7_00001_.png", false, [], {"erode": false}],
+  "tiger": ["D:/AI/ComfyUI/output/j1/tiger_7_00001_.png", false],
+  "snake": ["D:/AI/ComfyUI/output/j1/snake_7_00001_.png", false],
+  "frog": ["D:/AI/ComfyUI/output/j1/frog_7_00001_.png", false],
+  "sloth": ["D:/AI/ComfyUI/output/j1/sloth_7_00001_.png", false, [], {"erode": false}],
+  "gorilla": ["D:/AI/ComfyUI/output/j1/gorilla_7_00001_.png", false]
+}

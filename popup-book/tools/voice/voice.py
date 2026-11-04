@@ -44,6 +44,8 @@ LINES = [
     "Rocket", "Flying Saucer", "Astronaut", "Moon Rover", "Satellite", "Lunar Lander", "Space Station",
     # 🦁 動物：草原
     "Lion", "Elephant", "Giraffe", "Zebra", "Hippo", "Rhino", "Meerkat",
+    # 🐒 動物：叢林
+    "Monkey", "Sloth", "Parrot", "Tiger", "Snake", "Frog", "Gorilla",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",
