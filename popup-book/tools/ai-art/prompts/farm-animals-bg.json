@@ -1,0 +1,9 @@
+{
+  "name": "f1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean simple shapes, lots of calm open space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of a happy farmyard like a stage set seen straight from the front with no perspective, with NO animals and NO people: a big red barn with white trim on the left, a light blue sky with two soft white clouds, gentle green rolling hills far away, a short wooden fence across the middle, a small round blue duck pond on the right, and flat light green grass across the bottom half of the picture running from the left edge to the right edge."
+  }
+}

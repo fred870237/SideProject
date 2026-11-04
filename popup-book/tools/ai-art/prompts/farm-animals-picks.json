@@ -1,0 +1,9 @@
+{
+  "cow": ["D:/AI/ComfyUI/output/f1/cow_62_00001_.png", false, [], {"erode": false}],
+  "pig": ["D:/AI/ComfyUI/output/f1/pig_8_00001_.png", false],
+  "sheep": ["D:/AI/ComfyUI/output/f1/sheep_62_00001_.png", false, [], {"erode": false}],
+  "horse": ["D:/AI/ComfyUI/output/f1/horse_62_00001_.png", false, [], {"erode": false}],
+  "rooster": ["D:/AI/ComfyUI/output/f1/rooster_7_00001_.png", false, [], {"erode": false}],
+  "hen": ["D:/AI/ComfyUI/output/f1/hen_7_00001_.png", false, [], {"erode": false}],
+  "duck": ["D:/AI/ComfyUI/output/f1/duck_7_00001_.png", false]
+}

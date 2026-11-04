@@ -1,0 +1,15 @@
+{
+  "name": "f1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen from the side, the whole animal visible, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "cow": "A single black and white spotted dairy cow standing on four legs facing right, a pink nose, small horns, a pink udder and a tail with a tuft",
+    "pig": "A single round pink pig standing on four short legs facing right, a big round snout, floppy ears and a curly tail",
+    "sheep": "A single fluffy white sheep standing on four thin dark legs facing right, a dark grey face and a big round cloud of wool",
+    "horse": "A single brown horse standing on four legs facing right, a dark brown mane and tail, white socks on its feet",
+    "rooster": "A single proud rooster standing facing right, a big red comb and wattle, orange and brown feathers and a tall curved dark tail",
+    "hen": "A single plump white hen sitting in a round brown straw nest, facing right, a small red comb, a yellow beak",
+    "duck": "A single white farm duck standing facing right, an orange beak and orange webbed feet"
+  }
+}

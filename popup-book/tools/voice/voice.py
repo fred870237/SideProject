@@ -46,6 +46,8 @@ LINES = [
     "Lion", "Elephant", "Giraffe", "Zebra", "Hippo", "Rhino", "Meerkat",
     # 🐒 動物：叢林
     "Monkey", "Sloth", "Parrot", "Tiger", "Snake", "Frog", "Gorilla",
+    # 🐮 動物：農場動物
+    "Cow", "Pig", "Sheep", "Horse", "Rooster", "Hen", "Duck", "Quack quack!", "Cluck cluck!", "Peep peep!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

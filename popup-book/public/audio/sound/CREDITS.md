@@ -14,4 +14,9 @@
 | tiger | tiger.mp3 | [Tiger Roar by freesound_community](https://pixabay.com/sound-effects/nature-tiger-roar-104166/) |
 | snake（叢林） | anaconda.mp3 | [Snake hissing by freesound_community](https://pixabay.com/sound-effects/nature-snake-hissing-6092/) |
 | frog | frog.mp3 | [frog croak by freesound_community](https://pixabay.com/sound-effects/nature-frog-croak-80816/) |
+| cow | cow.mp3 | [Cow Moo 2 by freesound_community](https://pixabay.com/sound-effects/nature-cow-moo-2-6893/) |
+| pig | pig.mp3 | [Pig Oink by freesound_community](https://pixabay.com/sound-effects/nature-pig-oink-47167/) |
+| sheep | sheep.mp3（剪 11.8 秒起的 2.5 秒） | [Sheep bleating by freesound_community](https://pixabay.com/sound-effects/nature-sheep-bleating-31117/) |
+| horse | horse.mp3（剪 22.8 秒起的 2.5 秒） | [delicate horse by freesound_community](https://pixabay.com/sound-effects/nature-delicate-horse-69688/) |
+| rooster | rooster.mp3（剪 chicken.mp3 32.8 秒起的公雞啼 3 秒） | [Chickens clucking and rooster by freesound_community](https://pixabay.com/sound-effects/nature-chickens-clucking-and-rooster-with-cockadoodledoo-31734/) |
 | gorilla（叢林） | chimpanzee.mp3 | [chimpanzee by freesound_community](https://pixabay.com/sound-effects/nature-chimpanzee-101055/) |
