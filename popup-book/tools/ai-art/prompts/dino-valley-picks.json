@@ -1,0 +1,9 @@
+{
+  "trex": ["D:/AI/ComfyUI/output/dv1/trex_61_00001_.png", false, [], {"key": "magenta"}],
+  "triceratops": ["D:/AI/ComfyUI/output/dv1/triceratops_61_00001_.png", false, [], {"key": "magenta"}],
+  "stegosaurus": ["D:/AI/ComfyUI/output/dv1/stegosaurus_7_00001_.png", false, [], {"key": "magenta"}],
+  "brachiosaurus": ["D:/AI/ComfyUI/output/dv1/brachiosaurus_7_00001_.png", false, [], {"key": "magenta"}],
+  "ankylosaurus": ["D:/AI/ComfyUI/output/dv3/ankylosaurus_62_00001_.png", false, [], {"key": "magenta"}],
+  "raptor": ["D:/AI/ComfyUI/output/dv1/raptor_7_00001_.png", false, [], {"key": "magenta"}],
+  "parasaurolophus": ["D:/AI/ComfyUI/output/dv2/parasaurolophus_63_00001_.png", false, [], {"key": "magenta"}]
+}

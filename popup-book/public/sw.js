@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v26';
+const CACHE = 'popup-book-v27';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -45,6 +45,9 @@ const CORE = [
   'art/pets.js',
   ...['bg', 'bichon', 'shiba', 'cat', 'hamster', 'goldfish', 'budgie', 'guineapig', 'tortoise']
     .map((n) => `art/img/pets/${n}.webp`),
+  'art/dino-valley.js',
+  ...['bg', 'trex', 'triceratops', 'stegosaurus', 'brachiosaurus', 'ankylosaurus', 'raptor', 'parasaurolophus']
+    .map((n) => `art/img/dino-valley/${n}.webp`),
   ...['lion', 'elephant', 'rhino', 'macaque', 'parrot', 'tiger', 'anaconda', 'frog', 'chimpanzee',
     'cow', 'pig', 'sheep', 'horse', 'rooster', 'whale', 'dolphin', 'polar-bear', 'seal', 'fox', 'snowy-owl',
     'brown-bear', 'squirrel', 'wolf', 'dog', 'cat']

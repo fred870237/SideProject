@@ -58,6 +58,9 @@ LINES = [
     # 🐶 動物：寵物
     "Shiba Inu and Bichon Frise", "Cat", "Hamster", "Goldfish", "Budgie", "Guinea Pig", "Tortoise",
     "Squeak squeak!", "Tweet tweet!", "Wheek wheek!", "Munch munch!",
+    # 🦖 恐龍：恐龍山谷
+    "T-Rex", "Triceratops", "Stegosaurus", "Brachiosaurus", "Ankylosaurus", "Velociraptor", "Parasaurolophus",
+    "Roar!", "Stomp stomp!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

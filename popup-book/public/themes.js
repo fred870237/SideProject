@@ -30,6 +30,16 @@ const THEMES = [
       { id: 'pets', icon: '🐶', en: 'Pets', zh: '寵物' },
     ],
   },
-  { id: 'dinosaurs', icon: '🦕', en: 'Dinosaurs', zh: '恐龍', color: '#8fd3ff', pages: [] },
+  {
+    id: 'dinosaurs', icon: '🦕', en: 'Dinosaurs', zh: '恐龍', color: '#8fd3ff',
+    pages: [
+      { id: 'dino-valley', icon: '🦖', en: 'Dino Valley', zh: '恐龍山谷' },
+      { id: 'dino-sky', icon: '🦅', en: 'Prehistoric Sky', zh: '遠古天空' },
+      { id: 'dino-sea', icon: '🌊', en: 'Prehistoric Sea', zh: '遠古海洋' },
+      { id: 'dino-nest', icon: '🥚', en: 'Dino Nest', zh: '恐龍蛋巢' },
+      { id: 'volcano', icon: '🌋', en: 'Volcano', zh: '火山' },
+      { id: 'fossil-museum', icon: '🦴', en: 'Fossil Museum', zh: '化石博物館' },
+    ],
+  },
   { id: 'body', icon: '🦷', en: 'My Body', zh: '我的身體', color: '#ffb3c7', pages: [] },
 ];

@@ -1,0 +1,15 @@
+{
+  "name": "dv1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about dinosaurs. {subject}, seen from the side, the whole dinosaur visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the dinosaur. No text, no plants, no ground, no shadow, no scenery.",
+  "items": {
+    "trex": "A single big Tyrannosaurus rex walking facing right, standing on two strong legs with a long tail held straight out behind, a big head with its mouth closed, two tiny short arms, green skin with a pale yellow belly and darker green stripes on its back",
+    "triceratops": "A single Triceratops standing on four legs facing right, a big bony frill behind its head, two long horns above its eyes and a small horn on its nose, orange brown skin with a cream belly and a yellow frill",
+    "stegosaurus": "A single Stegosaurus standing on four legs facing right, a small head, a row of big orange diamond shaped plates along its arched back, four spikes at the end of its tail, blue grey skin with a pale belly",
+    "brachiosaurus": "A single huge Brachiosaurus standing on four legs facing right, a very long neck pointing up high, a small head, front legs longer than back legs, a short tail, soft green skin with a pale yellow belly and light spots",
+    "ankylosaurus": "A single Ankylosaurus standing low on four short legs facing right, a wide flat armoured back covered in tan bony plates and short spikes, a big round bony club at the end of its tail, brown skin with a cream belly",
+    "raptor": "A single small Velociraptor running facing right on two legs, a slim body, a long stiff tail, feathers on its arms and back, a big curved claw on each foot, orange brown feathers with darker stripes and a cream belly",
+    "parasaurolophus": "A single Parasaurolophus standing on two legs facing right, a long curved hollow tube crest sweeping back from its head, a duck like beak, a long tail, yellow orange skin with red brown stripes on its back and an orange crest"
+  }
+}

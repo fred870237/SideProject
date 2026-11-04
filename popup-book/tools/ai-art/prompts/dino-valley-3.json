@@ -1,0 +1,19 @@
+{
+  "name": "dv3",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about dinosaurs. {subject}, seen from the side, the whole dinosaur visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the dinosaur. No text, no plants, no ground, no shadow, no scenery.",
+  "items": {
+    "ankylosaurus": "A single cute armoured dinosaur shaped like a big low turtle or armadillo, walking facing right on four short thick legs, a wide low round body covered by one smooth domed brown shell with a pattern of small round tan bumps, a smooth rounded top line with nothing sticking up from its back, a row of small triangle spikes only along the lower edge of the shell at its sides, a short wide head, and a stiff straight tail that ends in a big round bony ball like a club, brown skin with a cream belly"
+  }
+}

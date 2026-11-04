@@ -1,0 +1,18 @@
+{
+  "name": "dv2",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about dinosaurs. {subject}, seen from the side, the whole dinosaur visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the dinosaur. No text, no plants, no ground, no shadow, no scenery.",
+  "items": {
+    "ankylosaurus": "A single Ankylosaurus, a very low wide flat tank like armoured dinosaur standing on four short stubby legs facing right, a short head with small horns at the back corners, its whole back covered by a flat shell of round tan bony bumps and a row of short side spikes, NO back plates and NO fins, a stiff tail ending in a big round heavy bony ball club, brown skin with a cream belly",
+    "parasaurolophus": "A single Parasaurolophus, a duck billed dinosaur standing on two legs facing right with its back sloping down to a long tail, a single long thin curved tube shaped crest growing from the back of its head and pointing straight backwards like a horn, a flat duck like beak, a smooth back with NO fins, NO spikes and NO plates, yellow orange skin with thin red brown stripes and a red crest"
+  }
+}
