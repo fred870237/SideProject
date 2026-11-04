@@ -24,5 +24,8 @@
 | polar bear | polar-bear.mp3 | [Bear by KoiRoylers](https://pixabay.com/sound-effects/nature-bear-356010/) |
 | seal | seal.mp3（剪 3.0 秒起的 2.5 秒） | [SEAL by Stu9](https://pixabay.com/sound-effects/nature-seal-352833/) |
 | arctic fox | fox.mp3 | [foxBark2 by freesound_community](https://pixabay.com/sound-effects/film-special-effects-foxbark2-89104/) |
-| snowy owl | snowy-owl.mp3 | [owl hooting by freesound_community](https://pixabay.com/sound-effects/nature-owl-hooting-000102-0145s3-002-070-000-002-068-074-37397/) |
+| snowy owl、owl（森林） | snowy-owl.mp3 | [owl hooting by freesound_community](https://pixabay.com/sound-effects/nature-owl-hooting-000102-0145s3-002-070-000-002-068-074-37397/) |
 | gorilla（叢林） | chimpanzee.mp3 | [chimpanzee by freesound_community](https://pixabay.com/sound-effects/nature-chimpanzee-101055/) |
+| brown bear | brown-bear.mp3 | [Bear Growl by Universfield](https://pixabay.com/sound-effects/nature-bear-growl-191995/) |
+| squirrel | squirrel.mp3 | [Squirrel by freesound_community](https://pixabay.com/sound-effects/nature-squirrel-89831/) |
+| wolf | wolf.mp3（剪 1.4 秒起的 3.5 秒） | [Wolf howl by freesound_community](https://pixabay.com/sound-effects/nature-wolf-howl-6310/) |

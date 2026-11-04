@@ -1,0 +1,9 @@
+{
+  "name": "f1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean simple shapes, lots of calm open space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of a friendly autumn forest like a stage set seen straight from the front with no perspective, with NO animals and NO people: a soft pale blue sky, rows of green pine trees and orange and yellow round trees far away, one big thick brown tree trunk on the left edge going up out of the top of the picture with a strong horizontal branch sticking out to the right, a wide open grassy meadow with a few mushrooms and fallen leaves across the bottom half of the picture, and a small fallen log on the right."
+  }
+}

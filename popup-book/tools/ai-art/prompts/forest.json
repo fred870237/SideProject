@@ -1,0 +1,16 @@
+{
+  "name": "f1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen from the side, the whole animal visible, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no trees, no leaves, no grass, no ground, no shadow, no scenery.",
+  "items": {
+    "bear": "A single big friendly brown bear standing on four legs facing right, thick chocolate brown fur with darker brown shading, a tan muzzle, a black nose and small round ears",
+    "deer": "A single graceful red deer stag standing facing right, reddish brown fur, a pale cream belly and a white rump patch, big branching antlers, slim legs and small black hooves",
+    "owl": "A single round brown tawny owl perched facing right, warm brown and cinnamon feathers with cream speckles, a pale round face disc, big dark eyes, folded wings, small yellow feet",
+    "squirrel": "A single cute red squirrel sitting upright facing right holding an acorn in its front paws, orange red fur, a cream belly, tufted ears and a big bushy curled tail",
+    "rabbit": "A single cute brown wild rabbit sitting facing right, soft light brown fur, long upright ears, a white fluffy tail and a pink nose",
+    "hedgehog": "A single cute round hedgehog walking facing right, a back covered in brown and cream spines, a tan furry face, a little black nose and tiny feet",
+    "woodpecker": "A single colourful great spotted woodpecker clinging upright facing right, black and white wings with white spots, a red patch on the back of its head and under its tail, a strong pointed beak, stiff tail feathers",
+    "wolf": "A single friendly grey wolf standing facing right, grey and cream fur with darker grey on its back, pointed ears, a long bushy tail, yellow eyes"
+  }
+}

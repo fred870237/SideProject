@@ -1,0 +1,10 @@
+{
+  "bear": ["D:/AI/ComfyUI/output/f1/bear_7_00001_.png", false],
+  "deer": ["D:/AI/ComfyUI/output/f1/deer_62_00001_.png", false],
+  "owl": ["D:/AI/ComfyUI/output/f1/owl_62_00001_.png", false],
+  "squirrel": ["D:/AI/ComfyUI/output/f1/squirrel_7_00001_.png", false],
+  "rabbit": ["D:/AI/ComfyUI/output/f1/rabbit_7_00001_.png", false],
+  "hedgehog": ["D:/AI/ComfyUI/output/f1/hedgehog_7_00001_.png", false],
+  "woodpecker": ["D:/AI/ComfyUI/output/f1/woodpecker_7_00001_.png", false],
+  "wolf": ["D:/AI/ComfyUI/output/f1/wolf_61_00001_.png", false]
+}
