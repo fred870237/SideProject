@@ -45,11 +45,13 @@ LINES = [
     # 🦁 動物：草原
     "Lion", "Elephant", "Giraffe", "Zebra", "Hippo", "Rhino", "Meerkat",
     # 🐒 動物：叢林
-    "Monkey", "Sloth", "Parrot", "Tiger", "Snake", "Frog", "Gorilla",
+    "Monkey", "Sloth", "Parrot", "Tiger", "Snake", "Frog", "Gorilla", "Green Iguana",
     # 🐮 動物：農場動物
     "Cow", "Pig", "Sheep", "Horse", "Rooster", "Hen", "Duck", "Quack quack!", "Cluck cluck!", "Peep peep!",
     # 🐳 動物：海洋
     "Whale", "Dolphin", "Shark", "Sea Turtle", "Octopus", "Crab", "Clownfish", "Chomp chomp!", "Snip snap!", "Blub blub!",
+    # 🐧 動物：極地
+    "Polar Bear", "Penguin", "Seal", "Walrus", "Arctic Fox", "Snowy Owl", "Orca", "Wheee!", "Clap clap!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

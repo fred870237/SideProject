@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v23';
+const CACHE = 'popup-book-v24';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -28,7 +28,7 @@ const CORE = [
   ...['bg', 'lion', 'elephant', 'giraffe', 'zebra', 'hippo', 'rhino', 'meerkat']
     .map((n) => `art/img/savanna/${n}.webp`),
   'art/jungle.js',
-  ...['bg', 'monkey', 'sloth', 'parrot', 'tiger', 'snake', 'frog', 'gorilla']
+  ...['bg', 'monkey', 'sloth', 'parrot', 'tiger', 'snake', 'frog', 'gorilla', 'iguana']
     .map((n) => `art/img/jungle/${n}.webp`),
   'art/farm-animals.js',
   ...['bg', 'cow', 'pig', 'sheep', 'horse', 'rooster', 'hen', 'duck']
@@ -36,8 +36,11 @@ const CORE = [
   'art/ocean.js',
   ...['bg', 'whale', 'dolphin', 'shark', 'turtle', 'octopus', 'crab', 'clownfish']
     .map((n) => `art/img/ocean/${n}.webp`),
+  'art/polar.js',
+  ...['bg', 'polarbear', 'penguin', 'seal', 'walrus', 'fox', 'owl', 'orca']
+    .map((n) => `art/img/polar/${n}.webp`),
   ...['lion', 'elephant', 'rhino', 'macaque', 'parrot', 'tiger', 'anaconda', 'frog', 'chimpanzee',
-    'cow', 'pig', 'sheep', 'horse', 'rooster', 'whale', 'dolphin']
+    'cow', 'pig', 'sheep', 'horse', 'rooster', 'whale', 'dolphin', 'polar-bear', 'seal', 'fox', 'snowy-owl']
     .map((n) => `audio/sound/${n}.mp3`),
   'icon.svg', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
 ];

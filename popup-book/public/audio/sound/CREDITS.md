@@ -21,4 +21,8 @@
 | rooster | rooster.mp3（剪 chicken.mp3 32.8 秒起的公雞啼 3 秒） | [Chickens clucking and rooster by freesound_community](https://pixabay.com/sound-effects/nature-chickens-clucking-and-rooster-with-cockadoodledoo-31734/) |
 | whale | whale.mp3 | [whale sound - type 2 by RibhavAgrawal](https://pixabay.com/sound-effects/nature-whale-sound-type-2-235983/) |
 | dolphin | dolphin.mp3 | [Dolphin Noise by freesound_community](https://pixabay.com/sound-effects/nature-dolphin-noise-6968/) |
+| polar bear | polar-bear.mp3 | [Bear by KoiRoylers](https://pixabay.com/sound-effects/nature-bear-356010/) |
+| seal | seal.mp3（剪 3.0 秒起的 2.5 秒） | [SEAL by Stu9](https://pixabay.com/sound-effects/nature-seal-352833/) |
+| arctic fox | fox.mp3 | [foxBark2 by freesound_community](https://pixabay.com/sound-effects/film-special-effects-foxbark2-89104/) |
+| snowy owl | snowy-owl.mp3 | [owl hooting by freesound_community](https://pixabay.com/sound-effects/nature-owl-hooting-000102-0145s3-002-070-000-002-068-074-37397/) |
 | gorilla（叢林） | chimpanzee.mp3 | [chimpanzee by freesound_community](https://pixabay.com/sound-effects/nature-chimpanzee-101055/) |

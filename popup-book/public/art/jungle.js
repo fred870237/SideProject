@@ -1,7 +1,7 @@
 // 🐒 叢林：點動物會唸英文名字、播真的叫聲，然後像機關書一樣動起來
 // 版面 1600×1000；左右兩邊是大樹，上面有兩根橫的樹枝（左 (208,240)→(792,94)、右 (885,94)→(1406,250)）
 // 中間是黃綠色的空地（地面約 y 540～830），下面有一條小河（y 830 以下）
-// 動物是 AI 生成的圖（art/img/jungle/*.webp）；猴子、樹懶、鸚鵡的圖裡自帶一小段樹枝
+// 動物是 AI 生成的圖（art/img/jungle/*.webp）；猴子、樹懶、鸚鵡的圖裡自帶一小段樹枝；綠鬣蜥趴在右邊樹枝的左段
 // 叫聲是 Pixabay 的音效（audio/sound/，來源見那裡的 CREDITS.md），用 playSound() 排在名字後面播
 // 整個檔案包在 { } 裡，變數名稱才不會跟其他頁面的檔案撞名
 {
@@ -173,6 +173,45 @@ const gorilla = {
   },
 };
 
+// ---------- 綠鬣蜥：趴在右邊樹枝上做伏地挺身、鼓起下巴的喉扇，再「撲通」跳進河裡，最後爬回樹枝 ----------
+// 圖 696×370（臉朝右，尾巴垂在身體下面）；綠色的動物不能用綠幕，改用洋紅色背景生圖
+// 腳踩在圖的 y ≈ 190，r: 17 讓牠順著樹枝的斜度趴；喉扇是程式畫的，在下巴 (585, 165)
+// focus: false：在原地表演，才看得到牠從樹枝跳進下面的河
+const iguana = {
+  id: 'iguana', en: 'Green Iguana', zh: '綠鬣蜥', x: 850, y: 151, s: 0.36, r: 17,
+  hint: [350, -260],
+  focus: false,
+  pivots: { body: [100, 200], dewlap: [585, 135] },
+  art: (p) => whole(p, 'iguana', 696, 370,
+    `<g id="${p}-dewlap"><ellipse cx="585" cy="165" rx="42" ry="48" fill="#a8d23c"/><ellipse cx="585" cy="175" rx="30" ry="34" fill="#c3e85a"/></g>` +
+    IMG('iguana', 696, 370)),
+  setup(c) { c.set('dewlap', { sx: 0.3, sy: 0.3, o: 0 }); },
+  async act(c) {
+    // 點頭做伏地挺身
+    for (let i = 0; i < 3; i++) {
+      await c.anim(220, { body: { r: -8 } });
+      await c.anim(220, { body: { r: 0 } });
+    }
+    // 喉扇鼓起來兩次
+    for (let i = 0; i < 2; i++) {
+      await c.anim(300, { dewlap: { sx: 1, sy: 1, o: 1 } });
+      await c.wait(300);
+      await c.anim(300, { dewlap: { sx: 0.3, sy: 0.3, o: 0 } });
+    }
+    // 往右前方跳出去，劃個拱形掉進河裡（樹枝斜 17°，所以畫面往下在牠的座標是往右下）
+    await c.anim(1300, {}, (t) => c.set('body', { tx: 1546 * t, ty: -1400 * t + 3134 * t * t, r: 40 * t }), (t) => t);
+    speak('Splash!', { queue: true });
+    c.burst('body', 600, 200, { n: 20, color: '#ffffff', vx: [-5, 5], vy: [-8, -3], g: 0.35, size: [6, 13] });
+    c.burst('body', 600, 200, { n: 12, color: '#8fd3ff', vx: [-4, 4], vy: [-6, -2], g: 0.3, size: [6, 11] });
+    await c.anim(200, { body: { o: 0 } });
+    await c.wait(600);
+    // 從樹枝左邊慢慢爬回來
+    c.set('body', { tx: -250, ty: 0, r: 0 });
+    await c.anim(1600, { body: { tx: 0, o: 1 } }, (t) => c.set('body', { ty: -6 * Math.abs(Math.sin(t * Math.PI * 6)) }));
+    c.set('body', { ty: 0 });
+  },
+};
+
 SCENES.jungle = {
   w: 1600,
   h: 1000,
@@ -184,6 +223,6 @@ SCENES.jungle = {
     </g>
   `,
   // 先畫後排（遠的），再畫前排
-  items: [monkey, sloth, parrot, gorilla, tiger, frog, snake],
+  items: [monkey, sloth, parrot, gorilla, iguana, tiger, frog, snake],
 };
 }

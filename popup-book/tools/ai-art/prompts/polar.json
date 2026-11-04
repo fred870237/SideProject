@@ -1,0 +1,15 @@
+{
+  "name": "p1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals. {subject}, seen from the side, the whole animal visible, cute and friendly with a happy face but realistic proportions, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the animal. No text, no snow, no ice, no water, no ground, no shadow, no scenery.",
+  "items": {
+    "polarbear": "A single big fluffy white polar bear standing on four legs facing right, cream white fur with pale grey shading, a black nose and small round ears",
+    "penguin": "A single cute emperor penguin standing upright facing right, a black back and head, a white belly, a yellow-orange patch on its neck, small flippers and orange feet",
+    "seal": "A single round grey harbour seal lying on its belly facing right, its head lifted up, big dark eyes, whiskers, front flippers and tail flippers",
+    "walrus": "A single big brown walrus lying facing right, two long white tusks, a bushy moustache of whiskers, front flippers",
+    "fox": "A single fluffy white arctic fox sitting facing right, a big bushy white tail, small rounded ears, a black nose",
+    "owl": "A single round white snowy owl perched facing right, white feathers with a few small dark speckles, big yellow eyes, folded wings",
+    "orca": "A single friendly black and white orca killer whale swimming facing right, a tall black dorsal fin, a white belly and a white eye patch, a tail fluke"
+  }
+}

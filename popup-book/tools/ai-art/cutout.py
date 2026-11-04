@@ -11,12 +11,18 @@ out = pathlib.Path(sys.argv[2]); out.mkdir(parents=True, exist_ok=True)
 rng = np.random.default_rng(1)
 
 for name, (path, flip, *rest) in picks.items():
+    opts = rest[1] if len(rest) > 1 else {}
+    # 綠色的動物（例如綠鬣蜥）改用洋紅色背景生圖：{"key": "magenta"}
+    magenta = opts.get("key") == "magenta"
     im = np.asarray(Image.open(path).convert("RGB")).astype(np.int16).copy()
-    # 手動擦掉的範圍 [x0, y0, x1, y1]：塗成背景綠
+    # 手動擦掉的範圍 [x0, y0, x1, y1]：塗成背景色
     for x0, y0, x1, y1 in (rest[0] if rest else []):
-        im[y0:y1, x0:x1] = (0, 255, 0)
+        im[y0:y1, x0:x1] = (255, 0, 255) if magenta else (0, 255, 0)
     r, g, b = im[..., 0], im[..., 1], im[..., 2]
-    greenness = g - np.maximum(r, b)          # 背景綠：g 明顯大於 r、b
+    if magenta:
+        greenness = np.minimum(r, b) - g      # 背景洋紅：r、b 都明顯大於 g（變數名稱沿用 greenness）
+    else:
+        greenness = g - np.maximum(r, b)      # 背景綠：g 明顯大於 r、b
     bgish = greenness > 18
     lab, _ = ndimage.label(bgish)
     edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
@@ -28,14 +34,17 @@ for name, (path, flip, *rest) in picks.items():
         sizes = ndimage.sum(holes, hl, range(1, n + 1))
         bg |= np.isin(hl, 1 + np.flatnonzero(sizes > 400))   # 大塊綠色（例如手臂中間的空隙）
     alpha = Image.fromarray(np.where(bg, 0, 255).astype(np.uint8))
-    opts = rest[1] if len(rest) > 1 else {}
     if opts.get("erode", True):   # 細線條（塔吊的桁架）不要侵蝕，不然會斷掉
         alpha = alpha.filter(ImageFilter.MinFilter(3))
     alpha = alpha.filter(ImageFilter.GaussianBlur(0.8))
-    # 去綠邊：邊緣附近的綠色壓回去
+    # 去綠邊：邊緣附近的背景色壓回去
     near = ndimage.binary_dilation(bg, iterations=4)
     spill = near & (greenness > 0)
-    im[..., 1] = np.where(spill, np.maximum(r, b), g)
+    if magenta:
+        im[..., 0] = np.where(spill, r - greenness, r)
+        im[..., 2] = np.where(spill, b - greenness, b)
+    else:
+        im[..., 1] = np.where(spill, np.maximum(r, b), g)
     im = im + rng.normal(0, 6, im.shape[:2])[..., None]   # 紙張顆粒
     img = Image.fromarray(np.clip(im, 0, 255).astype(np.uint8)).convert("RGBA")
     img.putalpha(alpha)

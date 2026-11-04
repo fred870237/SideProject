@@ -24,7 +24,7 @@ D:\AI\ComfyUI\venv\Scripts\python.exe D:\AI\ComfyUI\main.py --listen 127.0.0.1 -
    - 指令：`python cutout.py prompts/<頁面>-picks.json <cut 資料夾>`
    - 車子要生成在**綠幕背景**上（`#00FF00`）。去背用的是「綠色比紅、藍都多」，白色車身才不會被當成背景去掉
    - 去背後會加上紙張顆粒
-   - picks 的第 3 個值是要手動擦掉的範圍，例如塔吊的鋼索和吊鉤；第 4 個值是選項，`{"erode": false}` 給細線條用
+   - picks 的第 3 個值是要手動擦掉的範圍，例如塔吊的鋼索和吊鉤；第 4 個值是選項，`{"erode": false}` 給細線條用；綠色的動物（綠鬣蜥）改在洋紅色背景（`#FF00FF`）生圖，選項加 `{"key": "magenta"}`
 4. **輸出**：`python export.py <cut 資料夾> <背景.png> ../../public/art/img/<頁面> <格線預覽資料夾>`
    - 轉成 WebP，並產生畫好座標格線的預覽圖
    - 照預覽圖上的像素座標，在 `art/<頁面>.js` 裡用 clipPath 切出會動的零件

@@ -1,0 +1,9 @@
+{
+  "name": "p1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean simple shapes, lots of calm open space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of the snowy polar north like a stage set seen straight from the front with no perspective, with NO animals and NO people: a pale blue sky with soft pink and turquoise northern lights, white snowy mountains and icebergs far away, a big flat white snow and ice field across the bottom left two thirds of the picture, and calm dark blue sea water on the bottom right third beside the edge of the ice, running down to the bottom of the picture."
+  }
+}
