@@ -1,0 +1,9 @@
+{
+  "pteranodon": ["D:/AI/ComfyUI/output/ds1/pteranodon_8_00001_.png", false, [], {"key": "magenta"}],
+  "quetzalcoatlus": ["D:/AI/ComfyUI/output/ds1/quetzalcoatlus_63_00001_.png", false, [], {"key": "magenta"}],
+  "rhamphorhynchus": ["D:/AI/ComfyUI/output/ds1/rhamphorhynchus_62_00001_.png", false, [], {"key": "magenta", "erode": false}],
+  "tapejara": ["D:/AI/ComfyUI/output/ds1/tapejara_64_00001_.png", false, [], {"key": "magenta"}],
+  "dimorphodon": ["D:/AI/ComfyUI/output/ds1/dimorphodon_63_00001_.png", false, [], {"key": "magenta"}],
+  "archaeopteryx": ["D:/AI/ComfyUI/output/ds1/archaeopteryx_7_00001_.png", false, [], {"key": "magenta"}],
+  "microraptor": ["D:/AI/ComfyUI/output/ds1/microraptor_8_00001_.png", false, [], {"key": "magenta"}]
+}

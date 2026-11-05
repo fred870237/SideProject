@@ -1,0 +1,15 @@
+{
+  "name": "ds1",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about dinosaurs. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no clouds, no plants, no ground, no shadow, no scenery.",
+  "items": {
+    "pteranodon": "A single Pteranodon flying facing right seen from the side, both big leathery wings raised high above its back in a V shape, a long pointed beak and a long backward pointing crest on its head, small legs tucked under its body, light blue grey body and wings with a cream belly and an orange crest",
+    "quetzalcoatlus": "A single giant Quetzalcoatlus flying facing right seen from the side, both huge wide leathery wings raised high above its back in a V shape, a very long neck and an enormous long pointed beak, a small crest, tiny legs tucked under, sandy brown and white body with tan wings and a red brown head",
+    "rhamphorhynchus": "A single small Rhamphorhynchus flying facing right seen from the side, both leathery wings raised high above its back, a long beak full of little pointy teeth, a long thin tail with a diamond shaped vane at the tip, orange brown body and wings with a yellow belly",
+    "tapejara": "A single Tapejara flying facing right seen from the side, both leathery wings raised high above its back in a V shape, a short downturned beak and a huge tall rounded sail crest on its head in bright red and yellow, a teal blue body with a pale belly and teal wings",
+    "dimorphodon": "A single Dimorphodon standing on all fours on the ground facing right with its wings folded at its sides, a big tall puffin like head with a deep beak, a long thin tail, yellow and black striped beak, dark brown and orange body",
+    "archaeopteryx": "A single Archaeopteryx perched facing right seen from the side, a small feathered dinosaur bird with brown and black feathered wings slightly open, little clawed fingers on its wings, a toothy beak, a long bony feathered tail, dark brown and black feathers with a cream belly",
+    "microraptor": "A single Microraptor gliding facing right seen from the side, a small feathered dinosaur with feathered wings on its arms spread wide and a second pair of long feathers on its legs, a long feathered tail fan, glossy dark blue black feathers with a shimmering blue sheen, a small head with big eyes"
+  }
+}

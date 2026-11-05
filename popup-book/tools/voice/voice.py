@@ -61,6 +61,9 @@ LINES = [
     # 🦖 恐龍：恐龍山谷
     "T-Rex", "Triceratops", "Stegosaurus", "Brachiosaurus", "Ankylosaurus", "Velociraptor", "Parasaurolophus",
     "Roar!", "Stomp stomp!",
+    # 🦅 恐龍：遠古天空
+    "Pteranodon", "Quetzalcoatlus", "Rhamphorhynchus", "Tapejara", "Dimorphodon", "Archaeopteryx", "Microraptor",
+    "Squawk!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",
