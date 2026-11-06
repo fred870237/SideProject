@@ -1,0 +1,15 @@
+{
+  "name": "dsea1",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about prehistoric sea animals. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no water, no bubbles, no plants, no ground, no shadow, no scenery.",
+  "items": {
+    "plesiosaurus": "A single Plesiosaurus swimming facing right seen from the side, a round body with four big paddle flippers, a very long thin neck reaching forward and a small head with a smiling mouth, a short tail, teal green skin with a pale yellow belly and darker spots on its back",
+    "mosasaurus": "A single big Mosasaurus swimming facing right seen from the side, a long sleek sea lizard body, a long crocodile like head with its mouth closed in a big grin, four small flippers, a long tail ending in a shark like tail fin, dark blue grey skin with a white belly",
+    "ichthyosaurus": "A single Ichthyosaurus swimming facing right seen from the side, a dolphin shaped sea reptile with a long thin pointed snout, a very big round eye, a back fin, flippers and a half moon tail fin, light blue grey skin with a white belly",
+    "ammonite": "A single ammonite swimming facing right seen from the side, a big round coiled spiral shell with ridges like a snail shell in cream and brown stripes, a small squid like head with big eyes and a bunch of short orange tentacles sticking out of the shell opening",
+    "archelon": "A single giant prehistoric sea turtle Archelon swimming facing right seen from the side, a big leathery ridged dark brown shell, huge long front flippers, a big head with a hooked beak, grey brown skin with a cream belly",
+    "dunkleosteus": "A single Dunkleosteus swimming facing right seen from the side, a big armoured fish with a heavy bony grey helmet plate covering its head, a big jaw with two sharp bony blade plates instead of teeth, a round eye, a long shark like body and tail fin, silver blue grey skin with a white belly and darker stripes",
+    "trilobite": "A single trilobite crawling facing right on its little legs, seen from the side and slightly above so its back shows, an oval body made of many curved segments in three lobes, a half moon head shield with two bumpy eyes, small antennae, brown and orange shell with a cream underside"
+  }
+}

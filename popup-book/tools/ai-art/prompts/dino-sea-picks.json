@@ -1,0 +1,9 @@
+{
+  "plesiosaurus": ["D:/AI/ComfyUI/output/dsea2/plesiosaurus_64_00001_.png", false, [], {"key": "magenta"}],
+  "mosasaurus": ["D:/AI/ComfyUI/output/dsea1/mosasaurus_62_00001_.png", false, [], {"key": "magenta"}],
+  "ichthyosaurus": ["D:/AI/ComfyUI/output/dsea1/ichthyosaurus_7_00001_.png", false, [], {"key": "magenta"}],
+  "ammonite": ["D:/AI/ComfyUI/output/dsea2/ammonite_61_00001_.png", false, [], {"key": "magenta", "erode": false}],
+  "archelon": ["D:/AI/ComfyUI/output/dsea1/archelon_7_00001_.png", false, [], {"key": "magenta"}],
+  "dunkleosteus": ["D:/AI/ComfyUI/output/dsea1/dunkleosteus_8_00001_.png", false, [], {"key": "magenta"}],
+  "trilobite": ["D:/AI/ComfyUI/output/dsea2/trilobite_65_00001_.png", true, [], {"key": "magenta"}]
+}

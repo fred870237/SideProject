@@ -1,0 +1,21 @@
+{
+  "name": "dsea2",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about prehistoric sea animals. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no water, no bubbles, no plants, no ground, no shadow, no scenery.",
+  "items": {
+    "ammonite": "A single ammonite, an extinct sea creature related to the squid, floating in the sea facing right, NOT a snail: no foot and no body under the shell, a big round flat coiled spiral shell with ribs in cream and brown stripes standing upright, and coming out of the shell opening on the right a small squid like head with two big eyes and a bunch of long wavy orange tentacles trailing forward to the right",
+    "plesiosaurus": "A single Plesiosaurus swimming facing right seen from the side, a wide smooth turtle shaped body without a shell, four big long paddle flippers, a very long thin neck reaching forward and a small head with a smiling mouth, a short pointed tail, a completely smooth rounded back with NO plates, NO spikes and NO fins, teal green skin with a pale yellow belly and a few darker spots",
+    "trilobite": "A single trilobite seen from directly above like a top down view, a flat oval body divided into three long lobes from head to tail with many curved stripe segments across it, a half moon shaped head shield at the top with two small bumpy eyes and two thin antennae, little legs peeking out at the sides, brown and orange shell with lighter edges, pointing up the picture"
+  }
+}
