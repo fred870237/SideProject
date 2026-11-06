@@ -1,0 +1,15 @@
+{
+  "name": "foss1",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about a dinosaur museum. {subject}, the whole thing visible, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple cute shapes. No pink, purple or magenta anywhere on the object. No text, no stand, no base, no ground, no shadow, no scenery.",
+  "items": {
+    "trex": "A complete T-Rex dinosaur skeleton fossil standing facing right seen from the side, a big skull with a friendly toothy grin and round eye holes, ribs, tiny arms, a long tail of little bones, all bones in warm cream and light beige colours",
+    "triceratops": "A complete Triceratops dinosaur skeleton fossil standing on four legs facing right seen from the side, a big skull with a round frill and three horns, ribs, four sturdy legs, a short tail of little bones, all bones in warm cream and light beige colours",
+    "stegosaurus": "A complete Stegosaurus dinosaur skeleton fossil standing on four legs facing right seen from the side, a small skull, a row of big pointed bony plates along its arched back, ribs, four legs, a tail with spikes, all bones in warm cream and light beige colours",
+    "brachiosaurus": "A complete Brachiosaurus long neck dinosaur skeleton fossil standing on four legs facing right seen from the side, a very long neck reaching up with a small skull at the top, ribs, long front legs, a tail of little bones, all bones in warm cream and light beige colours",
+    "raptor": "A complete Velociraptor dinosaur skeleton fossil standing on two legs facing right seen from the side, a long narrow skull with small teeth, ribs, arms with claws, a big curved toe claw, a long stiff tail of little bones, all bones in warm cream and light beige colours",
+    "pteranodon": "A complete Pteranodon flying reptile skeleton fossil with its wings spread wide flying facing right seen from the side, a long pointed beak and a long crest on the back of the skull, thin wing bones, all bones in warm cream and light beige colours",
+    "ammonite": "A round ammonite fossil, a flat coiled spiral shell made of stone with ridges, in warm brown and golden beige stone colours"
+  }
+}
