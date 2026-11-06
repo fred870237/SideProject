@@ -1,0 +1,12 @@
+{
+  "name": "dnest1",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about dinosaurs. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no eggs, no nest, no shadow, no scenery.",
+  "items": {
+    "maiasaura": "A single mother Maiasaura duck billed dinosaur standing on four legs facing right seen from the side, a wide flat duck like beak, a small bony bump crest above the eyes, a gentle kind smile, a long thick tail held straight out, olive green skin with a light yellow belly and darker green stripes on its back",
+    "oviraptor": "A single Oviraptor dinosaur standing on two legs facing right seen from the side, a bird like dinosaur with a short parrot like beak, a tall round crest on its head, both feathered arms spread out wide like little wings, long legs, a feathery tail, orange and yellow feathers with blue feather tips on the arms",
+    "protoceratops": "A single Protoceratops dinosaur standing on four legs facing right seen from the side, a small chubby dinosaur with a parrot like beak, a wide flat bony frill behind its head, no horns, a short thick tail, sandy tan skin with a cream belly and brown spots",
+    "compsognathus": "A single tiny Compsognathus dinosaur running on two long thin legs facing right seen from the side, a slim little lizard like dinosaur with a small pointed head, big eyes, short arms and a very long thin tail held straight out, bright green skin with a yellow belly and dark green stripes"
+  }
+}

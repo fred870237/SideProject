@@ -1,0 +1,12 @@
+{
+  "maiasaura": ["D:/AI/ComfyUI/output/dnest1/maiasaura_62_00001_.png", false, [], {"key": "magenta"}],
+  "oviraptor": ["D:/AI/ComfyUI/output/dnest1/oviraptor_63_00001_.png", false, [], {"key": "magenta"}],
+  "protoceratops": ["D:/AI/ComfyUI/output/dnest1/protoceratops_61_00001_.png", false, [], {"key": "magenta"}],
+  "compsognathus": ["D:/AI/ComfyUI/output/dnest1/compsognathus_63_00001_.png", false, [], {"key": "magenta"}],
+  "baby-trex": ["D:/AI/ComfyUI/output/dnest2/baby-trex_61_00001_.png", false, [], {"key": "magenta"}],
+  "baby-triceratops": ["D:/AI/ComfyUI/output/dnest2/baby-triceratops_63_00001_.png", false, [], {"key": "magenta"}],
+  "baby-brachiosaurus": ["D:/AI/ComfyUI/output/dnest2/baby-brachiosaurus_63_00001_.png", false, [], {"key": "magenta"}],
+  "egg-a": ["D:/AI/ComfyUI/output/dnest2/egg-a_64_00001_.png", false, [], {"key": "magenta"}],
+  "egg-b": ["D:/AI/ComfyUI/output/dnest2/egg-b_61_00001_.png", false, [], {"key": "magenta"}],
+  "egg-c": ["D:/AI/ComfyUI/output/dnest2/egg-c_64_00001_.png", false, [], {"key": "magenta"}]
+}

@@ -66,6 +66,9 @@ LINES = [
     "Squawk!",
     # 🌊 恐龍：遠古海洋
     "Ichthyosaurus", "Plesiosaurus", "Archelon", "Mosasaurus", "Ammonite", "Dunkleosteus", "Trilobite",
+    # 🥚 恐龍：恐龍蛋巢
+    "Maiasaura", "Oviraptor", "Protoceratops", "Compsognathus",
+    "Baby T-Rex", "Baby Triceratops", "Baby Brachiosaurus", "Crack!", "Peep peep!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

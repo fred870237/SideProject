@@ -1,0 +1,9 @@
+{
+  "name": "dnest1bg",
+  "seeds": [51, 52, 53, 54, 55, 56],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean simple shapes, lots of calm open space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of a sunny prehistoric dinosaur nesting ground like a stage set seen straight from the front with no perspective, with NO animals, NO dinosaurs and NO eggs: a soft blue sky with a few white clouds, a far away smoking volcano and soft hills, some big ferns, palm like cycads and tall horsetail plants at the left and right sides, and a wide flat sandy brown ground across the whole bottom half of the picture with three big empty round nests made of twigs, mud and leaves sitting on the ground spread from left to right."
+  }
+}

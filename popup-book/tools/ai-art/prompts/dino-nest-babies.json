@@ -1,0 +1,14 @@
+{
+  "name": "dnest2",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 1024,
+  "style": "Flat 2D illustration from a children's picture book about dinosaurs. {subject}, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere. No text, no ground, no grass, no nest, no shadow, no scenery.",
+  "items": {
+    "baby-trex": "A single tiny cute baby T-Rex hatchling sitting upright facing the viewer in a three quarter front view, a very big round head with huge sparkly eyes and a wide happy open mouth with little teeth, tiny arms raised up, a chubby round body, orange skin with a cream belly. No egg shell",
+    "baby-triceratops": "A single tiny cute baby Triceratops hatchling sitting upright facing the viewer in a three quarter front view, a very big round head with huge sparkly eyes, a small round frill, three tiny stubby horns and a happy smile, a chubby round body, light blue skin with a cream belly. No egg shell",
+    "baby-brachiosaurus": "A single tiny cute baby Brachiosaurus hatchling sitting upright facing the viewer in a three quarter front view, a long neck stretched straight up with a small round head on top, huge sparkly eyes and a happy smile, a chubby round body, light green skin with a cream belly. No egg shell",
+    "egg-a": "A single big oval dinosaur egg standing upright, cream white shell with brown speckles, smooth and whole, nothing else",
+    "egg-b": "A single big oval dinosaur egg standing upright, pale mint green shell with dark green speckles, smooth and whole, nothing else",
+    "egg-c": "A single big oval dinosaur egg standing upright, pale yellow shell with orange spots, smooth and whole, nothing else"
+  }
+}
