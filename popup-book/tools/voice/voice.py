@@ -69,6 +69,9 @@ LINES = [
     # 🥚 恐龍：恐龍蛋巢
     "Maiasaura", "Oviraptor", "Protoceratops", "Compsognathus",
     "Baby T-Rex", "Baby Triceratops", "Baby Brachiosaurus", "Crack!", "Peep peep!",
+    # 🌋 恐龍：火山
+    "Volcano", "Spinosaurus", "Pachycephalosaurus", "Dilophosaurus", "Diplodocus", "Iguanodon", "Carnotaurus",
+    "Boom!", "Bonk!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

@@ -1,0 +1,9 @@
+{
+  "volcano": ["D:/AI/ComfyUI/output/volc1/volcano_63_00001_.png", false, [], {"key": "magenta"}],
+  "spinosaurus": ["D:/AI/ComfyUI/output/volc1/spinosaurus_63_00001_.png", false, [], {"key": "magenta"}],
+  "pachycephalosaurus": ["D:/AI/ComfyUI/output/volc1/pachycephalosaurus_63_00001_.png", false, [], {"key": "magenta"}],
+  "dilophosaurus": ["D:/AI/ComfyUI/output/volc1/dilophosaurus_63_00001_.png", false, [], {"key": "magenta"}],
+  "diplodocus": ["D:/AI/ComfyUI/output/volc1/diplodocus_62_00001_.png", false, [], {"key": "magenta"}],
+  "iguanodon": ["D:/AI/ComfyUI/output/volc1/iguanodon_7_00001_.png", false, [], {"key": "magenta"}],
+  "carnotaurus": ["D:/AI/ComfyUI/output/volc1/carnotaurus_63_00001_.png", false, [], {"key": "magenta"}]
+}

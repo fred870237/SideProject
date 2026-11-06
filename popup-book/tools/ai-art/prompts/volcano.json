@@ -1,0 +1,15 @@
+{
+  "name": "volc1",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about dinosaurs. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright colours, clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no rocks, no shadow, no scenery.",
+  "items": {
+    "spinosaurus": "A single big Spinosaurus dinosaur standing on two legs facing right seen from the side, a long narrow crocodile like snout with its mouth closed in a grin, a tall rounded sail on its back, short arms, a long tail, dark teal green skin with a light belly and a red orange sail with darker stripes",
+    "pachycephalosaurus": "A single Pachycephalosaurus dinosaur standing on two legs facing right seen from the side, a big round thick dome shaped head with little bumps around it, a short beak, short arms, a stiff tail held straight out, brown skin with a cream belly and a light tan dome",
+    "dilophosaurus": "A single Dilophosaurus dinosaur standing on two legs facing right seen from the side, a slim dinosaur with two thin red half moon crests on top of its head, a narrow snout, short arms, a long tail, yellow green skin with a cream belly and dark stripes",
+    "diplodocus": "A single Diplodocus long neck dinosaur standing on four legs facing right seen from the side, a very long neck held forward and slightly up with a small head, a big round body, and a very long thin whip like tail stretched out straight behind, grey blue skin with a light belly and darker stripes",
+    "iguanodon": "A single Iguanodon dinosaur standing on four legs facing right seen from the side, a horse like head with a beak, a pointed thumb spike on its front hand, a bulky body and a thick tail, green brown skin with a cream belly and darker spots",
+    "carnotaurus": "A single Carnotaurus dinosaur running on two legs facing right seen from the side, a short deep head with two small horns above the eyes like a bull, tiny short arms, long strong legs, a long tail, red orange skin with a cream belly and rows of small bumps",
+    "volcano": "A single big cone shaped volcano mountain seen from the side, brown and grey rocky slopes, a wide crater at the top with glowing orange lava inside and a few orange lava streams running down the slopes, no smoke, nothing else"
+  }
+}
