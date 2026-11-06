@@ -72,6 +72,8 @@ LINES = [
     # 🌋 恐龍：火山
     "Volcano", "Spinosaurus", "Pachycephalosaurus", "Dilophosaurus", "Diplodocus", "Iguanodon", "Carnotaurus",
     "Boom!", "Bonk!",
+    # 🐘 史前動物：冰河時期
+    "Woolly Mammoth", "Woolly Rhino", "Saber-toothed Cat", "Cave Bear", "Giant Deer", "Steppe Bison", "Dire Wolf",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

@@ -1,0 +1,15 @@
+{
+  "name": "ice1",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about Ice Age animals. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no snow, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "mammoth": "A single big Woolly Mammoth standing on four legs facing right seen from the side, a huge round body covered in long shaggy reddish brown fur, a high domed head with small ears, a long trunk hanging down, two very long curved white tusks, a short tail",
+    "woolly-rhino": "A single Woolly Rhinoceros standing on four legs facing right seen from the side, a stocky body covered in thick shaggy light brown fur, a very long curved front horn and a smaller second horn on its nose, small ears, short legs",
+    "sabertooth": "A single Saber-toothed cat Smilodon standing on four legs facing right seen from the side, a strong big cat with a short bobbed tail, two very long curved white saber fangs sticking down from its closed mouth, tawny golden fur with faint darker spots and a cream belly",
+    "cave-bear": "A single big Cave Bear standing on four legs facing right seen from the side, a huge round furry bear with a big domed forehead, small round ears, a friendly face, thick dark brown fur with a lighter brown muzzle",
+    "giant-deer": "A single Giant Deer Megaloceros standing on four legs facing right seen from the side, a tall elegant deer with enormous wide flat palm shaped antlers, a small hump on its shoulders, reddish brown fur with a cream belly and throat",
+    "bison": "A single Steppe Bison standing on four legs facing right seen from the side, a big hump on its shoulders, a big shaggy woolly head and beard with two long curved horns, dark brown shaggy fur on the front and shorter lighter brown fur on the back",
+    "dire-wolf": "A single Dire Wolf standing on four legs facing right seen from the side, a big strong wolf with a bushy tail, pointed ears, thick grey fur with a white belly, chest and muzzle"
+  }
+}

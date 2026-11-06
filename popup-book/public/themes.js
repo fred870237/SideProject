@@ -41,5 +41,16 @@ const THEMES = [
       { id: 'fossil-museum', icon: '🦴', en: 'Fossil Museum', zh: '化石博物館' },
     ],
   },
+  {
+    id: 'prehistoric', icon: '🐘', en: 'Prehistoric Animals', zh: '史前動物', color: '#c7e8f5',
+    pages: [
+      { id: 'ice-age', icon: '❄️', en: 'Ice Age', zh: '冰河時期' },
+      { id: 'sa-plains', icon: '🌵', en: 'South American Plains', zh: '南美洲草原' },
+      { id: 'ancient-australia', icon: '🦘', en: 'Ancient Australia', zh: '遠古澳洲' },
+      { id: 'megalodon-sea', icon: '🦈', en: 'Megalodon Sea', zh: '巨齒鯊海洋' },
+      { id: 'giant-beasts', icon: '🦏', en: 'Giant Beasts', zh: '遠古巨獸' },
+      { id: 'lost-animals', icon: '🐦', en: 'Lost Animals', zh: '消失的動物' },
+    ],
+  },
   { id: 'body', icon: '🦷', en: 'My Body', zh: '我的身體', color: '#ffb3c7', pages: [] },
 ];

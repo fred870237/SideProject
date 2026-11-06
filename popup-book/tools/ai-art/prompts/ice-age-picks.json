@@ -1,0 +1,9 @@
+{
+  "mammoth": ["D:/AI/ComfyUI/output/ice1/mammoth_63_00001_.png", false, [], {"key": "magenta"}],
+  "woolly-rhino": ["D:/AI/ComfyUI/output/ice1/woolly-rhino_63_00001_.png", false, [], {"key": "magenta"}],
+  "sabertooth": ["D:/AI/ComfyUI/output/ice1/sabertooth_64_00001_.png", false, [], {"key": "magenta"}],
+  "cave-bear": ["D:/AI/ComfyUI/output/ice1/cave-bear_63_00001_.png", false, [], {"key": "magenta"}],
+  "giant-deer": ["D:/AI/ComfyUI/output/ice1/giant-deer_63_00001_.png", false, [], {"key": "magenta"}],
+  "bison": ["D:/AI/ComfyUI/output/ice1/bison_62_00001_.png", false, [], {"key": "magenta"}],
+  "dire-wolf": ["D:/AI/ComfyUI/output/ice1/dire-wolf_62_00001_.png", false, [], {"key": "magenta"}]
+}

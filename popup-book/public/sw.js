@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v32';
+const CACHE = 'popup-book-v33';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -64,6 +64,9 @@ const CORE = [
   'art/fossil-museum.js',
   ...['bg', 'trex', 'triceratops', 'stegosaurus', 'brachiosaurus', 'raptor', 'pteranodon', 'ammonite']
     .map((n) => `art/img/fossil-museum/${n}.webp`),
+  'art/ice-age.js',
+  ...['bg', 'mammoth', 'woolly-rhino', 'sabertooth', 'cave-bear', 'giant-deer', 'bison', 'dire-wolf']
+    .map((n) => `art/img/ice-age/${n}.webp`),
   ...['lion', 'elephant', 'rhino', 'macaque', 'parrot', 'tiger', 'anaconda', 'frog', 'chimpanzee',
     'cow', 'pig', 'sheep', 'horse', 'rooster', 'whale', 'dolphin', 'polar-bear', 'seal', 'fox', 'snowy-owl',
     'brown-bear', 'squirrel', 'wolf', 'dog', 'cat']
