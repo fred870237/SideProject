@@ -1,0 +1,9 @@
+{
+  "name": "m1w",
+  "seeds": [7, 8, 61, 62, 63, 64],
+  "w": 1536, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a giant open-pit mine. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, many small mechanical details such as bolts, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "bwe": "A single gigantic bucket wheel excavator, the biggest land machine in the world: on the left end a huge round orange bucket wheel ringed with many grey buckets with teeth, mounted at the tip of a long steel lattice boom that slopes down to the left; in the middle a tall grey steel superstructure with towers, cables and walkways sitting on low wide crawler tracks; on the right a long counterweight boom and conveyor boom stretching out to the right; orange and grey steel lattice everywhere"
+  }
+}

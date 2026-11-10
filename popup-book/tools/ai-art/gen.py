@@ -4,6 +4,8 @@ usage: python gen.py <batch.json>
 batch.json: {"name": "b1", "style": "...", "seeds": [1,2], "w":1024, "h":1024,
              "items": {"excavator": "subject text", ...}}
 Images land in ComfyUI/output/<name>/<item>_<seed>_00001_.png
+以圖生圖：batch.json 加 "init": "檔名.png"（要先放進 ComfyUI/input/）和 "denoise": 0.6，
+FLUX 就會照那張圖的構圖畫（我們自己畫的草圖，例如 sketch_bagger.py；不要用別人拍的照片）
 """
 import json, sys, time, urllib.request, random
 
@@ -19,8 +21,8 @@ def get(path):
     return json.load(urllib.request.urlopen(URL + path))
 
 
-def workflow(prompt, seed, w, h, prefix):
-    return {
+def workflow(prompt, seed, w, h, prefix, init=None, denoise=1.0):
+    wf = {
         "1": {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": "flux1-schnell-fp8.safetensors"}},
         "2": {"class_type": "CLIPTextEncode", "inputs": {"text": prompt, "clip": ["1", 1]}},
         "3": {"class_type": "CLIPTextEncode", "inputs": {"text": "", "clip": ["1", 1]}},
@@ -31,6 +33,12 @@ def workflow(prompt, seed, w, h, prefix):
         "6": {"class_type": "VAEDecode", "inputs": {"samples": ["5", 0], "vae": ["1", 2]}},
         "7": {"class_type": "SaveImage", "inputs": {"images": ["6", 0], "filename_prefix": prefix}},
     }
+    if init:  # 以圖生圖：從草圖編碼成 latent 開始，只重畫 denoise 這麼多
+        wf["8"] = {"class_type": "LoadImage", "inputs": {"image": init}}
+        wf["9"] = {"class_type": "VAEEncode", "inputs": {"pixels": ["8", 0], "vae": ["1", 2]}}
+        wf["5"]["inputs"]["latent_image"] = ["9", 0]
+        wf["5"]["inputs"]["denoise"] = denoise
+    return wf
 
 
 def main():
@@ -40,7 +48,7 @@ def main():
     for item, subject in b["items"].items():
         for s in seeds:
             prompt = b["style"].replace("{subject}", subject)
-            r = post("/prompt", {"prompt": workflow(prompt, s, b.get("w", 1024), b.get("h", 1024), f"{b['name']}/{item}_{s}")})
+            r = post("/prompt", {"prompt": workflow(prompt, s, b.get("w", 1024), b.get("h", 1024), f"{b['name']}/{item}_{s}", b.get("init"), b.get("denoise", 1.0))})
             ids.append(r["prompt_id"])
     print(f"queued {len(ids)}", flush=True)
     t0 = time.time()

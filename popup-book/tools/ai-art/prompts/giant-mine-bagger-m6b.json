@@ -1,0 +1,17 @@
+{
+  "name": "m6b",
+  "seeds": [
+    91,
+    92,
+    93,
+    94
+  ],
+  "w": 1792,
+  "h": 896,
+  "init": "bagger-sketch.png",
+  "denoise": 0.75,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a giant open-pit mine. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Many small mechanical details such as ladders, railings, walkways and cables. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "bwe": "A single gigantic bucket wheel excavator in dull grey steel: on the left a big round rusty-brown bucket wheel ringed with scoop buckets with sharp teeth, a long horizontal steel lattice boom, two very tall steel lattice towers with many straight steel cables, a grey machine body on several short crawler tracks, a counterweight boom with a small machine house on the right and a long conveyor bridge at the lower right"
+  }
+}

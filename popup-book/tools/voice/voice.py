@@ -36,6 +36,8 @@ LINES = [
     "Semi Truck", "Garbage Truck", "Delivery Van", "Ice Cream Truck", "Car Carrier", "Monster Truck", "Street Sweeper",
     # 🏢 蓋大樓
     "Concrete Pump Truck", "Pile Driver", "Mobile Crane", "Boom Lift", "Skid Steer Loader",
+    # ⛏️ 巨型礦場
+    "Bagger", "Dragline Excavator", "Mining Shovel", "Drill Rig", "Mining Dump Truck", "Giant Wheel Loader",
     # 🚢 海上
     "Container Ship", "Sailboat", "Tugboat", "Fishing Boat", "Speedboat", "Submarine", "Lighthouse",
     # ✈️ 天空

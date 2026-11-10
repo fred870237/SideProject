@@ -1,0 +1,21 @@
+{
+  "name": "m5w",
+  "seeds": [
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90
+  ],
+  "w": 1792,
+  "h": 896,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a giant open-pit mine. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Many small mechanical details such as ladders, railings, walkways and cables. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "bwe": "A single gigantic bucket wheel excavator in dull grey steel, built like a suspension bridge: on the far LEFT a big round dark rusty-brown bucket wheel ringed with many scoop buckets with teeth, at the end of a long straight horizontal steel lattice boom; in the CENTRE a heavy grey superstructure on a stack of short wide crawler tracks, and rising from it TWO VERY TALL steel lattice towers: one tall leaning A-frame tower and one even taller straight vertical pylon mast, both much taller than the boom is high; many straight parallel steel cables run from the tops of the two towers down to the wheel boom on the left and down to a short counterweight boom with a small machine house on the right; the whole machine is very wide, about twice as wide as it is tall"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "m1bg",
+  "seeds": [51, 52, 53, 54],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A giant open-pit mine seen from the side with NO vehicles, NO machines and NO people: wide terraced benches of orange-brown and ochre earth stepping down like giant stairs from the left and right edges towards the middle, a few grey rock piles, a long grey conveyor belt on thin legs running along the back terrace; a flat light brown dirt floor across the whole bottom third of the picture. The upper part of the picture is plain white paper (no sky colour)."
+  }
+}

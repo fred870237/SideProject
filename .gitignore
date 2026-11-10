@@ -7,3 +7,5 @@ popup-book/tools/voice/out/*
 !popup-book/tools/voice/out/ref_chosen.wav
 # 動物地圖語音的生成過程（每句好幾個版本的 wav）
 animal-map/tools/voice/out/
+# 機關書 AI 插畫的挑圖總表（暫存，不進 git）
+popup-book/tools/ai-art/out/

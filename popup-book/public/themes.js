@@ -10,6 +10,7 @@ const THEMES = [
     pages: [
       { id: 'construction', icon: '🏗️', en: 'Construction Site', zh: '工地' },
       { id: 'building', icon: '🏢', en: 'Building Site', zh: '蓋大樓' },
+      { id: 'giant-mine', icon: '⛏️', en: 'Giant Mine', zh: '巨型礦場' },
       { id: 'rescue', icon: '🚒', en: 'Rescue', zh: '消防救援' },
       { id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' },
       { id: 'trucks', icon: '🚛', en: 'Trucks', zh: '貨運卡車' },

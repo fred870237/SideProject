@@ -1,0 +1,8 @@
+{
+  "bwe": ["D:/AI/ComfyUI/output/m7a/bwe_101_00001_.png", false, [], {"erode": false, "hole": 12}],
+  "haultruck": ["D:/AI/ComfyUI/output/m1/haultruck_61_00001_.png", false],
+  "shovel": ["D:/AI/ComfyUI/output/m1/shovel_7_00001_.png", false],
+  "loader": ["D:/AI/ComfyUI/output/m2/loader_63_00001_.png", false],
+  "drill": ["D:/AI/ComfyUI/output/m1/drill_8_00001_.png", false],
+  "dragline": ["D:/AI/ComfyUI/output/m1/dragline_8_00001_.png", false, [], {"erode": false}]
+}

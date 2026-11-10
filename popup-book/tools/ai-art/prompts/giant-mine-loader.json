@@ -1,0 +1,17 @@
+{
+  "name": "m2",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a giant open-pit mine. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "loader": "A single gigantic yellow front-end wheel loader (a bulldozer-like shovel machine, NOT a dump truck, with NO dump body): four enormous black tyres, an articulated frame bending in the middle, at the very front a huge wide grey scoop bucket with teeth held low on two long lift arms, a tall cab with ladders and railings in the middle, a big engine box and heavy counterweight at the back, facing right"
+  }
+}

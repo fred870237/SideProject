@@ -1,0 +1,13 @@
+{
+  "name": "m1",
+  "seeds": [7, 8, 61, 62],
+  "w": 1024, "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about a giant open-pit mine. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "haultruck": "A single gigantic yellow mining dump truck with two enormous black tyres, a huge red dump body over the whole back reaching forward over a small cab high up on the front deck, a ladder climbing up the front bumper, and a tiny worker in an orange vest and white hard hat standing next to the front tyre for scale, the worker much shorter than the tyre",
+    "shovel": "A single giant electric mining rope shovel: a big boxy orange machine house on wide grey crawler tracks, a tall straight boom leaning forward at about 45 degrees with steel ropes running to a large dipper bucket with teeth held out in front at mid height, a small cab with windows at the front corner of the house",
+    "loader": "A single giant yellow mining wheel loader on four enormous black tyres, a very big grey bucket with teeth raised a little above the ground at the front, a tall cab with ladders and railings, a heavy counterweight at the back",
+    "drill": "A single blasthole drill rig: a yellow body on grey crawler tracks with a small cab, a very tall straight vertical grey drill mast standing upright at the front with a long drill rod inside it reaching down to the bottom",
+    "dragline": "A single walking dragline excavator: a large white and red machine house sitting on a big round base, a very long thin lattice steel boom stretching far to the right at a low angle with steel cables from its tip down to a big grey bucket hanging just below the boom tip, support cables from a short mast on the house to the boom tip"
+  }
+}

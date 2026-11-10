@@ -32,7 +32,8 @@ for name, (path, flip, *rest) in picks.items():
     hl, n = ndimage.label(holes)
     if n:
         sizes = ndimage.sum(holes, hl, range(1, n + 1))
-        bg |= np.isin(hl, 1 + np.flatnonzero(sizes > 400))   # 大塊綠色（例如手臂中間的空隙）
+        # 大塊綠色（例如手臂中間的空隙）；桁架很細的圖（Bagger）格子裡的小空隙也要去掉：{"hole": 20}
+        bg |= np.isin(hl, 1 + np.flatnonzero(sizes > opts.get("hole", 400)))
     alpha = Image.fromarray(np.where(bg, 0, 255).astype(np.uint8))
     if opts.get("erode", True):   # 細線條（塔吊的桁架）不要侵蝕，不然會斷掉
         alpha = alpha.filter(ImageFilter.MinFilter(3))
