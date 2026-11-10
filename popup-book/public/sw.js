@@ -1,21 +1,21 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v34';
+const CACHE = 'popup-book-v35';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
   ...self.VOICES.map((s) => `audio/en/${s}.mp3`),
   'art/kit.js', 'art/construction.js', 'art/building.js', 'art/rescue.js',
-  ...['bg', 'pump', 'piledriver', 'crane', 'boomlift', 'skidsteer'].map((n) => `art/img/building/${n}.webp`),
-  'art/giant-mine.js', ...['bg', 'bwe', 'dragline', 'shovel', 'drill', 'haultruck', 'loader', 'loader-front', 'loader-tyres'].map((n) => `art/img/giant-mine/${n}.webp`),
+  ...['bg', 'pump', 'piledriver', 'crane', 'boomlift', 'skidsteer', 'skidsteer-w1', 'skidsteer-w2', 'skidsteer-front'].map((n) => `art/img/building/${n}.webp`),
+  'art/giant-mine.js', ...['bg', 'bwe', 'dragline', 'shovel', 'drill', 'haultruck', 'loader-body', 'loader-w1', 'loader-w2', 'loader-w3', 'loader-front', 'loader-bucket'].map((n) => `art/img/giant-mine/${n}.webp`),
   'art/farm.js', 'art/trucks.js',
-  ...['bg', 'crane', 'mixer', 'bulldozer', 'toilet', 'excavator', 'dumptruck', 'forklift', 'roller', 'worker']
+  ...['bg', 'crane', 'mixer', 'bulldozer', 'toilet', 'excavator', 'dumptruck', 'forklift', 'roller', 'roller-w1', 'roller-front', 'worker']
     .map((n) => `art/img/construction/${n}.webp`),
-  ...['bg', 'helicopter', 'ambulance', 'towtruck', 'motorbike', 'police', 'firetruck', 'hydrant', 'rescuer']
+  ...['bg', 'helicopter', 'ambulance', 'ambulance-w1', 'ambulance-w2', 'ambulance-front', 'towtruck', 'motorbike', 'motorbike-w1', 'motorbike-w2', 'motorbike-front', 'police', 'firetruck', 'hydrant', 'rescuer']
     .map((n) => `art/img/rescue/${n}.webp`),
-  ...['bg', 'plane', 'windmill', 'pickup', 'baler', 'tractor', 'combine', 'quad']
+  ...['bg', 'plane', 'windmill', 'pickup', 'pickup-w1', 'pickup-w2', 'pickup-w3', 'pickup-front', 'baler', 'tractor', 'tractor-w2', 'tractor-front', 'combine', 'quad', 'quad-w1', 'quad-w2', 'quad-front']
     .map((n) => `art/img/farm/${n}.webp`),
-  ...['bg', 'semi', 'garbage', 'van', 'icecream', 'carrier', 'monster', 'sweeper', 'courier']
+  ...['bg', 'semi', 'garbage', 'van', 'icecream', 'carrier', 'monster', 'sweeper', 'sweeper-w1', 'sweeper-w2', 'sweeper-front', 'courier']
     .map((n) => `art/img/trucks/${n}.webp`),
   'art/sea.js',
   ...['bg', 'cargo', 'sailboat', 'tugboat', 'fishing', 'speedboat', 'submarine', 'lighthouse']

@@ -14,13 +14,6 @@ const HOLE = (id, w, h, d) => `<clipPath id="${id}"><path clip-rule="evenodd" d=
 const CIRCLE = (cx, cy, r) => `M${cx - r},${cy}a${r},${r} 0 1,0 ${2 * r},0a${r},${r} 0 1,0 ${-2 * r},0Z`;
 const DIRT = '#b5713a', ROCK = '#8a8d96';
 
-// 輪子：從圖上裁出圓形，class="wheel" 給 c.wheels() 轉
-// 有第 4 個值（內半徑）的話只裁外圈的黑色輪胎（圓環），中間的輪圈和擋在前面的零件不跟著轉
-const ring = (cx, cy, r, rIn) => CIRCLE(cx, cy, r) + (rIn ? CIRCLE(cx, cy, rIn) : '');
-const wheel = (p, name, k, w, h, [cx, cy, r, rIn]) =>
-  `<clipPath id="${p}-cw${k}"><path clip-rule="evenodd" d="${ring(cx, cy, r, rIn)}"/></clipPath>` +
-  `<g id="${p}-w${k}" class="wheel" data-cx="${cx}" data-cy="${cy}">${IMG(name, w, h, `${p}-cw${k}`)}</g>`;
-
 // ---------- 斗輪挖掘機 Bagger（這頁的主角，放在正中間、很大）：巨大的轉輪轉起來挖土，土塊沿著長長的吊臂送回機身 ----------
 // 圖 1754×833（轉輪在左，跟照片一樣）：先用 tools/ai-art/sketch_bagger.py 照照片的比例畫草圖，再讓 AI 照草圖重畫
 // 轉輪中心 (210, 470)、半徑約 202（含鏟斗的齒）
@@ -160,22 +153,24 @@ const haultruck = {
 
 // ---------- 巨型輪式裝載機：往前開，舉起的大鏟斗把石頭倒出去，再倒車回來 ----------
 // 圖 817×608（鏟斗在左，往左開）；鏟斗繞 (330, 250) 轉
-// 鏟斗的範圍沿著灰色鏟斗的外緣（不能包到黃色手臂，不然手臂會跟著鏟斗飛走）
-// 輪子只轉外圈的黑色輪胎（中心、外半徑、內半徑）；擋在輪胎前面的黃色零件（前輪前面的手臂、輪圈邊緣）不能跟著轉，
-// 所以：車身整張不挖洞（原本的輪胎留在下面），上面疊一張只有黑色輪胎的圖 loader-tyres.webp 來轉，
-// 最上面再蓋只有那些黃色零件的圖 loader-front.webp（輪胎圓環裡不是黑色的像素），兩張都是 tools/ai-art 用原圖算出來的
-const LOADER_BUCKET = PATH([[0, 10], [285, 0], [330, 35], [372, 85], [394, 130], [387, 190], [356, 240], [312, 282], [240, 292], [0, 306]]);
-const LOADER_WHEELS = [[200, 495, 101, 62], [410, 492, 108, 66], [690, 497, 98, 60]];
+// 用 tools/ai-art/rig.py 拆成圖層（全部跟原圖一樣大，疊在同一個位置）：
+//   loader-body    車身，鏟斗後面原本被擋住的地方用 FLUX 局部重繪補好（鏟斗翻起來後面不會有洞）
+//   loader-w1～w3  正圓的輪胎外圈（SAM 自動切出來、拉成正圓，被手臂擋住的部分用另一邊補上）；只有這圈胎紋會轉
+//   loader-front   擋在輪子前面的手臂、輪框和輪胎內側，蓋在輪胎上面不動
+//   loader-bucket  鏟斗（SAM 自動切出來）
+// 輪子的圓心、半徑在 rig.py 輸出的 loader-rig.json
+const LOADER_WHEELS = { w1: [194.5, 491.5], w2: [414.5, 493.5], w3: [690.5, 496.5] };
 const loader = {
   id: 'loader', en: 'Giant Wheel Loader', zh: '巨型輪式裝載機', x: 0, y: 1000, s: 0.38, r: 2,
   hint: [560, -350],
   pivots: { bucket: [330, 250] },
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -608)">` +
-      HOLE(`${p}-cb`, 817, 608, LOADER_BUCKET) + IMG('loader', 817, 608, `${p}-cb`) +
-      LOADER_WHEELS.map((w, k) => wheel(p, 'loader-tyres', k + 1, 817, 608, w)).join('') +
+      IMG('loader-body', 817, 608) +
+      Object.entries(LOADER_WHEELS).map(([k, [cx, cy]]) =>
+        `<g id="${p}-${k}" class="wheel" data-cx="${cx}" data-cy="${cy}">${IMG(`loader-${k}`, 817, 608)}</g>`).join('') +
       IMG('loader-front', 817, 608) +
-      CLIP(`${p}-ck`, LOADER_BUCKET) + `<g id="${p}-bucket">${IMG('loader', 817, 608, `${p}-ck`)}</g>` +
+      `<g id="${p}-bucket">${IMG('loader-bucket', 817, 608)}</g>` +
     '</g></g>';
   },
   async act(c) {

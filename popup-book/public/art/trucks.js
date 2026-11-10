@@ -11,15 +11,17 @@ const RECT = (x0, y0, x1, y1) => PATH([[x0, y0], [x1, y0], [x1, y1], [x0, y1]]);
 const CLIP = (id, d) => `<clipPath id="${id}"><path d="${d}"/></clipPath>`;
 const HOLE = (id, w, h, d) => `<clipPath id="${id}"><path clip-rule="evenodd" d="M0,0H${w}V${h}H0Z${d}"/></clipPath>`;
 const CIRCLE = (cx, cy, r) => `M${cx - r},${cy}a${r},${r} 0 1,0 ${2 * r},0a${r},${r} 0 1,0 ${-2 * r},0Z`;
-// 把整張圖切成「車身＋幾個會動的零件」：parts = { 零件名: 裁切範圍 d }，wheels 的零件會加上 .wheel 讓 c.wheels() 轉
+// 把整張圖切成「車身＋幾個會動的零件」：parts = { 零件名: 裁切範圍 d }
+// wheels = { w1: [cx, cy], ... }：輪子用 tools/ai-art/rig.py 拆好的圖層（<圖名>-w1.webp…，正圓、只有外圈胎紋），
+// 加上 .wheel 讓 c.wheels() 轉；輪框和擋在輪子前面的東西在 <圖名>-front.webp，蓋在輪子上面不動
+// （front 會挖掉 parts 的範圍，零件動的時候才不會留下一塊不動的分身）
 function cut(p, name, w, h, parts, wheels = {}) {
-  const all = { ...parts, ...Object.fromEntries(Object.entries(wheels).map(([k, [cx, cy, r]]) => [k, CIRCLE(cx, cy, r)])) };
-  let out = HOLE(`${p}-cb`, w, h, Object.values(all).join('')) + IMG(name, w, h, `${p}-cb`);
-  for (const [k, d] of Object.entries(all)) {
-    const wh = wheels[k];
-    out += CLIP(`${p}-c${k}`, d) +
-      `<g id="${p}-${k}"${wh ? ` class="wheel" data-cx="${wh[0]}" data-cy="${wh[1]}"` : ''}>${IMG(name, w, h, `${p}-c${k}`)}</g>`;
+  let out = HOLE(`${p}-cb`, w, h, Object.values(parts).join('')) + IMG(name, w, h, `${p}-cb`);
+  for (const [k, [cx, cy]] of Object.entries(wheels)) {
+    out += `<g id="${p}-${k}" class="wheel" data-cx="${cx}" data-cy="${cy}">${IMG(`${name}-${k}`, w, h)}</g>`;
   }
+  if (Object.keys(wheels).length) out += HOLE(`${p}-cf`, w, h, Object.values(parts).join('')) + IMG(`${name}-front`, w, h, `${p}-cf`);
+  for (const [k, d] of Object.entries(parts)) out += CLIP(`${p}-c${k}`, d) + `<g id="${p}-${k}">${IMG(name, w, h, `${p}-c${k}`)}</g>`;
   return out;
 }
 const SMOKE = { n: 2, color: '#9a9ea8', vx: [-0.8, 0.2], vy: [-2.6, -1.4], g: -0.02, size: [10, 18], life: 1000 };
@@ -218,7 +220,7 @@ const sweeper = {
   pivots: { brush: [665, 312] },
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -432)">` +
-      cut(p, 'sweeper', 747, 432, { brush: CIRCLE(665, 312, 88) }, { w1: [148, 357, 76], w2: [532, 357, 76] }) +
+      cut(p, 'sweeper', 747, 432, { brush: CIRCLE(665, 312, 88) }, { w1: [145.5, 355.5], w2: [525.5, 355] }) +
     '</g></g>';
   },
   async act(c) {

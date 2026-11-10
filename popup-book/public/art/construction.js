@@ -269,11 +269,10 @@ const forklift = {
 };
 
 // ---------- 壓路機：倒車壓一段路再開回來 ----------
-// 圖 767×622；後輪用圓形裁出來，跟著車子轉
+// 圖 767×622；後輪用 tools/ai-art/rig.py 拆好的圖層（roller-w1.webp 只有外圈胎紋會轉、roller-front.webp 輪框不動）
 // 前面的大滾筒側面是斜著看的橢圓，旁邊緊貼著灰色的滾筒本體，中間又被橘色支架擋住，整塊裁下來轉一定破圖：
 // 所以圖上原本的四顆螺栓已經抹掉（tools/ai-art/erasebolts.py），改由程式畫四顆螺栓繞著輪軸轉，
 // 軌道照透視壓扁成橢圓；支架再疊一張蓋在最上面，螺栓轉到後面會被支架擋住
-const ROLLER_WHEEL = CIRCLE(115, 505, 100);
 const ROLLER_BOLTS = [0, 90, 180, 270].map((a) => {
   const x = 50 * Math.cos((a * Math.PI) / 180), y = 50 * Math.sin((a * Math.PI) / 180);
   return `<circle cx="${x}" cy="${y}" r="8" fill="#e35a26"/><circle cx="${x + 1.5}" cy="${y + 1.5}" r="3.5" fill="#8a2000"/>`;
@@ -284,10 +283,10 @@ const roller = {
   hint: [380, -300],
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -622)">` +
-      CLIP(`${p}-cw`, ROLLER_WHEEL) + CLIP(`${p}-cy`, ROLLER_YOKE) +
-      HOLE(`${p}-cb`, 767, 622, ROLLER_WHEEL) +
-      IMG('roller', 767, 622, `${p}-cb`) +
-      `<g id="${p}-w" class="wheel" data-cx="115" data-cy="505">${IMG('roller', 767, 622, `${p}-cw`)}</g>` +
+      CLIP(`${p}-cy`, ROLLER_YOKE) +
+      IMG('roller', 767, 622) +
+      `<g id="${p}-w" class="wheel" data-cx="122" data-cy="508.5">${IMG('roller-w1', 767, 622)}</g>` +
+      IMG('roller-front', 767, 622) +
       `<g transform="translate(552 490) scale(0.72 1)"><g id="${p}-d" class="wheel" data-cx="0" data-cy="0">${ROLLER_BOLTS}</g></g>` +
       IMG('roller', 767, 622, `${p}-cy`) +
       '</g></g>';

@@ -185,7 +185,7 @@ const boomlift = {
 };
 
 // ---------- 小山貓（滑移裝載機）：鏟斗舉起來，往前衝一下再倒回來 ----------
-// 圖 757×551（翻轉過，鏟斗在右）
+// 圖 757×551（翻轉過，鏟斗在右）；輪子用 tools/ai-art/rig.py 拆好的圖層（只有外圈胎紋會轉，輪框在 skidsteer-front.webp 不動）
 const SKID_BUCKET = PATH([[530, 285], [757, 285], [757, 515], [530, 515]]);
 const skidsteer = {
   id: 'skid', en: 'Skid Steer Loader', zh: '小山貓', x: 640, y: 990, s: 0.36, r: -4,
@@ -193,11 +193,12 @@ const skidsteer = {
   pivots: { bucket: [545, 300] },
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -551)">` +
-      HOLE(`${p}-cb`, 757, 551, SKID_BUCKET + CIRCLE(165, 455, 88) + CIRCLE(430, 455, 88)) +
+      HOLE(`${p}-cb`, 757, 551, SKID_BUCKET) +
       IMG('skidsteer', 757, 551, `${p}-cb`) +
-      CLIP(`${p}-cw1`, CIRCLE(165, 455, 88)) + CLIP(`${p}-cw2`, CIRCLE(430, 455, 88)) + CLIP(`${p}-ck`, SKID_BUCKET) +
-      `<g id="${p}-w1" class="wheel" data-cx="165" data-cy="455">${IMG('skidsteer', 757, 551, `${p}-cw1`)}</g>` +
-      `<g id="${p}-w2" class="wheel" data-cx="430" data-cy="455">${IMG('skidsteer', 757, 551, `${p}-cw2`)}</g>` +
+      CLIP(`${p}-ck`, SKID_BUCKET) +
+      `<g id="${p}-w1" class="wheel" data-cx="169" data-cy="455">${IMG('skidsteer-w1', 757, 551)}</g>` +
+      `<g id="${p}-w2" class="wheel" data-cx="429" data-cy="452.5">${IMG('skidsteer-w2', 757, 551)}</g>` +
+      HOLE(`${p}-cf`, 757, 551, SKID_BUCKET) + IMG('skidsteer-front', 757, 551, `${p}-cf`) +
       `<g id="${p}-bucket">${IMG('skidsteer', 757, 551, `${p}-ck`)}</g>` +
     '</g></g>';
   },

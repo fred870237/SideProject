@@ -11,15 +11,17 @@ const RECT = (x0, y0, x1, y1) => PATH([[x0, y0], [x1, y0], [x1, y1], [x0, y1]]);
 const CLIP = (id, d) => `<clipPath id="${id}"><path d="${d}"/></clipPath>`;
 const HOLE = (id, w, h, d) => `<clipPath id="${id}"><path clip-rule="evenodd" d="M0,0H${w}V${h}H0Z${d}"/></clipPath>`;
 const CIRCLE = (cx, cy, r) => `M${cx - r},${cy}a${r},${r} 0 1,0 ${2 * r},0a${r},${r} 0 1,0 ${-2 * r},0Z`;
-// 把整張圖切成「車身＋幾個會動的零件」：parts = { 零件名: 裁切範圍 d }，wheels 的零件會加上 .wheel 讓 c.wheels() 轉
+// 把整張圖切成「車身＋幾個會動的零件」：parts = { 零件名: 裁切範圍 d }
+// wheels = { w1: [cx, cy], ... }：輪子用 tools/ai-art/rig.py 拆好的圖層（<圖名>-w1.webp…，正圓、只有外圈胎紋），
+// 加上 .wheel 讓 c.wheels() 轉；輪框和擋在輪子前面的東西在 <圖名>-front.webp，蓋在輪子上面不動
+// （front 會挖掉 parts 的範圍，零件動的時候才不會留下一塊不動的分身）
 function cut(p, name, w, h, parts, wheels = {}) {
-  const all = { ...parts, ...Object.fromEntries(Object.entries(wheels).map(([k, [cx, cy, r]]) => [k, CIRCLE(cx, cy, r)])) };
-  let out = HOLE(`${p}-cb`, w, h, Object.values(all).join('')) + IMG(name, w, h, `${p}-cb`);
-  for (const [k, d] of Object.entries(all)) {
-    const wh = wheels[k];
-    out += CLIP(`${p}-c${k}`, d) +
-      `<g id="${p}-${k}"${wh ? ` class="wheel" data-cx="${wh[0]}" data-cy="${wh[1]}"` : ''}>${IMG(name, w, h, `${p}-c${k}`)}</g>`;
+  let out = HOLE(`${p}-cb`, w, h, Object.values(parts).join('')) + IMG(name, w, h, `${p}-cb`);
+  for (const [k, [cx, cy]] of Object.entries(wheels)) {
+    out += `<g id="${p}-${k}" class="wheel" data-cx="${cx}" data-cy="${cy}">${IMG(`${name}-${k}`, w, h)}</g>`;
   }
+  if (Object.keys(wheels).length) out += HOLE(`${p}-cf`, w, h, Object.values(parts).join('')) + IMG(`${name}-front`, w, h, `${p}-cf`);
+  for (const [k, d] of Object.entries(parts)) out += CLIP(`${p}-c${k}`, d) + `<g id="${p}-${k}">${IMG(name, w, h, `${p}-c${k}`)}</g>`;
   return out;
 }
 const SMOKE = { n: 2, color: '#9a9ea8', vx: [-0.8, 0.2], vy: [-2.6, -1.4], g: -0.02, size: [10, 18], life: 1000 };
@@ -90,7 +92,7 @@ const pickup = {
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -451)">` +
       cut(p, 'pickup', 869, 451, { bales: RECT(0, 86, 410, 248) },
-        { w1: [190, 362, 92], w2: [458, 362, 92], w3: [766, 362, 92] }) +
+        { w1: [189.5, 346.5], w2: [452.5, 360], w3: [769, 349.5] }) +
     '</g></g>';
   },
   async act(c) {
@@ -143,7 +145,7 @@ const quad = {
   pivots: { body: [130, 621] },
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -621)">` +
-      cut(p, 'quad', 713, 621, {}, { w1: [130, 492, 124], w2: [582, 492, 124] }) +
+      cut(p, 'quad', 713, 621, {}, { w1: [129.5, 492], w2: [581.5, 496.5] }) +
     '</g></g>';
   },
   async act(c) {
@@ -159,7 +161,8 @@ const quad = {
 
 // ---------- 拖拉機：排氣管噗噗冒煙，往前開再倒回來 ----------
 // 圖 928×697；後輪的外圈輪胎是斜著看的（橢圓，不能直接整塊轉）：
-// 黃色輪框照樣裁出來轉，外圈另外畫一圈胎紋（壓扁成同樣的橢圓）跟著轉，看起來就是整個輪胎在滾
+// 黃色輪框固定不動，外圈另外畫一圈胎紋（壓扁成同樣的橢圓）跟著轉，看起來就是輪胎在滾
+// 前輪用 tools/ai-art/rig.py 拆好的圖層（tractor-w2.webp 只有外圈胎紋會轉、tractor-front.webp 輪框不動）
 const TREAD = Array.from({ length: 18 }, (_, i) =>
   `<rect x="-15" y="-192" width="30" height="46" rx="7" fill="#4a4955" transform="rotate(${i * 20}) skewX(-14)"/>`).join('');
 const tractor = {
@@ -167,13 +170,12 @@ const tractor = {
   hint: [560, -330],
   art(p) {
     return `<g id="${p}-body"><g transform="translate(0 -697)">` +
-      HOLE(`${p}-cb`, 928, 697, CIRCLE(205, 440, 98) + CIRCLE(826, 506, 104)) + IMG('tractor', 928, 697, `${p}-cb`) +
+      IMG('tractor', 928, 697) +
       `<clipPath id="${p}-ct"><ellipse cx="205" cy="440" rx="140" ry="188"/></clipPath>` +
       `<g clip-path="url(#${p}-ct)"><g transform="translate(205 440) scale(0.74 1)">` +
         `<g id="${p}-tread" class="wheel" data-cx="0" data-cy="0">${TREAD}</g></g></g>` +
-      CLIP(`${p}-cw1`, CIRCLE(205, 440, 98)) + CLIP(`${p}-cw2`, CIRCLE(826, 506, 104)) +
-      `<g id="${p}-w1" class="wheel" data-cx="205" data-cy="440">${IMG('tractor', 928, 697, `${p}-cw1`)}</g>` +
-      `<g id="${p}-w2" class="wheel" data-cx="826" data-cy="506">${IMG('tractor', 928, 697, `${p}-cw2`)}</g>` +
+      `<g id="${p}-w2" class="wheel" data-cx="821.5" data-cy="504.5">${IMG('tractor-w2', 928, 697)}</g>` +
+      IMG('tractor-front', 928, 697) +
     '</g></g>';
   },
   async act(c) {
