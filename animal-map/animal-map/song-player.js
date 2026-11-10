@@ -1,6 +1,8 @@
 'use strict';
 
 // 兒歌播放器：用 Web Audio 合成溫和的樂器音色（鋼琴、音樂盒、木琴、長笛）＋自動伴奏，歌詞逐字亮起（卡拉 OK 效果），不需要網路
+// 有人聲的歌（audio/songs/<id>.mp3，用開源 SoulX-Singer 照 songs.js 的旋律唱的，工具在 tools/voice/soulx.py）會一起唱；
+// 人聲的時間軸跟這裡一樣（每行多停 0.25 拍），所以從第一個音開始播就對得上。慢速時拍子不同，只放樂器
 
 const SongPlayer = (() => {
   const NOTE = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
@@ -36,7 +38,8 @@ const SongPlayer = (() => {
   const INST_ORDER = Object.keys(INSTRUMENTS);
 
   let ctx = null, bus = null, master = null, vibOsc = null, vibDepth = null;
-  let rafId = 0, timeline = [], current = null, speed = 1, ui = null;
+  let rafId = 0, timeline = [], current = null, speed = 1, ui = null, vocalSrc = null;
+  const vocals = {}; // 歌曲 id → 解碼好的人聲（AudioBuffer），沒有人聲的是 null
   let instName = 'piano';
   try { if (INSTRUMENTS[localStorage.getItem('songInst')]) instName = localStorage.getItem('songInst'); } catch { /* 無痕模式 */ }
   const waves = {};
@@ -160,8 +163,18 @@ const SongPlayer = (() => {
     return prev;
   }
 
+  // 載入人聲：抓 mp3、解碼成 Web Audio 能排時間播放的 AudioBuffer；沒有檔案或解碼失敗就是 null（只放樂器）
+  function loadVocal(id) {
+    if (id in vocals) return Promise.resolve(vocals[id]);
+    return fetch(`audio/songs/${id}.mp3`)
+      .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(r.status)))
+      .then((buf) => new Promise((ok, fail) => ctx.decodeAudioData(buf, ok, fail)))
+      .then((b) => (vocals[id] = b), () => (vocals[id] = null));
+  }
+
   function stop() {
     cancelAnimationFrame(rafId);
+    if (vocalSrc) { try { vocalSrc.stop(ctx.currentTime + 0.2); } catch { /* 已經停了 */ } vocalSrc = null; }
     if (master) {
       const m = master, v = vibOsc;
       m.gain.setTargetAtTime(0, ctx.currentTime, 0.03);
@@ -195,12 +208,21 @@ const SongPlayer = (() => {
     const key = current.song.key || 0;
     let t = ctx.currentTime + 0.15;
     const start = t;
+    const vocal = speed === 1 ? vocals[current.song.id] : null;
+    if (vocal) {
+      vocalSrc = ctx.createBufferSource();
+      vocalSrc.buffer = vocal;
+      const vg = ctx.createGain();
+      vg.gain.value = 0.85;
+      vocalSrc.connect(vg).connect(master);
+      vocalSrc.start(start);
+    }
     timeline = [];
     let prev = 'I';
     current.parsed.forEach((line, li) => {
       prev = accompany(line, t, spb, key, prev, li === current.parsed.length - 1, inst.accomp, master);
       line.notes.forEach((n, ni) => {
-        note(instName, t, n.f, n.beats * spb * 0.98, 0.3, master);
+        note(instName, t, n.f, n.beats * spb * 0.98, vocal ? 0.16 : 0.3, master); // 有人聲時旋律小聲一點，聽得清楚歌聲
         timeline.push({ t, li, ni });
         t += n.beats * spb;
       });
@@ -277,7 +299,10 @@ const SongPlayer = (() => {
     ui.list.classList.add('hidden');
     ui.player.classList.remove('hidden');
     ui.lyrics.scrollTop = 0;
-    play();
+    // 等人聲載入好再開始（最多等 3 秒，載不到就只放樂器）
+    ensureCtx();
+    Promise.race([loadVocal(song.id), new Promise((r) => setTimeout(r, 3000))])
+      .then(() => { if (current && current.song === song && !master) play(); });
   }
 
   function backToList() {
