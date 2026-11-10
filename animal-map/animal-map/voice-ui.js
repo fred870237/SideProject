@@ -13,6 +13,8 @@ const VoiceUI = (() => {
   if ('speechSynthesis' in window) { pick(); speechSynthesis.addEventListener('voiceschanged', pick); }
 
   function speak(text) {
+    // 預先生成的語音（voice-clips.js）優先，沒有才用系統語音
+    if (typeof VoiceClips !== 'undefined' && VoiceClips.play(text, 'zh-TW')) return;
     if (!('speechSynthesis' in window)) return;
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);

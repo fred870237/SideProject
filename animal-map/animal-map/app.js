@@ -137,7 +137,10 @@ function pickVoice(code) {
   return voices.find((v) => norm(v.lang).startsWith(base)) || null;
 }
 
-function speakTTS(text, code) {
+// 預先生成的語音（voice-clips.js）優先，沒有才用系統語音
+async function speakTTS(text, code) {
+  const clip = VoiceClips.url(text, code);
+  if (clip && await playSrc(clip)) return true;
   return new Promise((resolve) => {
     if (!('speechSynthesis' in window)) return resolve(false);
     const u = new SpeechSynthesisUtterance(text);

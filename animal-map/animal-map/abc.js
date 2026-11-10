@@ -167,6 +167,9 @@ function pickVoice(code) {
   return voices.find((v) => norm(v.lang).startsWith(base)) || null;
 }
 function speak(text, lang) {
+  // 預先生成的語音（voice-clips.js）優先，沒有才用系統語音
+  const clip = VoiceClips.url(text, lang);
+  if (clip) return playRec(clip);
   return new Promise((resolve) => {
     if (!('speechSynthesis' in window)) return resolve();
     const u = new SpeechSynthesisUtterance(text);

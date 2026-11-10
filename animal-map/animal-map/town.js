@@ -292,6 +292,8 @@ if ('speechSynthesis' in window) {
   pick(); speechSynthesis.addEventListener('voiceschanged', pick);
 }
 function sayName(id) {
+  // 預先生成的語音（voice-clips.js）優先，沒有才用系統語音
+  if (VoiceClips.play(byId.get(id).zh, 'zh-TW')) return;
   if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(byId.get(id).zh);
