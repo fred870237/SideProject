@@ -293,6 +293,19 @@ Object.assign(ART, {
       line('M0 -34 V40', dk, 1.2) + line('M-14 28 H14 M-10 6 H10 M-7 -12 H7 M-4 -27 H4', dk, 1.2);
   },
 
+  // 蒙古包：白色圓圓的帳篷，屋頂有藍色花紋帶子，橘色的木門，頂上一根煙囪
+  ger: () => {
+    const { path, line, circle } = K;
+    return path('M-50 44 V40 H50 V44Z', '#8cc85a') +
+      path('M-40 40 V12 H40 V40Z', '#f5f1e6') +
+      line('M-40 22 H40 M-40 32 H40', '#c9b994', 1.4) +
+      path('M-44 12 Q-30 -12 0 -16 Q30 -12 44 12Z', '#fbf8f0') +
+      line('M-40 8 Q0 -6 40 8', '#2f6fb3', 3) + line('M-28 -2 Q0 -12 28 -2', '#2f6fb3', 2) +
+      path('M-8 40 V18 H8 V40Z', '#e2552f') + line('M-8 26 H8 M0 18 V40', '#f4c542', 1.6) +
+      path('M-8 -15 Q0 -19 8 -15 V-12 H-8Z', '#cdbfa5') +
+      path('M1 -16 V-28 H5 V-16Z', '#777') + circle(6, -34, 2.6, '#e8e8e8') + circle(10, -40, 2, '#e8e8e8');
+  },
+
   registan: () => {
     const { path, circle, flatPath, line } = K;
     const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';

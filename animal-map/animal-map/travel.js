@@ -36,6 +36,7 @@ const Travel = (() => {
     { id: 'southeast-asia', icon: '🦧', zh: '東南亞', en: 'Southeast Asia', at: [114, 1], box: [96, -11, 127, 23.5], ready: true },
     { id: 'central-america', icon: '🌵', zh: '墨西哥中美洲', en: 'Mexico & Central America', at: [-96, 19], box: [-110, 7, -77, 31], ready: true },
     { id: 'middle-east', icon: '🎈', zh: '中東土耳其', en: 'Middle East & Turkey', at: [40, 33], box: [25, 20, 60, 43], ready: true },
+    { id: 'mongolia', icon: '🐎', zh: '蒙古', en: 'Mongolia', at: [104, 46.5], box: [87, 41, 120, 52.5], ready: true },
     { id: 'europe', icon: '🏰', zh: '歐洲', en: 'Europe', at: [10, 48.5], box: [-10.5, 36, 31.5, 70.5], ready: true },
   ];
   const trip = (id) => TRIPS.find((t) => t.id === id);
