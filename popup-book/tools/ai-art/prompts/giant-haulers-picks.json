@@ -1,0 +1,68 @@
+{
+  "roadtrain": [
+    "D:/AI/ComfyUI/output/h1w/roadtrain_62_00001_.png",
+    true,
+    [],
+    {
+      "noline": true
+    }
+  ],
+  "blade": [
+    "D:/AI/ComfyUI/output/h1w/blade_61_00001_.png",
+    false,
+    [],
+    {
+      "noline": true
+    }
+  ],
+  "spmt": [
+    "D:/AI/ComfyUI/output/h1w/spmt_61_00001_.png",
+    false,
+    [],
+    {
+      "noline": true
+    }
+  ],
+  "heavyhaul": [
+    "D:/AI/ComfyUI/output/h1/heavyhaul_7_00001_.png",
+    false,
+    [],
+    {
+      "noline": true
+    }
+  ],
+  "logtruck": [
+    "D:/AI/ComfyUI/output/h2/logtruck_63_00001_.png",
+    false,
+    [],
+    {
+      "noline": true
+    }
+  ],
+  "tanker": [
+    "D:/AI/ComfyUI/output/h1/tanker_7_00001_.png",
+    false,
+    [],
+    {
+      "noline": true
+    }
+  ],
+  "escort": [
+    "D:/AI/ComfyUI/output/h1/escort_7_00001_.png",
+    false,
+    [],
+    {
+      "noline": true
+    }
+  ],
+  "carcarrier": [
+    "D:/AI/ComfyUI/output/h3w/carcarrier_63_00001_.png",
+    false,
+    [],
+    {
+      "noline": true,
+      "erode": false,
+      "hole": 30
+    }
+  ]
+}

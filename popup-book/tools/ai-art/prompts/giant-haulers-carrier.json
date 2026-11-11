@@ -1,0 +1,17 @@
+{
+  "name": "h3w",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64
+  ],
+  "w": 1536,
+  "h": 768,
+  "style": "Flat 2D side elevation illustration from a children's picture book about giant trucks on the highway. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "carcarrier": "A single double-deck car carrier truck facing right, all wheels in one straight row touching the same flat ground line: a white flat-front truck cab at the front right, and behind it a long open blue steel frame with tall blue vertical posts holding TWO decks: the upper deck carries three small white cars in a row and the lower deck carries two small white cars, red and white striped edges on the decks, the back part of the upper deck slopes down slightly like a ramp, many black tyres"
+  }
+}

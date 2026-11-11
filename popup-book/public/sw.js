@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v35';
+const CACHE = 'popup-book-v36';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -17,6 +17,9 @@ const CORE = [
     .map((n) => `art/img/farm/${n}.webp`),
   ...['bg', 'semi', 'garbage', 'van', 'icecream', 'carrier', 'monster', 'sweeper', 'sweeper-w1', 'sweeper-w2', 'sweeper-front', 'courier']
     .map((n) => `art/img/trucks/${n}.webp`),
+  'art/giant-haulers.js', 'art/long-haul.js',
+  ...['bg', 'roadtrain', 'roadtrain-w1', 'roadtrain-w2', 'roadtrain-w3', 'roadtrain-w4', 'roadtrain-w5', 'roadtrain-w6', 'roadtrain-w7', 'roadtrain-w8', 'roadtrain-front', 'blade', 'blade-w1', 'blade-w2', 'blade-w3', 'blade-w4', 'blade-front', 'spmt', 'spmt-w1', 'spmt-w2', 'spmt-w3', 'spmt-w4', 'spmt-w5', 'spmt-w6', 'spmt-front', 'heavyhaul', 'heavyhaul-w1', 'heavyhaul-w2', 'heavyhaul-w3', 'heavyhaul-w4', 'heavyhaul-w5', 'heavyhaul-front', 'logtruck', 'logtruck-w1', 'logtruck-w2', 'logtruck-w3', 'logtruck-w4', 'logtruck-w5', 'logtruck-front', 'tanker', 'tanker-w1', 'tanker-w2', 'tanker-w3', 'tanker-w4', 'tanker-front', 'escort', 'escort-w1', 'escort-w2', 'escort-w3', 'escort-front', 'carcarrier', 'carcarrier-w1', 'carcarrier-w2', 'carcarrier-w3', 'carcarrier-w4', 'carcarrier-w5', 'carcarrier-front']
+    .map((n) => `art/img/giant-haulers/${n}.webp`),
   'art/sea.js',
   ...['bg', 'cargo', 'sailboat', 'tugboat', 'fishing', 'speedboat', 'submarine', 'lighthouse']
     .map((n) => `art/img/sea/${n}.webp`),

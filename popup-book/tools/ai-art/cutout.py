@@ -34,6 +34,15 @@ for name, (path, flip, *rest) in picks.items():
         sizes = ndimage.sum(holes, hl, range(1, n + 1))
         # 大塊綠色（例如手臂中間的空隙）；桁架很細的圖（Bagger）格子裡的小空隙也要去掉：{"hole": 20}
         bg |= np.isin(hl, 1 + np.flatnonzero(sizes > opts.get("hole", 400)))
+    if opts.get("noline"):  # AI 有時會畫出地面或馬路的線：橫跨整張圖（95% 以上寬）的那幾列當成背景
+        rows = (~bg).mean(axis=1) > 0.95
+        rows = ndimage.binary_dilation(rows, iterations=3)
+        bg[rows] = True
+        # 線拿掉以後，原本連在線上的小碎點也一起去掉（只留最大的那一塊車子）
+        lab2, n2 = ndimage.label(~bg)
+        if n2 > 1:
+            sizes2 = ndimage.sum(~bg, lab2, range(1, n2 + 1))
+            bg |= ~np.isin(lab2, 1 + np.flatnonzero(sizes2 >= sizes2.max() * 0.02))
     alpha = Image.fromarray(np.where(bg, 0, 255).astype(np.uint8))
     if opts.get("erode", True):   # 細線條（塔吊的桁架）不要侵蝕，不然會斷掉
         alpha = alpha.filter(ImageFilter.MinFilter(3))

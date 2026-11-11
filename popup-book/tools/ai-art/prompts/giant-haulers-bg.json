@@ -1,0 +1,17 @@
+{
+  "name": "h2bg",
+  "seeds": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "w": 1536,
+  "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side-view landscape like a theatre backdrop, absolutely no perspective and no vanishing point, NO vehicles and NO people: along the bottom third a straight horizontal grey asphalt road band running from the left edge to the right edge, with one row of short white dashes along its middle, a thin green grass strip above the road, behind it gentle rolling green hills with a few white wind turbines, and on the right far away a harbour with a few tall red container cranes. The upper part of the picture is plain white paper (no sky colour)."
+  }
+}

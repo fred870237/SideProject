@@ -1,0 +1,17 @@
+{
+  "name": "h1w",
+  "seeds": [
+    7,
+    8,
+    61,
+    62
+  ],
+  "w": 1792,
+  "h": 640,
+  "style": "Flat 2D side elevation illustration from a children's picture book about giant trucks on the highway. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "roadtrain": "A single very long Australian road train facing right, all wheels in one straight row touching the same flat ground line: a big red truck cab pulling three long red box trailers one behind the other, many black tyres",
+    "blade": "A single wind turbine blade transporter facing right, all wheels in one straight row touching the same flat ground line: a yellow truck cab pulling a very long extendable trailer carrying one enormous long white wind turbine blade, much longer than the truck, its thin tip sticking far out behind",
+    "spmt": "A single self-propelled modular transporter facing right, all wheels in one straight row touching the same flat ground line: a very long low orange flat platform on a long row of many small black wheels, carrying a huge grey steel ship hull section block, a small control box at one end, no cab"
+  }
+}

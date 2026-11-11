@@ -1,0 +1,18 @@
+{
+  "name": "h1",
+  "seeds": [
+    7,
+    8,
+    61,
+    62
+  ],
+  "w": 1024,
+  "h": 640,
+  "style": "Flat 2D side elevation illustration from a children's picture book about giant trucks on the highway. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "escort": "A single small white pickup escort car facing right, all wheels in one straight row touching the same flat ground line, with a row of bright orange flashing lights on the roof and a blank yellow sign board folded flat on the roof",
+    "tanker": "A single shiny silver tank truck facing right, all wheels in one straight row touching the same flat ground line: a red cab at the front and a long round silver fuel tank trailer with ladders and a walkway on top, ten black tyres",
+    "logtruck": "A single green logging truck facing right, all wheels in one straight row touching the same flat ground line, its long flat trailer carrying a big neat stack of brown tree logs held by tall steel stakes and chains, many black tyres",
+    "heavyhaul": "A single blue heavy haul truck facing right, all wheels in one straight row touching the same flat ground line, pulling a long low flat trailer with many small black tyres, carrying one giant grey electrical transformer box with cooling fins and insulators"
+  }
+}

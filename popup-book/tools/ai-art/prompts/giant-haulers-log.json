@@ -1,0 +1,17 @@
+{
+  "name": "h2",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64
+  ],
+  "w": 1024,
+  "h": 640,
+  "style": "Flat 2D side elevation illustration from a children's picture book about giant trucks on the highway. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "logtruck": "A single orange logging truck with a dark grey chassis facing right, all wheels in one straight row touching the same flat ground line, its long flat trailer carrying a big neat stack of brown tree logs held by tall steel stakes and chains, many black tyres"
+  }
+}

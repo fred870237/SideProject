@@ -14,6 +14,8 @@ const THEMES = [
       { id: 'rescue', icon: '🚒', en: 'Rescue', zh: '消防救援' },
       { id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' },
       { id: 'trucks', icon: '🚛', en: 'Trucks', zh: '貨運卡車' },
+      { id: 'giant-haulers', icon: '🚚', en: 'Giant Haulers', zh: '超大運輸' },
+      { id: 'long-haul', icon: '🛣️', en: 'Long Haul', zh: '長途運輸' },
       { id: 'sea', icon: '🚢', en: 'Sea', zh: '海上' },
       { id: 'sky', icon: '✈️', en: 'Sky', zh: '天空' },
       { id: 'space', icon: '🚀', en: 'Space', zh: '太空' },
