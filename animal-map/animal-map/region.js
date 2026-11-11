@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=32`;
+script.src = `regions/${regionId}.js?v=35`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -21,16 +21,21 @@ function start(R) {
   $('title').textContent = `${trip ? trip.icon : '🚂'} ${R.title.zh}`;
   document.body.style.background = R.sea;
   // 每個地方可以不一樣的設定（沒寫就用台灣環島的）
-  const islands = R.islands || [R.outline]; // 好幾個島（日本）就寫 islands: [[...], [...]]
+  const islands = R.islands || (R.outline ? [R.outline] : []); // 好幾個島（日本）就寫 islands: [[...], [...]]；歐洲沒有，用 countries
   const VEHICLE = R.vehicle || 'train'; // 坐什麼：ART 裡的名字，車頭要朝左
-  const LANG3 = R.lang3 || 'tw'; // 第三種語言：'tw' 台語（家長錄音）、'ja' 日語（系統語音）、'none' 只有中文和英文
+  const LANG3 = R.lang3 || 'tw'; // 第三種語言：'tw' 台語（家長錄音）、'ja' 日語（系統語音）、'none' 只有中文和英文、'local' 每個國家自己的語言（歐洲）
+  // 好幾個國家（歐洲）：countries 每國一個顏色、國旗、當地語言的「你好」；國界是手畫的大概形狀，海岸線用主地圖的陸地裁出來
+  const COUNTRIES = R.countries || [];
+  const countryOf = (s) => COUNTRIES.find((c) => c.id === s.country) || null;
   const loop = R.loop !== false; // 環島（最後一站接回第一站）；false = 從頭開到尾的一條線
   if (R.hint) $('hint').textContent = R.hint;
 
   /* ---------- 投影：經緯度 → 畫面座標（1000 高） ---------- */
   // 用跟主世界地圖一樣的 Miller 投影（travel.js），只是放大、平移：
   // 地區畫面座標 = (主地圖座標 - 左上角) × SC，主地圖上的陸地也能用同一套座標畫在旁邊
-  const pts = [...islands.flat(), ...R.stops.flatMap((s) => [s.at, s.marker || s.at])];
+  // R.bounds = [西經, 南緯, 東經, 北緯]：手動指定要看的範圍（歐洲的國家外框有畫到海上，不能拿來算範圍）
+  const B = R.bounds ? [[R.bounds[0], R.bounds[1]], [R.bounds[2], R.bounds[3]]] : [];
+  const pts = [...(R.islands || R.outline ? islands.flat() : []), ...B, ...R.stops.flatMap((s) => [s.at, s.marker || s.at])];
   const lons = pts.map((p) => p[0]), lats = pts.map((p) => p[1]);
   const pad = 0.18;
   const [OX, OY] = Travel.project(Math.min(...lons) - pad, Math.max(...lats) + pad);
@@ -143,6 +148,9 @@ function start(R) {
   $('world').innerHTML = `
     <rect x="-200000" y="-200000" width="400000" height="400000" fill="${R.sea}"/>${waves}
     <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND} ${MAP_TAIWAN}" fill="${R.landFar || '#b8de95'}"/></g>
+    ${COUNTRIES.length ? `<clipPath id="landClip"><path transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})" d="${MAP_LAND}"/></clipPath>
+      <g clip-path="url(#landClip)">${COUNTRIES.flatMap((c) => c.polys.map((o) => `<path d="${smooth(o)}" fill="${c.color}" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>`)).join('')}</g>
+      <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND}" fill="none" stroke="#fff" stroke-width="${(5 / SC).toFixed(3)}"/></g>` : ''}
     ${islands.map((o) => `<path d="${smooth(o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
     ${islands.map((o) => `<path d="${smooth(o)}" fill="${R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
     ${mountains}
@@ -241,14 +249,29 @@ function start(R) {
     showStop(s, first && fresh);
   }
 
+  function flagSvg(f, w = 30, h = 20) {
+    if (!f) return '';
+    const [kind, ...c] = f;
+    let body = '';
+    if (kind === 'v') body = c.map((col, i) => `<rect x="${(i * 30) / c.length}" width="${30 / c.length + 0.5}" height="20" fill="${col}"/>`).join('');
+    else if (kind === 'h') body = c.map((col, i) => `<rect y="${(i * 20) / c.length}" width="30" height="${20 / c.length + 0.5}" fill="${col}"/>`).join('');
+    else if (kind === 'swiss') body = `<rect width="30" height="20" fill="${c[0]}"/><path d="M13 4h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="#fff"/>`;
+    else if (kind === 'nordic') body = `<rect width="30" height="20" fill="${c[0]}"/><path d="M0 8h30v4H0zM9 0h4v20H9z" fill="${c[1]}"/>`;
+    else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
+    return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
+  }
   const zhChip = (s) => `<button class="name-chip zh" data-lang="zh"><span class="tag">中文</span><b>${s.zh}</b></button>`;
   const enChip = (s) => `<button class="name-chip en" data-lang="en"><span class="tag">English</span><b>${s.en}</b></button>`;
   const twChip = (s) => `<button class="name-chip tw" data-lang="tw"><span class="tag">台語</span><b>${s.tw}</b><small>${s.twRom}</small></button>`;
   const jaChip = (s) => `<button class="name-chip ja" data-lang="ja"><span class="tag">日本語</span><b>${s.ja}</b><small>${s.jaRom}</small></button>`;
-  const chip3 = (s) => (LANG3 === 'ja' ? jaChip(s) : LANG3 === 'tw' ? twChip(s) : '');
-  const line3 = (it) => (LANG3 === 'ja' ? `<span class="ja">${it.ja}<br><small>${it.jaRom}</small></span>` : LANG3 === 'tw' ? `<span class="tw">${it.tw}<br><small>${it.twRom}</small></span>` : '');
+  // 歐洲：這一站是哪一國（國旗＋國名），用當地的語言打招呼、唸站名
+  const localChip = (s) => { const c = countryOf(s); return c ? `<button class="name-chip local" data-lang="local"><span class="tag">${flagSvg(c.flag, 22, 15)} ${c.zh}</span><b>${c.hello}!</b><small>${s.local || ''}</small></button>` : ''; };
+  const chip3 = (s) => (LANG3 === 'ja' ? jaChip(s) : LANG3 === 'tw' ? twChip(s) : LANG3 === 'local' ? localChip(s) : '');
+  let curStop = null; // 現在這一站（歐洲的東西要知道是哪一國的語言）
+  const line3 = (it) => (LANG3 === 'local' ? (it.local ? `<span class="local">${it.local}</span>` : '') : LANG3 === 'ja' ? `<span class="ja">${it.ja}<br><small>${it.jaRom}</small></span>` : LANG3 === 'tw' ? `<span class="tw">${it.tw}<br><small>${it.twRom}</small></span>` : '');
 
   function showStop(s, stamp) {
+    curStop = s;
     $('stopStamp').textContent = stamp ? '🎫' : '🚉';
     $('stopStamp').style.animation = 'none'; void $('stopStamp').offsetWidth; $('stopStamp').style.animation = '';
     $('stopNames').innerHTML = zhChip(s) + enChip(s) + chip3(s);
@@ -270,7 +293,8 @@ function start(R) {
     $('stop').classList.remove('hidden');
     if (stamp) confetti();
     // 到站廣播：「臺中到了！」＋英文（日本再加日文站名）
-    sayLines([[`${s.zh}到了！`, 'zh-TW'], [s.en, 'en-US'], ...(LANG3 === 'ja' ? [[s.ja, 'ja-JP']] : [])]);
+    const c = countryOf(s);
+    sayLines([[`${s.zh}到了！`, 'zh-TW'], [s.en, 'en-US'], ...(LANG3 === 'ja' ? [[s.ja, 'ja-JP']] : []), ...(LANG3 === 'local' && c ? [[`${c.hello}! ${s.local || ''}`, c.lang]] : [])]);
   }
 
   /* ---------- 說話：中文、英文用系統語音；台語用家長錄音（錄音室的 key：<id>_tw）；日語用系統的日文語音 ---------- */
@@ -305,11 +329,13 @@ function start(R) {
     }
   }
   const twLine = (x) => (Recs.has(`${x.id}_tw`) ? [[Recs.url(`${x.id}_tw`), 'rec']] : []);
-  const line3Say = (x) => (LANG3 === 'ja' ? [[x.ja, 'ja-JP']] : LANG3 === 'tw' ? twLine(x) : []);
+  const localLang = () => (countryOf(curStop || {}) || {}).lang || 'en-US';
+  const line3Say = (x) => (LANG3 === 'local' ? (x.local ? [[x.local, localLang()]] : []) : LANG3 === 'ja' ? [[x.ja, 'ja-JP']] : LANG3 === 'tw' ? twLine(x) : []);
   function sayIn(s, lang) {
     if (lang === 'zh') sayLines([[s.zh, 'zh-TW']]);
     else if (lang === 'en') sayLines([[s.en, 'en-US']]);
     else if (lang === 'ja') sayLines([[s.ja, 'ja-JP']]);
+    else if (lang === 'local') { const c = countryOf(s); if (c) sayLines([[`這裡是${c.zh}`, 'zh-TW'], [`${c.hello}! ${s.local || ''}`, c.lang]]); }
     else sayLines(twLine(s).length ? twLine(s) : [[`台語唸作：${s.twRom}`, 'zh-TW']]);
   }
   function sayItem(it) {

@@ -68,7 +68,7 @@ REGIONS.china = {
     {
       id: 'beijing', zh: '北京', en: 'Beijing', at: [116.4, 39.9],
       items: [
-        { id: 'cn-wall', emoji: '🧱', zh: '長城', en: 'Great Wall', fact: '長城是一道好長好長的城牆，在山上彎來彎去，像一條長龍！' },
+        { id: 'cn-wall', art: 'great-wall', zh: '長城', en: 'Great Wall', fact: '長城是一道好長好長的城牆，在山上彎來彎去，像一條長龍！' },
         { id: 'cn-duck', emoji: '🦆', zh: '烤鴨', en: 'Roast Duck', fact: '北京烤鴨的皮脆脆的，用薄薄的餅包起來吃！' },
       ],
     },
@@ -83,7 +83,7 @@ REGIONS.china = {
     {
       id: 'xian', zh: '西安', en: "Xi'an", at: [108.9, 34.3],
       items: [
-        { id: 'cn-terracotta', emoji: '🗿', zh: '兵馬俑', en: 'Terracotta Army', fact: '西安的兵馬俑是兩千多年前用泥土做的士兵和馬，排成好長的隊伍！' },
+        { id: 'cn-terracotta', art: 'terracotta-warrior', zh: '兵馬俑', en: 'Terracotta Army', fact: '西安的兵馬俑是兩千多年前用泥土做的士兵和馬，排成好長的隊伍！' },
         { id: 'cn-noodles', emoji: '🍜', zh: '麵條', en: 'Noodles', fact: '西安的麵條又寬又長，有的一條就可以裝滿一整碗！' },
       ],
     },

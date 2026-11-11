@@ -83,6 +83,8 @@ button { font-family: inherit; cursor: pointer; border: none; padding: 0; color:
 .name-chip.en .tag { background: #3b82f6; }
 .name-chip.tw .tag { background: #16a34a; }
 .name-chip.ja .tag { background: #db2777; }
+.name-chip.local .tag { background: #7c3aed; display: inline-flex; align-items: center; gap: 5px; }
+.flag { border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .15); flex: none; }
 
 .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
 .item {
@@ -98,6 +100,7 @@ button { font-family: inherit; cursor: pointer; border: none; padding: 0; color:
 .item .en { font-size: 15px; color: #3b82f6; font-weight: 800; }
 .item .tw { font-size: 14px; color: #16a34a; font-weight: 700; text-align: center; }
 .item .ja { font-size: 14px; color: #db2777; font-weight: 700; text-align: center; }
+.item .local { font-size: 15px; color: #7c3aed; font-weight: 800; text-align: center; font-style: italic; }
 .item.pop { animation: pop .45s ease-out; }
 @keyframes pop { 40% { transform: scale(1.1); } }
 .stop-fact { margin-top: 12px; padding: 10px 14px; border-radius: 14px; font-size: 17px; font-weight: 700; line-height: 1.5; background: #fff7d6; border: 2px dashed #f5c542; }
