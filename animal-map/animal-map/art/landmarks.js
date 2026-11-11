@@ -92,6 +92,29 @@ Object.assign(ART, {
       flat(-18, -32, 9, 5.5, '#5fae3b') + flat(-5, -37, 9, 6, '#6cbb47') + flat(9, -36, 9, 6, '#5fae3b') + flat(20, -31, 8, 5, '#6cbb47');
   },
 
+  // 雪梨歌劇院：海邊的平台上，好幾片白色的貝殼屋頂一片疊一片
+  'opera-house': () => {
+    const { path, flatPath, line } = K;
+    const shell = (x, w, h, c = '#fbfaf5') => path(`M${x} 18 Q${x + w * 0.15} ${18 - h} ${x + w} ${18 - h * 1.05} Q${x + w * 0.55} ${18 - h * 0.45} ${x + w * 0.75} 18Z`, c);
+    return path('M-50 44 V30 H50 V44Z', '#4aa3df') +
+      line('M-44 38 q4 -3 8 0 t8 0 M-8 38 q4 -3 8 0 t8 0 M26 38 q4 -3 8 0 t8 0', '#fff', 1.6) +
+      path('M-40 30 V18 H42 V30Z', '#e2c9a0') +
+      line('M-36 24 H38', '#c4a678', 1.4) +
+      shell(-34, 22, 18, '#efece3') + shell(-22, 26, 26) + shell(-6, 22, 20, '#efece3') + shell(6, 26, 32) + shell(22, 18, 22) +
+      flatPath('M-20 18 Q-14 4 -2 0 Q-6 8 -4 18Z', '#d9e2ec', 0.6) + flatPath('M8 18 Q16 -2 30 -9 Q22 4 24 18Z', '#d9e2ec', 0.6);
+  },
+
+  // 烏魯魯：紅色沙漠裡一塊又大又長、圓圓的紅色大石頭
+  uluru: () => {
+    const { path, flatPath, line, circle } = K;
+    return circle(30, -26, 8, '#ffd23f') +
+      path('M-50 44 V32 Q0 26 50 32 V44Z', '#e9a15a') +
+      path('M-44 32 Q-42 6 -26 2 Q0 -4 26 1 Q42 4 46 32Z', '#d9653b') +
+      flatPath('M-44 32 Q-42 22 -30 20 Q0 18 30 20 Q42 22 46 32Z', '#b84e2c', 0.5) +
+      line('M-30 8 q2 10 0 20 M-14 4 q3 12 1 24 M2 2 q2 12 0 26 M18 4 q3 12 1 24 M32 10 q2 10 0 18', '#b04a2a', 1.6) +
+      line('M-48 40 l3 -4 l3 4 M36 40 l3 -4 l3 4', '#7a9a3a', 1.8);
+  },
+
   // 大笨鐘：米黃色的鐘塔，大大的白色時鐘，屋頂是尖尖的灰綠色塔頂
   'big-ben': () => {
     const { path, circle, flatPath, line } = K;

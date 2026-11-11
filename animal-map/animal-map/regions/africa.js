@@ -57,7 +57,7 @@ REGIONS.africa = {
       ],
     },
     {
-      id: 'luxor', country: 'egypt', zh: '路克索', en: 'Luxor', local: 'الأقصر', at: [32.64, 25.69], marker: [35.5, 24.5],
+      id: 'luxor', vehicle: 'sailboat', country: 'egypt', zh: '路克索', en: 'Luxor', local: 'الأقصر', at: [32.64, 25.69], marker: [35.5, 24.5],
       items: [
         { id: 'af-felucca', art: 'sailboat', zh: '尼羅河帆船', en: 'Felucca', local: 'فلوكة', fact: '尼羅河是世界上最長的河之一，大家坐著白色帆船在河上慢慢漂！' },
         { id: 'af-crocodile', art: 'crocodile', zh: '尼羅鱷', en: 'Nile Crocodile', local: 'تمساح', fact: '尼羅鱷住在河邊，嘴巴好大好長，會在岸上曬太陽！' },

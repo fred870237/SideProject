@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=37`;
+script.src = `regions/${regionId}.js?v=39`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -258,7 +258,8 @@ function start(R) {
       if (ride[i] !== riding) { riding = ride[i]; use.setAttribute('href', `#art-${riding}`); Synth.play(soundOf(riding)); }
       placeTrain([seg[i - 1][0] + (seg[i][0] - seg[i - 1][0]) * r, seg[i - 1][1] + (seg[i][1] - seg[i - 1][1]) * r], seg[i][0] - seg[i - 1][0]);
       if (d < total) requestAnimationFrame(step);
-      else { moving = false; parkAt(to); arrive(to, true); }
+      // 停下來的時候停最後坐的那個（坐露營車到烏魯魯，就停一台露營車）
+      else { moving = false; use.setAttribute('href', `#art-${R.stops[to].vehicle || ride[ride.length - 1] || VEHICLE}`); arrive(to, true); }
     };
     requestAnimationFrame(step);
   }
@@ -290,6 +291,12 @@ function start(R) {
     else if (kind === 'za') body = '<rect width="30" height="10" fill="#E03C31"/><rect y="10" width="30" height="10" fill="#001489"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#fff" stroke-width="7"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#007749" stroke-width="4.2"/><path d="M0 3.5L7.5 10L0 16.5Z" fill="#000"/>';
     // 肯亞（簡化）：黑、紅、綠，中間有白線，再加一個盾牌
     else if (kind === 'ke') body = '<rect width="30" height="7" fill="#000"/><rect y="6.5" width="30" height="7" fill="#fff"/><rect y="7.6" width="30" height="4.8" fill="#BB0000"/><rect y="13" width="30" height="7" fill="#006600"/><ellipse cx="15" cy="10" rx="3.2" ry="6.5" fill="#BB0000" stroke="#000" stroke-width="1"/>';
+    // 澳洲：深藍色，左上角是英國國旗，下面一顆大星星，右邊是南十字星
+    else if (kind === 'au') {
+      const star = (x, y, r) => `<path d="${[...Array(10)].map((_, k) => { const a = (k * Math.PI) / 5 - Math.PI / 2, rr = k % 2 ? r * 0.45 : r; return `${k ? 'L' : 'M'}${(x + rr * Math.cos(a)).toFixed(1)} ${(y + rr * Math.sin(a)).toFixed(1)}`; }).join('')}Z" fill="#fff"/>`;
+      body = '<rect width="30" height="20" fill="#012169"/><g transform="scale(.5)"><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/></g>' +
+        star(7.5, 15, 2.6) + star(22.5, 4, 1.4) + star(19, 9, 1.4) + star(26, 8, 1.4) + star(22.5, 16, 1.4);
+    }
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }
