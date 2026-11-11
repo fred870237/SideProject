@@ -31,17 +31,32 @@ const VoiceUI = (() => {
     const el = e.target.closest && e.target.closest('[data-say]');
     if (!el || el.disabled) return;
     speak(el.dataset.say);
-    // 換頁的連結：等名字唸完（大約 0.8 秒）再走
+    // 換頁的連結：等名字真的唸完再走（以前固定等 0.8 秒，長一點的名字會被切掉）
     if (el.tagName === 'A' && el.href && !e.defaultPrevented && !e.metaKey && !e.ctrlKey) {
       e.preventDefault();
       e.stopImmediatePropagation();
       const href = el.href;
-      setTimeout(() => { location.href = href; }, 800);
+      waitDone().then(() => { location.href = href; });
     }
   }, true);
 
+  // 等按鈕名字唸完：系統語音和預先生成的音檔都停了才算（最多等 max 毫秒，免得卡住）
+  function waitDone(max = 3500) {
+    const t0 = Date.now();
+    const busy = () => ('speechSynthesis' in window && (speechSynthesis.speaking || speechSynthesis.pending)) ||
+      (typeof VoiceClips !== 'undefined' && VoiceClips.busy && VoiceClips.busy());
+    return new Promise((resolve) => {
+      const tick = () => {
+        const waited = Date.now() - t0;
+        if ((waited > 300 && !busy()) || waited > max) resolve(); else setTimeout(tick, 100);
+      };
+      setTimeout(tick, 150);
+    });
+  }
+
   return {
     enabled,
+    waitDone,
     set(on) { try { localStorage.setItem('voice-ui', on ? 'on' : 'off'); } catch { /* */ } },
     speak,
   };

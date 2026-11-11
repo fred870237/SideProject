@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=40`;
+script.src = `regions/${regionId}.js?v=42`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -311,6 +311,12 @@ function start(R) {
       body = `<rect width="30" height="20" fill="#fff"/>${body}<rect width="13" height="10.8" fill="#3C3B6E"/>`;
       for (let y = 1.6; y < 10; y += 2.2) for (let x = 1.4; x < 13; x += 2.2) body += `<circle cx="${x}" cy="${y}" r=".55" fill="#fff"/>`;
     }
+    // 巴西：綠底、黃色菱形、中間藍色圓球
+    else if (kind === 'br') body = '<rect width="30" height="20" fill="#009C3B"/><path d="M15 2.5L27.5 10L15 17.5L2.5 10Z" fill="#FFDF00"/><circle cx="15" cy="10" r="4.6" fill="#002776"/><path d="M10.6 9.2Q15 7.6 19.4 10.4" stroke="#fff" stroke-width=".9" fill="none"/>';
+    // 智利：上白下紅，左上角藍色方塊裡一顆白星星
+    else if (kind === 'cl') body = '<rect width="30" height="20" fill="#fff"/><rect y="10" width="30" height="10" fill="#D52B1E"/><rect width="10" height="10" fill="#0039A6"/><path d="M5 2.4L6 5.6H9.2L6.6 7.5L7.6 10.6L5 8.6L2.4 10.6L3.4 7.5L.8 5.6H4Z" transform="translate(0 -.6) scale(1 .9)" fill="#fff"/>';
+    // 阿根廷：淺藍、白、淺藍，中間一個黃色的太陽
+    else if (kind === 'ar') body = '<rect width="30" height="20" fill="#74ACDF"/><rect y="6.7" width="30" height="6.6" fill="#fff"/><circle cx="15" cy="10" r="2.2" fill="#F6B40E"/>';
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }
@@ -492,6 +498,8 @@ function travelUi(R, P, setVB, HOME_VB, VW, trainAt) {
     await Travel.wait(500);
     await Travel.cloudsIn();
     await going;
+    // 「坐飛機回世界地圖」還沒唸完的話，等它唸完再換頁
+    if (typeof VoiceUI !== 'undefined' && VoiceUI.enabled()) await VoiceUI.waitDone();
     Travel.setFlight(R.id, 'out');
     location.href = `index.html?back=${R.id}`;
   }

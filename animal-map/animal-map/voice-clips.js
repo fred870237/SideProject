@@ -29,5 +29,7 @@ const VoiceClips = (() => {
     el.play().catch(() => {});
     return true;
   }
-  return { url, play };
+  // 按鈕名字的音檔還在播嗎（換頁前要等它唸完）
+  const busy = () => !!el.src && !el.paused && !el.ended;
+  return { url, play, busy };
 })();

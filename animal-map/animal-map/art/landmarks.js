@@ -144,6 +144,30 @@ Object.assign(ART, {
       tower(-22) + tower(22);
   },
 
+  // 秘魯的馬丘比丘：高高的綠色尖山下面，有一層一層的梯田和灰色石頭房子
+  'machu-picchu': () => {
+    const { path, flatPath, line } = K;
+    const stone = '#b8b2a7';
+    const hut = (x, y) => path(`M${x - 6} ${y} V${y - 7} H${x + 6} V${y}Z`, stone) + path(`M${x - 7} ${y - 7} L${x} ${y - 12} L${x + 7} ${y - 7}Z`, '#8a7d6b');
+    return path('M-50 44 V20 Q-40 10 -30 16 L-6 -42 Q2 -48 8 -40 L22 -6 Q36 0 50 10 V44Z', '#6cbb47') +
+      flatPath('M2 -44 Q8 -40 22 -6 Q36 0 50 10 V44 H20Z', '#000', 0.1) +
+      line('M-40 26 H40 M-36 32 H44 M-30 38 H48', '#4f9a36', 2) +
+      path('M-38 26 H34 V20 H-38Z', '#8fd06a') +
+      hut(-26, 20) + hut(-10, 20) + hut(6, 20) + hut(22, 20) +
+      line('M-50 44 Q-30 40 -10 44', '#3d8bd6', 2.4);
+  },
+
+  // 伊瓜蘇瀑布：綠色的懸崖上，好幾條白色的大瀑布轟隆隆地衝下來，前面還有一道彩虹
+  waterfall: () => {
+    const { path, line, flat } = K;
+    const fall = (x, w) => path(`M${x} -14 H${x + w} L${x + w + 2} 30 H${x - 2}Z`, '#eaf6ff') + line(`M${x + w / 3} -10 V26 M${(x + (w * 2) / 3).toFixed(1)} -6 V28`, '#bfe3ff', 1.4);
+    return path('M-50 -14 Q-30 -26 0 -20 Q30 -26 50 -14 V-10 H-50Z', '#4caf50') +
+      path('M-50 -10 H50 V30 H-50Z', '#8a6a4a') +
+      fall(-44, 14) + fall(-22, 18) + fall(4, 12) + fall(24, 18) +
+      path('M-50 30 H50 V44 H-50Z', '#4aa3df') + flat(0, 31, 48, 3, '#fff', 0, 0.8) +
+      line('M-36 40 Q0 -22 36 40', '#ff6b6b', 2.2) + line('M-32 40 Q0 -16 32 40', '#ffd23f', 2.2) + line('M-28 40 Q0 -10 28 40', '#4caf50', 2.2);
+  },
+
   // 大笨鐘：米黃色的鐘塔，大大的白色時鐘，屋頂是尖尖的灰綠色塔頂
   'big-ben': () => {
     const { path, circle, flatPath, line } = K;
