@@ -54,6 +54,9 @@ button { font-family: inherit; cursor: pointer; border: none; padding: 0; color:
 .pin { stroke: #fff; stroke-width: 2.4; stroke-dasharray: 3 5; fill: none; stroke-linecap: round; }
 .rail-bed { fill: none; stroke: #8a5a3a; stroke-width: 9; stroke-linejoin: round; opacity: .55; }
 .sea-route { fill: none; stroke: #fff; stroke-width: 4; stroke-dasharray: 2 12; stroke-linecap: round; opacity: .9; }
+.road-bed { fill: none; stroke: #a8865f; stroke-width: 11; stroke-linejoin: round; stroke-linecap: round; opacity: .55; }
+.road { fill: none; stroke: #fff6dc; stroke-width: 2.5; stroke-dasharray: 6 9; stroke-linejoin: round; opacity: .9; }
+.air-route { fill: none; stroke: #fff; stroke-width: 3; stroke-dasharray: 1 10; stroke-linecap: round; opacity: .95; }
 .rail { fill: none; stroke: #fff; stroke-width: 3; stroke-dasharray: 10 8; stroke-linejoin: round; opacity: .9; }
 #train { pointer-events: none; }
 

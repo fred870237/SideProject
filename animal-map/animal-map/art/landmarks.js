@@ -54,6 +54,44 @@ Object.assign(ART, {
       eyes(0, -15, 6.5, 3.2) + smile(0, -8, 3) + blush(0, -10, 11, 3.2);
   },
 
+  // 草原上看動物的吉普車（車頭朝左）：卡其色、沒有車頂只有鐵架、後面掛著備胎
+  jeep: () => {
+    const { path, circle, line, flat } = K;
+    const body = '#d9b96a', dark = '#a8873f';
+    const wheel = (x) => circle(x, 34, 10, '#3b3640') + circle(x, 34, 4.5, '#d6dbe1');
+    return line('M-14 4 V-16 H24 V4 M5 -16 V4', '#5a5560', 3.2) +
+      path('M-46 22 V12 Q-46 6 -40 6 H-22 L-14 -2 H34 Q38 -2 38 2 V22Z', body) +
+      path('M-44 22 H38 V30 H-44Z', dark) +
+      path('M-17 4 L-11 -2 H-2 V4Z', '#bfe6ff') +
+      flat(-8, 1, 2.5, 1.2, '#fff', -20, 0.9) +
+      line('M8 4 V20 M-20 8 V20', '#8a6a2a', 1.6) +
+      circle(-42, 13, 3, '#ffe066') +
+      circle(43, 10, 8, '#3b3640') + circle(43, 10, 3.5, '#d6dbe1') +
+      wheel(-28) + wheel(22);
+  },
+
+  // 埃及的金字塔：沙漠裡三座金黃色的金字塔，旁邊一棵椰子樹
+  pyramid: () => {
+    const { path, flatPath, line } = K;
+    const stone = '#e8c070', side = '#c99d52';
+    const pyr = (x, w, h) => path(`M${x - w} 40 L${x} ${40 - h} L${x + w} 40Z`, stone) + flatPath(`M${x} ${40 - h} L${x + w} 40 H${x + w * 0.15}Z`, side) +
+      line(`M${x - w * 0.66} ${40 - h * 0.33} H${x + w * 0.66} M${x - w * 0.33} ${40 - h * 0.66} H${x + w * 0.33}`, '#b9894a', 1.2);
+    return path('M-50 44 Q-20 34 10 40 Q32 44 50 38 V44Z', '#f3d48f') +
+      pyr(26, 16, 26) + pyr(-24, 18, 30) + pyr(2, 26, 48) +
+      line('M-46 40 Q-44 24 -40 14', '#8a5a3a', 3) +
+      path('M-40 14 q-10 -2 -14 6 q8 -6 14 -6 q-4 -9 -12 -8 q9 0 12 8 q4 -9 12 -7 q-8 0 -12 7 q8 -1 11 6 q-5 -5 -11 -6z', '#4caf50');
+  },
+
+  // 馬達加斯加的猴麵包樹：又粗又高的樹幹，最上面才有一小撮樹枝和葉子
+  baobab: () => {
+    const { path, flat, line } = K;
+    return path('M-50 44 Q0 36 50 44Z', '#e9b973') +
+      path('M-11 44 Q-8 10 -9 -18 H9 Q8 10 11 44Z', '#b07a52') +
+      flat(4, 12, 3, 22, '#000', 0, 0.1) +
+      line('M-7 -18 L-18 -30 M-2 -18 L-6 -34 M3 -18 L8 -33 M7 -18 L19 -29', '#8a5a3a', 3.4) +
+      flat(-18, -32, 9, 5.5, '#5fae3b') + flat(-5, -37, 9, 6, '#6cbb47') + flat(9, -36, 9, 6, '#5fae3b') + flat(20, -31, 8, 5, '#6cbb47');
+  },
+
   // 大笨鐘：米黃色的鐘塔，大大的白色時鐘，屋頂是尖尖的灰綠色塔頂
   'big-ben': () => {
     const { path, circle, flatPath, line } = K;

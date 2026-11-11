@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=35`;
+script.src = `regions/${regionId}.js?v=37`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -87,25 +87,42 @@ function start(R) {
     const [ax, ay] = P(R.stops[i - 1].at), [bx, by] = P(s.at);
     return `<path class="sea-route" d="M${ax.toFixed(1)} ${ay.toFixed(1)} Q${((ax + bx) / 2 + (by - ay) * 0.2).toFixed(1)} ${((ay + by) / 2 - (bx - ax) * 0.2).toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}"/>`;
   }).join('');
-  /* ---------- 真的鐵路路線（lines）：火車照著路線開，兩站之間走最短的那條路 ----------
-     lines: [{ name: '京滬高鐵', path: ['beijing', [117.0, 36.65], ..., 'shanghai'], by?: 'ship' }]
+  /* ---------- 真的路線（lines）：照著路線開，兩站之間走最短的那條路 ----------
+     lines: [{ name: '京滬高鐵', path: ['beijing', [117.0, 36.65], ..., 'shanghai'], mode?, vehicle? }]
+     mode：'rail' 鐵路（預設）、'road' 公路（吉普車、露營車）、'boat' 河上或海上坐船、'air' 坐飛機（自動畫成弧線）
+     vehicle：這條路線坐什麼（ART 的名字，車頭朝左）；沒寫就用 mode 的預設：鐵路 R.vehicle、公路 R.roadVehicle、船 ship、飛機 airplane
+     （舊的寫法 by: 'ship' 等於 mode: 'boat'）
      path 裡的字串是車站（stops 的 id）或轉乘站（junctions 的 id），[經度, 緯度] 是讓鐵路彎得像真的那樣的中間點
      沒有 lines 的地方（台灣）照舊：環島或一條線 */
   const NODES = { ...(R.junctions || {}) };
   R.stops.forEach((s) => { NODES[s.id] = s.at; });
-  const EDGES = {}; // 車站 id → [{ to, pts（經緯度）, ship, len }]
+  const EDGES = {}; // 車站 id → [{ to, pts（經緯度）, veh（坐什麼）, len }]
+  const modeOf = (l) => l.mode || (l.by === 'ship' ? 'boat' : 'rail');
+  const vehOf = (l) => l.vehicle || { rail: VEHICLE, road: R.roadVehicle || 'jeep', boat: 'ship', air: 'airplane' }[modeOf(l)];
+  // 坐飛機的路線：兩點之間自動加一個往上拱的中間點，畫起來和飛起來都是弧線
+  const lineNodes = (l) => {
+    const raw = l.path.map((n) => (typeof n === 'string' ? NODES[n] : n));
+    if (modeOf(l) !== 'air') return l.path;
+    const out = [l.path[0]];
+    for (let i = 1; i < l.path.length; i++) {
+      const a = raw[i - 1], b = raw[i];
+      out.push([(a[0] + b[0]) / 2 - (b[1] - a[1]) * 0.22, (a[1] + b[1]) / 2 + (b[0] - a[0]) * 0.22], l.path[i]);
+    }
+    return out;
+  };
   const plen = (pts) => pts.reduce((sum, q, i) => (i ? sum + Math.hypot(...P(q).map((v, k) => v - P(pts[i - 1])[k])) : 0), 0);
   (R.lines || []).forEach((line) => {
     let last = null, buf = [];
-    line.path.forEach((n) => {
+    lineNodes(line).forEach((n) => {
       const ll = typeof n === 'string' ? NODES[n] : n;
       if (!ll) throw new Error(`${R.id}：路線 ${line.name} 找不到 ${n}`);
       buf.push(ll);
       if (typeof n !== 'string') return;
       if (last) {
-        const pts = buf, len = plen(pts), ship = !!line.by;
-        (EDGES[last] = EDGES[last] || []).push({ to: n, pts, ship, len });
-        (EDGES[n] = EDGES[n] || []).push({ to: last, pts: [...pts].reverse(), ship, len });
+        // 飛機比較快：算最短路的時候打個折，長途的才會選飛機
+        const pts = buf, veh = vehOf(line), len = plen(pts) * (modeOf(line) === 'air' ? 0.6 : 1);
+        (EDGES[last] = EDGES[last] || []).push({ to: n, pts, veh, len });
+        (EDGES[n] = EDGES[n] || []).push({ to: last, pts: [...pts].reverse(), veh, len });
       }
       last = n; buf = [ll];
     });
@@ -127,8 +144,12 @@ function start(R) {
     for (let k = to; k !== from; k = prev[k].from) legs.unshift(prev[k].e);
     return legs;
   }
-  const lineRail = (R.lines || []).filter((l) => !l.by).map((l) => smooth(l.path.map((n) => (typeof n === 'string' ? NODES[n] : n)), false)).join(' ');
-  const lineSea = (R.lines || []).filter((l) => l.by).map((l) => `<path class="sea-route" d="${smooth(l.path.map((n) => (typeof n === 'string' ? NODES[n] : n)), false)}"/>`).join('');
+  const lineD = (l) => smooth(lineNodes(l).map((n) => (typeof n === 'string' ? NODES[n] : n)), false);
+  const linesOf = (m) => (R.lines || []).filter((l) => modeOf(l) === m);
+  const lineRail = linesOf('rail').map(lineD).join(' ');
+  const lineRoad = linesOf('road').map(lineD).join(' ');
+  const lineSea = linesOf('boat').map((l) => `<path class="sea-route" d="${lineD(l)}"/>`).join('') +
+    linesOf('air').map((l) => `<path class="air-route" d="${lineD(l)}"/>`).join('');
 
   const pins = R.stops.filter((s) => s.marker).map((s) => {
     const [ax, ay] = P(s.at), [mx, my] = P(s.marker);
@@ -155,6 +176,7 @@ function start(R) {
     ${islands.map((o) => `<path d="${smooth(o)}" fill="${R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
     ${mountains}
     ${R.lines ? lineSea : seaRoutes}
+    ${R.lines && lineRoad ? `<path class="road-bed" d="${lineRoad}"/><path class="road" d="${lineRoad}"/>` : ''}
     <path class="rail-bed" d="${R.lines ? lineRail : railD}"/><path class="rail" d="${R.lines ? lineRail : railD}"/>
     ${pins}
     <g id="train"><use href="#art-${VEHICLE}" x="-44" y="-66" width="88" height="88"/></g>
@@ -185,8 +207,8 @@ function start(R) {
     train.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${trainFlip} 1)`);
   }
   placeTrain(P(R.stops[prog.at].at));
-  // 停在要坐船才到得了的站（沖繩），就停一艘船
-  const parkAt = (i) => train.querySelector('use').setAttribute('href', `#art-${R.stops[i].by ? 'ship' : VEHICLE}`);
+  // 停在要坐船才到得了的站（沖繩），就停一艘船；站自己寫了 vehicle 就停那個
+  const parkAt = (i) => train.querySelector('use').setAttribute('href', `#art-${R.stops[i].vehicle || (R.stops[i].by ? 'ship' : VEHICLE)}`);
   parkAt(prog.at);
 
   let moving = false;
@@ -194,16 +216,16 @@ function start(R) {
     if (moving) return;
     const n = R.stops.length;
     if (to === prog.at) { arrive(to, false); return; }
-    // 每一段切成小點；坐船的那一段換成船
-    const seg = [], ship = [];
-    const addLeg = (pts, bySea) => {
+    // 每一段切成小點，每一點記住坐什麼（換路線時換交通工具）
+    const seg = [], ride = [];
+    const addLeg = (pts, veh) => {
       for (let k = 0; k < pts.length - 1; k++) {
         const a = P(pts[k]), b = P(pts[k + 1]);
-        for (let t = 0; t <= 1; t += 0.1) { seg.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); ship.push(bySea); }
+        for (let t = 0; t <= 1; t += 0.1) { seg.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); ride.push(veh); }
       }
     };
     const legs = R.lines ? findRoute(R.stops[prog.at].id, R.stops[to].id) : null;
-    if (legs) legs.forEach((e) => addLeg(e.pts, e.ship));
+    if (legs) legs.forEach((e) => addLeg(e.pts, e.veh));
     else {
       // 沒有路線網：環島就照環島的方向開；一條線的就往前或往回開
       const idx = [prog.at];
@@ -211,26 +233,29 @@ function start(R) {
       else for (let i = prog.at; i !== to;) { i += to > i ? 1 : -1; idx.push(i); }
       // by: 'ship' 的站和前一站之間坐船
       for (let k = 0; k < idx.length - 1; k++) {
-        addLeg([R.stops[idx[k]].at, R.stops[idx[k + 1]].at], !!R.stops[Math.max(idx[k], idx[k + 1])].by && Math.abs(idx[k] - idx[k + 1]) === 1);
+        addLeg([R.stops[idx[k]].at, R.stops[idx[k + 1]].at], R.stops[Math.max(idx[k], idx[k + 1])].by && Math.abs(idx[k] - idx[k + 1]) === 1 ? 'ship' : VEHICLE);
       }
     }
     const lens = [0];
     for (let i = 1; i < seg.length; i++) lens.push(lens[i - 1] + Math.hypot(seg[i][0] - seg[i - 1][0], seg[i][1] - seg[i - 1][1]));
-    const total = lens[lens.length - 1], dur = Math.min(7000, Math.max(1200, total * 4));
+    // 開多久：越遠越久；換好幾種交通工具（坐船→飛機→吉普車）的話再久一點，才看得清楚
+    const changes = ride.filter((v, k) => k && v !== ride[k - 1]).length;
+    const total = lens[lens.length - 1], dur = Math.min(9000, Math.max(1200, total * 4) + changes * 1200);
     moving = true;
     $('stop').classList.add('hidden');
     $('hint').classList.add('hidden');
     stopSpeech();
-    Synth.play(Synth.has(VEHICLE) ? VEHICLE : 'train');
+    // 交通工具的聲音：有自己的聲音就用，沒有就用差不多的（吉普車用汽車的聲音）
+    const soundOf = (v) => (Synth.has(v) ? v : { jeep: 'car', sailboat: 'sailboat' }[v] || 'train');
     const use = train.querySelector('use');
-    let onShip = false;
+    let riding = null;
     const t0 = performance.now();
     const step = (now) => {
       const d = Math.min(1, (now - t0) / dur) * total;
       let i = lens.findIndex((l) => l >= d);
       if (i <= 0) i = 1;
       const r = (d - lens[i - 1]) / Math.max(1e-6, lens[i] - lens[i - 1]);
-      if (ship[i] !== onShip) { onShip = ship[i]; use.setAttribute('href', `#art-${onShip ? 'ship' : VEHICLE}`); if (onShip) Synth.play('ship'); }
+      if (ride[i] !== riding) { riding = ride[i]; use.setAttribute('href', `#art-${riding}`); Synth.play(soundOf(riding)); }
       placeTrain([seg[i - 1][0] + (seg[i][0] - seg[i - 1][0]) * r, seg[i - 1][1] + (seg[i][1] - seg[i - 1][1]) * r], seg[i][0] - seg[i - 1][0]);
       if (d < total) requestAnimationFrame(step);
       else { moving = false; parkAt(to); arrive(to, true); }
@@ -257,6 +282,14 @@ function start(R) {
     else if (kind === 'h') body = c.map((col, i) => `<rect y="${(i * 20) / c.length}" width="30" height="${20 / c.length + 0.5}" fill="${col}"/>`).join('');
     else if (kind === 'swiss') body = `<rect width="30" height="20" fill="${c[0]}"/><path d="M13 4h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="#fff"/>`;
     else if (kind === 'nordic') body = `<rect width="30" height="20" fill="${c[0]}"/><path d="M0 8h30v4H0zM9 0h4v20H9z" fill="${c[1]}"/>`;
+    // 坦尚尼亞：左上綠、右下藍，中間一條斜斜的黑色帶子（兩邊黃色）
+    else if (kind === 'diag') body = `<path d="M0 0H30L0 20Z" fill="${c[0]}"/><path d="M30 0V20H0Z" fill="${c[1]}"/><path d="M0 20L30 0" stroke="#FCD116" stroke-width="9"/><path d="M0 20L30 0" stroke="#000" stroke-width="5.5"/>`;
+    // 馬達加斯加：左邊白色直條，右邊上紅下綠
+    else if (kind === 'mg') body = '<rect width="30" height="20" fill="#007E3A"/><rect width="30" height="10" fill="#FC3D32"/><rect width="10" height="20" fill="#fff"/>';
+    // 南非（簡化）：上紅下藍，中間橫躺的綠色 Y
+    else if (kind === 'za') body = '<rect width="30" height="10" fill="#E03C31"/><rect y="10" width="30" height="10" fill="#001489"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#fff" stroke-width="7"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#007749" stroke-width="4.2"/><path d="M0 3.5L7.5 10L0 16.5Z" fill="#000"/>';
+    // 肯亞（簡化）：黑、紅、綠，中間有白線，再加一個盾牌
+    else if (kind === 'ke') body = '<rect width="30" height="7" fill="#000"/><rect y="6.5" width="30" height="7" fill="#fff"/><rect y="7.6" width="30" height="4.8" fill="#BB0000"/><rect y="13" width="30" height="7" fill="#006600"/><ellipse cx="15" cy="10" rx="3.2" ry="6.5" fill="#BB0000" stroke="#000" stroke-width="1"/>';
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }
@@ -412,8 +445,9 @@ function travelUi(R, P, setVB, HOME_VB, VW, trainAt) {
   if (t) {
     const [x0, y0, x1, y1] = Travel.frame(t);
     const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-    const w = 300, h = w * (100 / 156);
     const bw = Math.max(x1 - x0, 12), bh = Math.max(y1 - y0, 12);
+    // 小地圖的範圍：至少看得到附近幾個國家；地方很大（非洲）就再拉遠一點，紅框才放得下
+    const w = Math.max(300, bw * 1.6, bh * 1.6 * (156 / 100)), h = w * (100 / 156);
     const mini = document.createElement('button');
     mini.className = 'mini-map';
     mini.dataset.say = '回世界地圖';

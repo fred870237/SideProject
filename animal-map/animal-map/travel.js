@@ -19,6 +19,7 @@ const Travel = (() => {
     { id: 'taiwan', icon: '🚂', zh: '台灣環島', en: 'Around Taiwan', at: [121, 23.7], box: [119.9, 21.8, 122.1, 25.4], ready: true },
     { id: 'japan', icon: '🗻', zh: '日本', en: 'Japan', at: [138.5, 36.5], box: [127, 26, 146, 45.6], ready: true },
     { id: 'china', icon: '🐼', zh: '中國', en: 'China', at: [104, 34], box: [73, 18, 135, 54], ready: true },
+    { id: 'africa', icon: '🦁', zh: '非洲', en: 'Africa', at: [24, 2], box: [-18, -36, 52, 33], ready: true },
     { id: 'europe', icon: '🏰', zh: '歐洲', en: 'Europe', at: [10, 48.5], box: [-10.5, 36, 31.5, 70.5], ready: true },
   ];
   const trip = (id) => TRIPS.find((t) => t.id === id);
