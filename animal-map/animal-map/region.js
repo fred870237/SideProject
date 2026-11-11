@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=42`;
+script.src = `regions/${regionId}.js?v=43`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -35,14 +35,28 @@ function start(R) {
   // 地區畫面座標 = (主地圖座標 - 左上角) × SC，主地圖上的陸地也能用同一套座標畫在旁邊
   // R.bounds = [西經, 南緯, 東經, 北緯]：手動指定要看的範圍（歐洲的國家外框有畫到海上，不能拿來算範圍）
   const B = R.bounds ? [[R.bounds[0], R.bounds[1]], [R.bounds[2], R.bounds[3]]] : [];
-  const pts = [...(R.islands || R.outline ? islands.flat() : []), ...B, ...R.stops.flatMap((s) => [s.at, s.marker || s.at])];
-  const lons = pts.map((p) => p[0]), lats = pts.map((p) => p[1]);
-  const pad = 0.18;
-  const [OX, OY] = Travel.project(Math.min(...lons) - pad, Math.max(...lats) + pad);
-  const [EX, EY] = Travel.project(Math.max(...lons) + pad, Math.min(...lats) - pad);
+  const pts = [...(R.islands || R.outline ? islands.flatMap((o) => o.pts || o) : []), ...B, ...R.stops.flatMap((s) => [s.at, s.marker || s.at])];
+  // 南極（R.projection = 'south-pole'）：Miller 投影在南極附近會拉得很誇張，改成「從南極正上方往下看」的地圖（極射赤面投影），
+  // R.rotate 把哪一邊轉到上面（南極半島朝上）；這時候主地圖的陸地資料對不起來，背景的陸地改用 islands 自己畫
+  const POLAR = R.projection === 'south-pole';
+  const ROT = ((R.rotate || 0) * Math.PI) / 180;
+  const PROJ = POLAR
+    ? (lon, lat) => { const r = Math.tan(((90 + lat) * Math.PI) / 360) * 1000, a = (lon * Math.PI) / 180 + ROT; return [r * Math.sin(a), -r * Math.cos(a)]; }
+    : Travel.project;
+  let OX, OY, EX, EY;
+  if (POLAR) {
+    const xy = pts.map((p) => PROJ(p[0], p[1])), xs = xy.map((q) => q[0]), ys = xy.map((q) => q[1]);
+    const pd = (Math.max(...ys) - Math.min(...ys)) * 0.03;
+    [OX, OY, EX, EY] = [Math.min(...xs) - pd, Math.min(...ys) - pd, Math.max(...xs) + pd, Math.max(...ys) + pd];
+  } else {
+    const lons = pts.map((p) => p[0]), lats = pts.map((p) => p[1]);
+    const pad = 0.18;
+    [OX, OY] = Travel.project(Math.min(...lons) - pad, Math.max(...lats) + pad);
+    [EX, EY] = Travel.project(Math.max(...lons) + pad, Math.min(...lats) - pad);
+  }
   const SC = 1000 / (EY - OY);
   const VW = (EX - OX) * SC, VH = 1000;
-  const P = ([lon, lat]) => { const [x, y] = Travel.project(lon, lat); return [(x - OX) * SC, (y - OY) * SC]; };
+  const P = ([lon, lat]) => { const [x, y] = PROJ(lon, lat); return [(x - OX) * SC, (y - OY) * SC]; };
   // 左右多留一點海；很寬的地方（美國）少留一點，地圖才不會被縮得太小
   const PADX = VW > VH * 1.4 ? VW * 0.06 : VW * 0.25;
   const HOME_VB = [-PADX, -60, VW + PADX * 2, VH + 120];
@@ -104,7 +118,8 @@ function start(R) {
   // 坐飛機的路線：兩點之間自動加一個往上拱的中間點，畫起來和飛起來都是弧線
   const lineNodes = (l) => {
     const raw = l.path.map((n) => (typeof n === 'string' ? NODES[n] : n));
-    if (modeOf(l) !== 'air') return l.path;
+    // 南極的地圖是從正上方往下看，用經緯度算弧線會歪掉，直接畫直線
+    if (modeOf(l) !== 'air' || POLAR) return l.path;
     const out = [l.path[0]];
     for (let i = 1; i < l.path.length; i++) {
       const a = raw[i - 1], b = raw[i];
@@ -170,12 +185,12 @@ function start(R) {
 
   $('world').innerHTML = `
     <rect x="-200000" y="-200000" width="400000" height="400000" fill="${R.sea}"/>${waves}
-    <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND} ${MAP_TAIWAN}" fill="${R.landFar || '#b8de95'}"/></g>
-    ${COUNTRIES.length ? `<clipPath id="landClip"><path transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})" d="${MAP_LAND}"/></clipPath>
+    ${POLAR ? '' : `<g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND} ${MAP_TAIWAN}" fill="${R.landFar || '#b8de95'}"/></g>`}
+    ${COUNTRIES.length && !POLAR ? `<clipPath id="landClip"><path transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})" d="${MAP_LAND}"/></clipPath>
       <g clip-path="url(#landClip)">${COUNTRIES.flatMap((c) => c.polys.map((o) => `<path d="${smooth(o)}" fill="${c.color}" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>`)).join('')}</g>
       <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND}" fill="none" stroke="#fff" stroke-width="${(5 / SC).toFixed(3)}"/></g>` : ''}
-    ${islands.map((o) => `<path d="${smooth(o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
-    ${islands.map((o) => `<path d="${smooth(o)}" fill="${R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
+    ${islands.map((o) => `<path d="${smooth(o.pts || o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
+    ${islands.map((o) => `<path d="${smooth(o.pts || o)}" fill="${o.fill || R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
     ${(R.insets || []).map((b) => {
       // 小框框：離太遠放不進來的地方（夏威夷）搬到旁邊畫，用虛線框起來，跟真的地圖一樣
       const [x0, y0] = P([b.box[0], b.box[3]]), [x1, y1] = P([b.box[2], b.box[1]]);
@@ -290,7 +305,12 @@ function start(R) {
     if (kind === 'v') body = c.map((col, i) => `<rect x="${(i * 30) / c.length}" width="${30 / c.length + 0.5}" height="20" fill="${col}"/>`).join('');
     else if (kind === 'h') body = c.map((col, i) => `<rect y="${(i * 20) / c.length}" width="30" height="${20 / c.length + 0.5}" fill="${col}"/>`).join('');
     else if (kind === 'swiss') body = `<rect width="30" height="20" fill="${c[0]}"/><path d="M13 4h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="#fff"/>`;
-    else if (kind === 'nordic') body = `<rect width="30" height="20" fill="${c[0]}"/><path d="M0 8h30v4H0zM9 0h4v20H9z" fill="${c[1]}"/>`;
+    // 北歐十字；有第三個顏色的話十字外面再包一圈（冰島：藍底、白邊、紅十字）
+    else if (kind === 'nordic') body = `<rect width="30" height="20" fill="${c[0]}"/>${c[2] ? `<path d="M0 7h30v6H0zM8 0h6v20H8z" fill="${c[2]}"/>` : ''}<path d="M0 8h30v4H0zM9 0h4v20H9z" fill="${c[1]}"/>`;
+    // 加拿大：左右紅色、中間白色，中間一片紅色楓葉（簡化）
+    else if (kind === 'ca') body = '<rect width="30" height="20" fill="#fff"/><rect width="7.5" height="20" fill="#D52B1E"/><rect x="22.5" width="7.5" height="20" fill="#D52B1E"/><path d="M15 4l1.2 2.4 1.6-.6-.4 3 2-1.6.6 1.2 1.6-.2-.8 2 1 .8-3.6 2.4.4 1.4-3.2-.4V17h-.8v-2.6l-3.2.4.4-1.4-3.6-2.4 1-.8-.8-2 1.6.2.6-1.2 2 1.6-.4-3 1.6.6z" fill="#D52B1E"/>';
+    // 格陵蘭：上白下紅，中間偏左一個圓，圓也是上紅下白
+    else if (kind === 'gl') body = '<rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#D00C33"/><path d="M5 10a6 6 0 0 1 12 0z" fill="#D00C33"/><path d="M5 10a6 6 0 0 0 12 0z" fill="#fff"/>';
     // 坦尚尼亞：左上綠、右下藍，中間一條斜斜的黑色帶子（兩邊黃色）
     else if (kind === 'diag') body = `<path d="M0 0H30L0 20Z" fill="${c[0]}"/><path d="M30 0V20H0Z" fill="${c[1]}"/><path d="M0 20L30 0" stroke="#FCD116" stroke-width="9"/><path d="M0 20L30 0" stroke="#000" stroke-width="5.5"/>`;
     // 馬達加斯加：左邊白色直條，右邊上紅下綠
