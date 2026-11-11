@@ -168,6 +168,23 @@ Object.assign(ART, {
       line('M-36 40 Q0 -22 36 40', '#ff6b6b', 2.2) + line('M-32 40 Q0 -16 32 40', '#ffd23f', 2.2) + line('M-28 40 Q0 -10 28 40', '#4caf50', 2.2);
   },
 
+  // 印度的泰姬瑪哈陵：白色的大圓頂，旁邊四根高高的尖塔，前面一條長長的水池
+  'taj-mahal': () => {
+    const { path, circle, flatPath, line } = K;
+    const white = '#f8f6f0', shade = '#e2ddd0';
+    const minaret = (x) => path(`M${x - 2.6} 26 V-10 H${x + 2.6} V26Z`, white) + path(`M${x - 3.6} -10 Q${x} -17 ${x + 3.6} -10Z`, white) + line(`M${x - 2.6} 0 H${x + 2.6} M${x - 2.6} 12 H${x + 2.6}`, shade, 1.2);
+    return path('M-50 44 V26 H50 V44Z', '#a6dd8f') +
+      path('M-10 44 V30 H10 V44Z', '#7cc4ff') + flatPath('M-6 44 V32 H6 V44Z', '#fff', 0.4) +
+      minaret(-38) + minaret(38) +
+      path('M-28 26 V0 H28 V26Z', white) +
+      flatPath('M10 0 H28 V26 H10Z', shade, 0.6) +
+      path('M-7 26 V12 Q0 4 7 12 V26Z', '#c9b9a0') +
+      path('M-22 0 Q-24 -14 -14 -22 Q0 -38 14 -22 Q24 -14 22 0Z', white) +
+      flatPath('M4 -30 Q14 -22 18 -12 Q22 -6 22 0 H8Z', shade, 0.6) +
+      line('M0 -34 V-44', LINE, 1.6) + circle(0, -45, 1.6, '#f2c94c') +
+      path('M-24 0 Q-24 -8 -19 -10 Q-14 -8 -14 0Z', white) + path('M14 0 Q14 -8 19 -10 Q24 -8 24 0Z', white);
+  },
+
   // 大笨鐘：米黃色的鐘塔，大大的白色時鐘，屋頂是尖尖的灰綠色塔頂
   'big-ben': () => {
     const { path, circle, flatPath, line } = K;

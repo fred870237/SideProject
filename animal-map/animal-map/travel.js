@@ -26,6 +26,7 @@ const Travel = (() => {
     { id: 'south-america', icon: '🦜', zh: '南美洲', en: 'South America', at: [-60, -14], box: [-93, -56, -33, 7], ready: true },
     { id: 'arctic', icon: '🧊', zh: '北極', en: 'Arctic', at: [-40, 74], box: [-100, 55, 36, 84], ready: true },
     { id: 'antarctica', icon: '🐧', zh: '南極', en: 'Antarctica', at: [-62, -60], box: [-80, -70, -40, -54], ready: true },
+    { id: 'india', icon: '🐯', zh: '印度', en: 'India', at: [79, 21], box: [66.5, 6.5, 98, 35.5], ready: true },
     { id: 'europe', icon: '🏰', zh: '歐洲', en: 'Europe', at: [10, 48.5], box: [-10.5, 36, 31.5, 70.5], ready: true },
   ];
   const trip = (id) => TRIPS.find((t) => t.id === id);

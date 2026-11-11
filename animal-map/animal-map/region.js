@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=43`;
+script.src = `regions/${regionId}.js?v=45`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -337,6 +337,8 @@ function start(R) {
     else if (kind === 'cl') body = '<rect width="30" height="20" fill="#fff"/><rect y="10" width="30" height="10" fill="#D52B1E"/><rect width="10" height="10" fill="#0039A6"/><path d="M5 2.4L6 5.6H9.2L6.6 7.5L7.6 10.6L5 8.6L2.4 10.6L3.4 7.5L.8 5.6H4Z" transform="translate(0 -.6) scale(1 .9)" fill="#fff"/>';
     // 阿根廷：淺藍、白、淺藍，中間一個黃色的太陽
     else if (kind === 'ar') body = '<rect width="30" height="20" fill="#74ACDF"/><rect y="6.7" width="30" height="6.6" fill="#fff"/><circle cx="15" cy="10" r="2.2" fill="#F6B40E"/>';
+    // 印度：橘、白、綠，中間一個藍色的法輪
+    else if (kind === 'in') body = '<rect width="30" height="6.7" fill="#FF9933"/><rect y="6.6" width="30" height="6.8" fill="#fff"/><rect y="13.3" width="30" height="6.7" fill="#138808"/><circle cx="15" cy="10" r="2.6" fill="none" stroke="#000080" stroke-width=".7"/><circle cx="15" cy="10" r=".6" fill="#000080"/>';
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }
