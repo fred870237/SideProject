@@ -53,6 +53,7 @@ button { font-family: inherit; cursor: pointer; border: none; padding: 0; color:
 .station:active .ring { fill: #ffe066; }
 .pin { stroke: #fff; stroke-width: 2.4; stroke-dasharray: 3 5; fill: none; stroke-linecap: round; }
 .rail-bed { fill: none; stroke: #8a5a3a; stroke-width: 9; stroke-linejoin: round; opacity: .55; }
+.sea-route { fill: none; stroke: #fff; stroke-width: 4; stroke-dasharray: 2 12; stroke-linecap: round; opacity: .9; }
 .rail { fill: none; stroke: #fff; stroke-width: 3; stroke-dasharray: 10 8; stroke-linejoin: round; opacity: .9; }
 #train { pointer-events: none; }
 
@@ -81,6 +82,7 @@ button { font-family: inherit; cursor: pointer; border: none; padding: 0; color:
 .name-chip.zh .tag { background: #ef4444; }
 .name-chip.en .tag { background: #3b82f6; }
 .name-chip.tw .tag { background: #16a34a; }
+.name-chip.ja .tag { background: #db2777; }
 
 .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
 .item {
@@ -95,6 +97,7 @@ button { font-family: inherit; cursor: pointer; border: none; padding: 0; color:
 .item b { font-size: 22px; }
 .item .en { font-size: 15px; color: #3b82f6; font-weight: 800; }
 .item .tw { font-size: 14px; color: #16a34a; font-weight: 700; text-align: center; }
+.item .ja { font-size: 14px; color: #db2777; font-weight: 700; text-align: center; }
 .item.pop { animation: pop .45s ease-out; }
 @keyframes pop { 40% { transform: scale(1.1); } }
 .stop-fact { margin-top: 12px; padding: 10px 14px; border-radius: 14px; font-size: 17px; font-weight: 700; line-height: 1.5; background: #fff7d6; border: 2px dashed #f5c542; }

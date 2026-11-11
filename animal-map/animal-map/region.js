@@ -1,7 +1,7 @@
-// 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js）
-// 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、台語）＋蓋護照印章
-// 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES
-const REGION_FILES = ['taiwan'];
+// 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
+// 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
+// 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
+const REGION_FILES = ['taiwan', 'japan'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,19 +11,26 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=28`;
+script.src = `regions/${regionId}.js?v=30`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
 function start(R) {
   document.title = R.title.zh;
-  $('title').textContent = `🚂 ${R.title.zh}`;
+  const trip = Travel.trip(R.id);
+  $('title').textContent = `${trip ? trip.icon : '🚂'} ${R.title.zh}`;
   document.body.style.background = R.sea;
+  // 每個地方可以不一樣的設定（沒寫就用台灣環島的）
+  const islands = R.islands || [R.outline]; // 好幾個島（日本）就寫 islands: [[...], [...]]
+  const VEHICLE = R.vehicle || 'train'; // 坐什麼：ART 裡的名字，車頭要朝左
+  const LANG3 = R.lang3 || 'tw'; // 第三種語言：'tw' 台語（家長錄音）或 'ja' 日語（系統語音）
+  const loop = R.loop !== false; // 環島（最後一站接回第一站）；false = 從頭開到尾的一條線
+  if (R.hint) $('hint').textContent = R.hint;
 
   /* ---------- 投影：經緯度 → 畫面座標（1000 高） ---------- */
   // 用跟主世界地圖一樣的 Miller 投影（travel.js），只是放大、平移：
   // 地區畫面座標 = (主地圖座標 - 左上角) × SC，主地圖上的陸地也能用同一套座標畫在旁邊
-  const pts = [...R.outline, ...R.stops.flatMap((s) => [s.at, s.marker || s.at])];
+  const pts = [...islands.flat(), ...R.stops.flatMap((s) => [s.at, s.marker || s.at])];
   const lons = pts.map((p) => p[0]), lats = pts.map((p) => p[1]);
   const pad = 0.18;
   const [OX, OY] = Travel.project(Math.min(...lons) - pad, Math.max(...lats) + pad);
@@ -65,7 +72,15 @@ function start(R) {
     return `<path d="M${x - 34} ${y + 20} L${x - 8} ${y - 26} L${x + 4} ${y - 8} L${x + 14} ${y - 20} L${x + 36} ${y + 20}Z" fill="#7aa95c" stroke="#5b8a43" stroke-width="2" stroke-linejoin="round"/>` +
       `<path d="M${x - 8} ${y - 26} L${x - 15} ${y - 14} L${x - 9} ${y - 17} L${x - 4} ${y - 12} L${x + 0} ${y - 20}Z" fill="#fff"/>`;
   }).join('');
-  const route = R.stops.map((s) => s.at);
+  // 鐵路：by: 'ship' 的站要坐船過去（海上畫虛線），其他照順序連成鐵路
+  const runs = [[]];
+  R.stops.forEach((s, i) => { if (s.by && i > 0) runs.push([]); runs[runs.length - 1].push(s.at); });
+  const railD = loop ? smooth(R.stops.map((s) => s.at)) : runs.filter((r) => r.length > 1).map((r) => smooth(r, false)).join(' ');
+  const seaRoutes = R.stops.map((s, i) => {
+    if (!s.by || i === 0) return '';
+    const [ax, ay] = P(R.stops[i - 1].at), [bx, by] = P(s.at);
+    return `<path class="sea-route" d="M${ax.toFixed(1)} ${ay.toFixed(1)} Q${((ax + bx) / 2 + (by - ay) * 0.2).toFixed(1)} ${((ay + by) / 2 - (bx - ax) * 0.2).toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}"/>`;
+  }).join('');
   const pins = R.stops.filter((s) => s.marker).map((s) => {
     const [ax, ay] = P(s.at), [mx, my] = P(s.marker);
     return `<path class="pin" d="M${ax.toFixed(1)} ${ay.toFixed(1)} L${mx.toFixed(1)} ${my.toFixed(1)}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="5" fill="#fff"/>`;
@@ -84,12 +99,13 @@ function start(R) {
   $('world').innerHTML = `
     <rect x="-200000" y="-200000" width="400000" height="400000" fill="${R.sea}"/>${waves}
     <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND}" fill="${R.landFar || '#b8de95'}"/></g>
-    <path d="${smooth(R.outline)}" fill="#000" opacity=".15" transform="translate(4 8)"/>
-    <path d="${smooth(R.outline)}" fill="${R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+    ${islands.map((o) => `<path d="${smooth(o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
+    ${islands.map((o) => `<path d="${smooth(o)}" fill="${R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
     ${mountains}
-    <path class="rail-bed" d="${smooth(route)}"/><path class="rail" d="${smooth(route)}"/>
+    ${seaRoutes}
+    <path class="rail-bed" d="${railD}"/><path class="rail" d="${railD}"/>
     ${pins}
-    <g id="train"><use href="#art-train" x="-44" y="-66" width="88" height="88"/></g>
+    <g id="train"><use href="#art-${VEHICLE}" x="-44" y="-66" width="88" height="88"/></g>
     <g id="stations">${stations}</g>`; // 火車畫在車站下面，停靠時不會蓋住車站圖示
 
   /* ---------- 進度：去過哪些站、現在在哪 ---------- */
@@ -117,18 +133,26 @@ function start(R) {
     train.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${trainFlip} 1)`);
   }
   placeTrain(P(R.stops[prog.at].at));
+  // 停在要坐船才到得了的站（沖繩），就停一艘船
+  const parkAt = (i) => train.querySelector('use').setAttribute('href', `#art-${R.stops[i].by ? 'ship' : VEHICLE}`);
+  parkAt(prog.at);
 
   let moving = false;
   function travel(to) {
     if (moving) return;
     const n = R.stops.length;
     if (to === prog.at) { arrive(to, false); return; }
-    // 照環島的方向開過去，經過的每一站都會停一下下（不顯示卡片）
-    const path = [P(R.stops[prog.at].at)];
-    for (let i = prog.at; i !== to;) { i = (i + 1) % n; path.push(P(R.stops[i].at)); }
-    // 每一段用曲線上的點，比較像在鐵路上跑
-    const seg = [];
-    for (let i = 0; i < path.length - 1; i++) for (let t = 0; t <= 1; t += 0.1) seg.push([path[i][0] + (path[i + 1][0] - path[i][0]) * t, path[i][1] + (path[i + 1][1] - path[i][1]) * t]);
+    // 經過的每一站：環島就照環島的方向開；一條線的就往前或往回開
+    const idx = [prog.at];
+    if (loop) for (let i = prog.at; i !== to;) { i = (i + 1) % n; idx.push(i); }
+    else for (let i = prog.at; i !== to;) { i += to > i ? 1 : -1; idx.push(i); }
+    // 每一段切成小點；坐船的那一段（by: 'ship' 的站和前一站之間）換成船
+    const seg = [], ship = [];
+    for (let k = 0; k < idx.length - 1; k++) {
+      const a = P(R.stops[idx[k]].at), b = P(R.stops[idx[k + 1]].at);
+      const bySea = !!R.stops[Math.max(idx[k], idx[k + 1])].by && Math.abs(idx[k] - idx[k + 1]) === 1;
+      for (let t = 0; t <= 1; t += 0.1) { seg.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); ship.push(bySea); }
+    }
     const lens = [0];
     for (let i = 1; i < seg.length; i++) lens.push(lens[i - 1] + Math.hypot(seg[i][0] - seg[i - 1][0], seg[i][1] - seg[i - 1][1]));
     const total = lens[lens.length - 1], dur = Math.min(6000, Math.max(1200, total * 4));
@@ -136,16 +160,19 @@ function start(R) {
     $('stop').classList.add('hidden');
     $('hint').classList.add('hidden');
     stopSpeech();
-    Synth.play('train');
+    Synth.play(Synth.has(VEHICLE) ? VEHICLE : 'train');
+    const use = train.querySelector('use');
+    let onShip = false;
     const t0 = performance.now();
     const step = (now) => {
       const d = Math.min(1, (now - t0) / dur) * total;
       let i = lens.findIndex((l) => l >= d);
       if (i <= 0) i = 1;
       const r = (d - lens[i - 1]) / Math.max(1e-6, lens[i] - lens[i - 1]);
+      if (ship[i] !== onShip) { onShip = ship[i]; use.setAttribute('href', `#art-${onShip ? 'ship' : VEHICLE}`); if (onShip) Synth.play('ship'); }
       placeTrain([seg[i - 1][0] + (seg[i][0] - seg[i - 1][0]) * r, seg[i - 1][1] + (seg[i][1] - seg[i - 1][1]) * r], seg[i][0] - seg[i - 1][0]);
       if (d < total) requestAnimationFrame(step);
-      else { moving = false; arrive(to, true); }
+      else { moving = false; parkAt(to); arrive(to, true); }
     };
     requestAnimationFrame(step);
   }
@@ -164,11 +191,14 @@ function start(R) {
   const zhChip = (s) => `<button class="name-chip zh" data-lang="zh"><span class="tag">中文</span><b>${s.zh}</b></button>`;
   const enChip = (s) => `<button class="name-chip en" data-lang="en"><span class="tag">English</span><b>${s.en}</b></button>`;
   const twChip = (s) => `<button class="name-chip tw" data-lang="tw"><span class="tag">台語</span><b>${s.tw}</b><small>${s.twRom}</small></button>`;
+  const jaChip = (s) => `<button class="name-chip ja" data-lang="ja"><span class="tag">日本語</span><b>${s.ja}</b><small>${s.jaRom}</small></button>`;
+  const chip3 = (s) => (LANG3 === 'ja' ? jaChip(s) : twChip(s));
+  const line3 = (it) => (LANG3 === 'ja' ? `<span class="ja">${it.ja}<br><small>${it.jaRom}</small></span>` : `<span class="tw">${it.tw}<br><small>${it.twRom}</small></span>`);
 
   function showStop(s, stamp) {
     $('stopStamp').textContent = stamp ? '🎫' : '🚉';
     $('stopStamp').style.animation = 'none'; void $('stopStamp').offsetWidth; $('stopStamp').style.animation = '';
-    $('stopNames').innerHTML = zhChip(s) + enChip(s) + twChip(s);
+    $('stopNames').innerHTML = zhChip(s) + enChip(s) + chip3(s);
     $('stopNames').querySelectorAll('.name-chip').forEach((b) => b.addEventListener('click', () => sayIn(s, b.dataset.lang)));
     $('stopItems').innerHTML = '';
     $('stopFact').classList.add('hidden');
@@ -176,7 +206,7 @@ function start(R) {
       const c = document.createElement('button');
       c.className = 'item';
       c.innerHTML = (it.art ? `<svg viewBox="-50 -50 100 100"><use href="#art-${it.art}" x="-50" y="-50" width="100" height="100"/></svg>` : `<span class="emoji">${it.emoji}</span>`) +
-        `<b>${it.zh}</b><span class="en">${it.en}</span><span class="tw">${it.tw}<br><small>${it.twRom}</small></span>`;
+        `<b>${it.zh}</b><span class="en">${it.en}</span>${line3(it)}`;
       c.addEventListener('click', () => {
         c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop');
         if (it.fact) { $('stopFact').textContent = `💡 ${it.fact}`; $('stopFact').classList.remove('hidden'); }
@@ -186,11 +216,11 @@ function start(R) {
     });
     $('stop').classList.remove('hidden');
     if (stamp) confetti();
-    // 到站廣播：「臺中到了！」＋英文
-    sayLines([[`${s.zh}到了！`, 'zh-TW'], [s.en, 'en-US']]);
+    // 到站廣播：「臺中到了！」＋英文（日本再加日文站名）
+    sayLines([[`${s.zh}到了！`, 'zh-TW'], [s.en, 'en-US'], ...(LANG3 === 'ja' ? [[s.ja, 'ja-JP']] : [])]);
   }
 
-  /* ---------- 說話：中文、英文用系統語音；台語用家長錄音（錄音室的 key：<id>_tw） ---------- */
+  /* ---------- 說話：中文、英文用系統語音；台語用家長錄音（錄音室的 key：<id>_tw）；日語用系統的日文語音 ---------- */
   let voices = [];
   const loadVoices = () => { voices = 'speechSynthesis' in window ? speechSynthesis.getVoices() : []; };
   if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.addEventListener('voiceschanged', loadVoices); }
@@ -222,13 +252,15 @@ function start(R) {
     }
   }
   const twLine = (x) => (Recs.has(`${x.id}_tw`) ? [[Recs.url(`${x.id}_tw`), 'rec']] : []);
+  const line3Say = (x) => (LANG3 === 'ja' ? [[x.ja, 'ja-JP']] : twLine(x));
   function sayIn(s, lang) {
     if (lang === 'zh') sayLines([[s.zh, 'zh-TW']]);
     else if (lang === 'en') sayLines([[s.en, 'en-US']]);
+    else if (lang === 'ja') sayLines([[s.ja, 'ja-JP']]);
     else sayLines(twLine(s).length ? twLine(s) : [[`台語唸作：${s.twRom}`, 'zh-TW']]);
   }
   function sayItem(it) {
-    sayLines([[it.zh, 'zh-TW'], [it.en, 'en-US'], ...twLine(it), ...(it.fact ? [[it.fact, 'zh-TW']] : [])]);
+    sayLines([[it.zh, 'zh-TW'], [it.en, 'en-US'], ...line3Say(it), ...(it.fact ? [[it.fact, 'zh-TW']] : [])]);
   }
 
   /* ---------- 🛂 護照 ---------- */
@@ -241,7 +273,7 @@ function start(R) {
     }).join('');
     $('passTotal').textContent = `${prog.visited.length} / ${R.stops.length}`;
     $('pass').classList.remove('hidden');
-    if (prog.visited.length === R.stops.length) { confetti(); sayLines([['環島成功！你好厲害！', 'zh-TW']]); }
+    if (prog.visited.length === R.stops.length) { confetti(); sayLines([[R.doneSay || '環島成功！你好厲害！', 'zh-TW']]); }
   }
   $('passBtn').addEventListener('click', openPass);
   $('passClose').addEventListener('click', () => $('pass').classList.add('hidden'));
@@ -251,6 +283,7 @@ function start(R) {
     const g = e.target.closest('.station');
     if (g) travel(Number(g.dataset.i));
   });
+  // 下一站：一條線的開到最後一站以後，從頭再開一次
   $('nextBtn').addEventListener('click', () => travel((prog.at + 1) % R.stops.length));
   $('stopClose').addEventListener('click', () => { stopSpeech(); $('stop').classList.add('hidden'); });
 
@@ -271,7 +304,7 @@ function start(R) {
 
   markStations();
   save();
-  Recs.load(['_tw']);
+  if (LANG3 === 'tw') Recs.load(['_tw']);
   travelUi(R, P, setVB, HOME_VB, VW, P(R.stops[prog.at].at));
 }
 
