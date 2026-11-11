@@ -16,7 +16,8 @@ const Travel = (() => {
 
   // at = 地圖上插旗子的地方；box = [西經, 南緯, 東經, 北緯]，飛到這裡時畫面要放大到看得到這一塊
   const TRIPS = [
-    { id: 'taiwan', icon: '🚂', zh: '台灣環島', en: 'Around Taiwan', at: [121, 23.7], box: [119.9, 21.8, 122.1, 25.4], ready: true },
+    { id: 'taiwan', icon: '🚂', zh: '台灣環島', en: 'Around Taiwan', at: [121, 23.7], box: [119.9, 21.8, 122.1, 25.4], ready: true,
+      go: '坐飛機出發，去台灣環島！', welcome: '台灣環島，出發囉！' },
     { id: 'japan', icon: '🗻', zh: '日本', en: 'Japan', at: [138.5, 36.5], box: [127, 26, 146, 45.6], ready: true },
     { id: 'china', icon: '🐼', zh: '中國', en: 'China', at: [104, 34], box: [73, 18, 135, 54], ready: true },
     { id: 'africa', icon: '🦁', zh: '非洲', en: 'Africa', at: [24, 2], box: [-18, -36, 52, 33], ready: true },
@@ -28,6 +29,21 @@ const Travel = (() => {
     { id: 'europe', icon: '🏰', zh: '歐洲', en: 'Europe', at: [10, 48.5], box: [-10.5, 36, 31.5, 70.5], ready: true },
   ];
   const trip = (id) => TRIPS.find((t) => t.id === id);
+
+  /* ---------- 說話：出發「坐飛機去日本！」、降落「歡迎來到日本！」、回來「回家囉！」 ---------- */
+  // 用按鈕唸名字的同一套聲音（voice-ui.js：有預先生成的語音就播，沒有就用系統的中文語音）
+  const goText = (t) => t.go || `坐飛機去${t.zh}！`;
+  const welcomeText = (t) => t.welcome || `歡迎來到${t.zh}！`;
+  function say(text) {
+    if (typeof VoiceUI !== 'undefined') { VoiceUI.speak(text); return; }
+    if (!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'zh-TW';
+    speechSynthesis.speak(u);
+  }
+  // 等話說完（換頁前用）；沒有 voice-ui 的頁面就不等
+  const sayDone = () => (typeof VoiceUI !== 'undefined' ? VoiceUI.waitDone(4000) : Promise.resolve());
 
   // 這個地方在主地圖上的範圍（地圖座標 [x0, y0, x1, y1]）
   function frame(t) {
@@ -87,5 +103,5 @@ const Travel = (() => {
     } catch { return null; }
   }
 
-  return { project, HOME, TRIPS, trip, frame, progress, PLANE, puff, cloudsIn, cloudsOut, setFlight, takeFlight, wait };
+  return { project, HOME, TRIPS, trip, frame, progress, PLANE, puff, cloudsIn, cloudsOut, setFlight, takeFlight, wait, say, sayDone, goText, welcomeText };
 })();

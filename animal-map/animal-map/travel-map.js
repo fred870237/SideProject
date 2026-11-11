@@ -135,8 +135,9 @@
   async function flyTo(id) {
     const t = Travel.trip(id);
     if (!t || flying) return;
-    if (!t.ready) { setTravel(true); toast(`${t.icon} ${t.zh}：敬請期待！`); return; }
+    if (!t.ready) { setTravel(true); toast(`${t.icon} ${t.zh}：敬請期待！`); Travel.say(`${t.zh}還在準備中喔！`); return; }
     flying = true;
+    Travel.say(Travel.goText(t));
     setTravel(true);
     hint.classList.add('hidden');
     await camera(1, [MAP_W / 2, MAP_H / 2], 400);
@@ -150,6 +151,7 @@
       if (e > 0.6 && !covered) { covered = true; Travel.cloudsIn(); }
     });
     await Travel.wait(300);
+    await Travel.sayDone(); // 「坐飛機去日本！」說完再換頁
     Travel.setFlight(id, 'in');
     location.href = `region.html?r=${id}&fly=1`;
   }
@@ -165,6 +167,7 @@
     world.classList.add('flying');
     const { s, c } = fitTrip(t);
     setRaw(s, c[0], c[1]);
+    Travel.say('回家囉！');
     await Travel.cloudsOut();
     await camera(1, [MAP_W / 2, MAP_H / 2], 1500);
     world.classList.remove('flying');

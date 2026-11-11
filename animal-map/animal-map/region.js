@@ -544,6 +544,7 @@ function travelUi(R, P, setVB, HOME_VB, VW, trainAt) {
     const land = trainAt; // 降落在火車停的那一站
     const start = [land[0] - VW * 1.2, land[1] - 700];
     (async () => {
+      Travel.say(Travel.welcomeText(t)); // 「歡迎來到日本！」
       await Travel.cloudsOut();
       const zoom = moveVB(far(2.4), HOME_VB, 1600);
       const t0 = performance.now(), ms = 1800;
