@@ -88,14 +88,19 @@
         return [c[0] + r * Math.cos(ang) * (1 - t * 0.3), c[1] + r * Math.sin(ang)];
       };
     }
-    // 弧線：中間往上拱起來
-    const ctl = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2 - d * 0.35];
+    // 弧線：中間往上拱起來（飛很遠的時候不要拱太高）
+    const ctl = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2 - Math.min(d * 0.35, 110)];
     return (t) => [
       (1 - t) ** 2 * a[0] + 2 * (1 - t) * t * ctl[0] + t * t * b[0],
       (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * ctl[1] + t * t * b[1],
     ];
   }
-  function fly(a, b, ms) {
+  // 越過太平洋：主地圖是攤平的，台灣在右邊、美國在左邊；往東飛越太平洋比較近的話，
+  // 就讓飛機從地圖右邊飛出去、再從左邊飛進來（反過來也一樣）
+  const wrapX = (x) => ((x % MAP_W) + MAP_W) % MAP_W;
+  function fly(a, b0, ms) {
+    const dx = b0[0] - a[0];
+    const b = Math.abs(dx) > MAP_W / 2 ? [b0[0] - Math.sign(dx) * MAP_W, b0[1]] : b0;
     const at = route(a, b), plane = $('#plane'), trail = $('#planeTrail'), puffs = $('#puffs');
     const pts = [];
     let last = 0;
@@ -106,20 +111,24 @@
     return new Promise((resolve) => {
       const step = (now) => {
         const k = Math.min(1, (now - t0) / ms), t = k < 0.5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
-        const p = at(t), q = at(Math.min(1, t + 0.01)), p0 = at(Math.max(0, t - 0.01));
+        const raw = at(t), q = at(Math.min(1, t + 0.01)), p0 = at(Math.max(0, t - 0.01));
+        const p = [wrapX(raw[0]), raw[1]];
         const ang = (Math.atan2(q[1] - p0[1], q[0] - p0[0]) * 180) / Math.PI;
         // 起飛時變大一點、降落時變小（看起來像飛高再降下來），大小不跟著畫面放大
         const size = (0.3 + 0.18 * Math.sin(Math.PI * t)) / view.s;
         const flip = Math.abs(ang) > 90 ? -1 : 1; // 往左飛時把飛機翻過來，才不會頭下腳上
         plane.setAttribute('transform', `translate(${p[0].toFixed(2)} ${p[1].toFixed(2)}) rotate(${ang.toFixed(1)}) scale(${size} ${size * flip})`);
         pts.push(p);
-        trail.setAttribute('d', 'M' + pts.map((v) => v.map((n) => n.toFixed(2)).join(' ')).join(' L'));
+        // 從地圖一邊跳到另一邊的地方，尾巴的虛線斷開重新畫
+        trail.setAttribute('d', pts.map((v, i) => `${i && Math.abs(v[0] - pts[i - 1][0]) < MAP_W / 2 ? 'L' : 'M'}${v[0].toFixed(2)} ${v[1].toFixed(2)}`).join(' '));
         if (now - last > 120 && k < 0.95) { last = now; puffs.insertAdjacentHTML('beforeend', Travel.puff(p[0], p[1], 5 / view.s)); }
         if (k < 1) requestAnimationFrame(step); else resolve();
       };
       requestAnimationFrame(step);
     });
   }
+
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 
   /* ---------- 點一個地方：飛過去 ---------- */
   let flying = false;
@@ -131,7 +140,7 @@
     setTravel(true);
     hint.classList.add('hidden');
     await camera(1, [MAP_W / 2, MAP_H / 2], 400);
-    await fly(home, P(t.at), Math.hypot(...[0, 1].map((i) => P(t.at)[i] - home[i])) < 12 ? 1800 : 2600);
+    await fly(home, P(t.at), dist(home, P(t.at)) < 12 ? 1800 : 2600);
     // 一路放大到那一塊，最後飛進雲裡
     world.classList.add('flying');
     const { s, c } = fitTrip(t);
@@ -160,7 +169,7 @@
     await camera(1, [MAP_W / 2, MAP_H / 2], 1500);
     world.classList.remove('flying');
     applyView();
-    await fly(P(t.at), home, Math.hypot(...[0, 1].map((i) => P(t.at)[i] - home[i])) < 12 ? 1500 : 2400);
+    await fly(P(t.at), home, dist(P(t.at), home) < 12 ? 1500 : 2400);
     await Travel.wait(400);
     $('#plane').setAttribute('opacity', '0');
     $('#planeTrail').setAttribute('d', '');
