@@ -696,7 +696,7 @@ svg.addEventListener('pointerdown', (e) => {
 });
 
 svg.addEventListener('pointermove', (e) => {
-  if (!pointers.has(e.pointerId)) return;
+  if (!pointers.has(e.pointerId) || world.classList.contains('flying')) return; // 飛機正在放大飛進去，不能拖
   const prev = [...pointers.values()];
   const p = toSvg(e.clientX, e.clientY);
   if (gesture && Math.hypot(e.clientX - gesture.startX, e.clientY - gesture.startY) > 10) gesture.moved = true;
@@ -728,7 +728,10 @@ function endPointer(e) {
   if (!pointers.has(e.pointerId)) return;
   pointers.delete(e.pointerId);
   if (pointers.size === 0 && gesture) {
-    if (e.type === 'pointerup' && !gesture.moved && !gesture.multi && gesture.region && !gesture.tapId) location.href = `region.html?r=${gesture.region}`;
+    // 點到「台灣」標籤或旅行模式裡的地方：坐飛機飛過去（travel-map.js）
+    if (e.type === 'pointerup' && !gesture.moved && !gesture.multi && gesture.region && !gesture.tapId) {
+      if (window.flyTo) window.flyTo(gesture.region); else location.href = `region.html?r=${gesture.region}`;
+    }
     if (e.type === 'pointerup' && !gesture.moved && !gesture.multi && gesture.tapId) {
       if (quiz.on) quizTap(gesture.tapId); else selectAnimal(gesture.tapId);
     }
@@ -740,6 +743,7 @@ svg.addEventListener('pointercancel', endPointer);
 
 svg.addEventListener('wheel', (e) => {
   e.preventDefault();
+  if (world.classList.contains('flying')) return;
   const p = toSvg(e.clientX, e.clientY);
   zoomAt(p.x, p.y, Math.exp(-e.deltaY * 0.0015));
 }, { passive: false });
