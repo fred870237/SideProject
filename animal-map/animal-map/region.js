@@ -387,9 +387,13 @@ function start(R) {
     if (clip) return playRec(clip);
     return new Promise((resolve) => {
       if (!('speechSynthesis' in window)) return resolve();
+      const norm = (x) => x.lang.replace('_', '-').toLowerCase(), base = lang.split('-')[0].toLowerCase();
+      const v = voices.find((x) => norm(x) === lang.toLowerCase()) || voices.find((x) => norm(x).startsWith(base));
+      // 這台機器根本沒有這種語言的聲音（例如只裝了中文語音的電腦唸日文）：瀏覽器會拿中文的聲音硬唸，漢字變成中文、假名唸不出來，
+      // 乾脆跳過不唸；中文、英文不跳過（中文的聲音唸英文單字還可以）
+      if (!v && voices.length && !['zh', 'en'].includes(base)) return resolve();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = lang; u.rate = 0.85; u.pitch = 1.1;
-      const v = voices.find((x) => x.lang.replace('_', '-').toLowerCase() === lang.toLowerCase());
       if (v) u.voice = v;
       let done = false;
       const fin = () => { if (!done) { done = true; resolve(); } };

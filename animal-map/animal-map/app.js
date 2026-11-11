@@ -143,11 +143,13 @@ async function speakTTS(text, code) {
   if (clip && await playSrc(clip)) return true;
   return new Promise((resolve) => {
     if (!('speechSynthesis' in window)) return resolve(false);
+    const v = pickVoice(code);
+    // 這台機器根本沒有這種語言的聲音（只裝了中文語音的電腦唸日文）：瀏覽器會拿中文的聲音硬唸成中文，乾脆跳過；中文、英文不跳過
+    if (!v && voices.length && !['zh', 'en'].includes(code.split('-')[0].toLowerCase())) return resolve(false);
     const u = new SpeechSynthesisUtterance(text);
     u.lang = code;
     u.rate = 0.8;     // 慢一點，小朋友比較聽得清楚
     u.pitch = 1.1;
-    const v = pickVoice(code);
     if (v) u.voice = v;
     let done = false;
     const finish = (ok) => { if (!done) { done = true; resolve(ok); } };
