@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america', 'middle-east'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=56`;
+script.src = `regions/${regionId}.js?v=57`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -323,6 +323,14 @@ function start(R) {
     else if (kind === 'za') body = '<rect width="30" height="10" fill="#E03C31"/><rect y="10" width="30" height="10" fill="#001489"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#fff" stroke-width="7"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#007749" stroke-width="4.2"/><path d="M0 3.5L7.5 10L0 16.5Z" fill="#000"/>';
     // 肯亞（簡化）：黑、紅、綠，中間有白線，再加一個盾牌
     else if (kind === 'ke') body = '<rect width="30" height="7" fill="#000"/><rect y="6.5" width="30" height="7" fill="#fff"/><rect y="7.6" width="30" height="4.8" fill="#BB0000"/><rect y="13" width="30" height="7" fill="#006600"/><ellipse cx="15" cy="10" rx="3.2" ry="6.5" fill="#BB0000" stroke="#000" stroke-width="1"/>';
+    // 土耳其：紅底，白色的月亮和星星
+    else if (kind === 'tr') body = '<rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.3" cy="10" r="4" fill="#E30A17"/>' + star5(17.4, 10, 2.3, '#fff');
+    // 約旦：黑、白、綠，左邊紅色三角形，裡面一顆白星星
+    else if (kind === 'jo') body = '<rect width="30" height="6.7" fill="#000"/><rect y="6.6" width="30" height="6.8" fill="#fff"/><rect y="13.3" width="30" height="6.7" fill="#007A3D"/><path d="M0 0L15 10L0 20Z" fill="#CE1126"/>' + star5(5, 10, 1.7, '#fff');
+    // 阿拉伯聯合大公國：左邊紅色直條，右邊綠、白、黑
+    else if (kind === 'ae') body = '<rect width="30" height="6.7" fill="#00732F"/><rect y="6.6" width="30" height="6.8" fill="#fff"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/>';
+    // 阿曼：紅底，右上白、右下綠，左上角一個白色徽章（簡化成圓圈）
+    else if (kind === 'om') body = '<rect width="30" height="20" fill="#DB161B"/><rect x="8" width="22" height="6.7" fill="#fff"/><rect x="8" y="13.3" width="22" height="6.7" fill="#008000"/><circle cx="4" cy="3.6" r="1.8" fill="#fff"/>';
     // 墨西哥：綠、白、紅，中間一個咖啡色的老鷹圖案（簡化成圓圈）
     else if (kind === 'mx') body = '<rect width="10" height="20" fill="#006847"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#CE1126"/><circle cx="15" cy="10" r="2.6" fill="#8C5A2B"/><path d="M12.6 11.6q2.4 2.2 4.8 0" stroke="#006847" stroke-width=".8" fill="none"/>';
     // 貝里斯：藍底，上下各一條紅邊，中間白色圓圈

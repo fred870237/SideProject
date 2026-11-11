@@ -268,6 +268,31 @@ Object.assign(ART, {
     return s + path('M-11 -14 V-30 H11 V-14Z', st) + path('M-13 -30 H13 V-34 H-13Z', dk) + path('M-4 -14 V-24 H4 V-14Z', '#5a4a3a');
   },
 
+  // 佩特拉的卡茲尼神殿：直接刻在粉紅色岩壁上的大門，下面一排柱子，上面中間一座圓亭
+  petra: () => {
+    const { path, line, circle } = K;
+    const rock = '#d98b6a', lt = '#eaa98a', pale = '#f3c4a8', dk = '#b5674a';
+    return path('M-50 44 V-30 Q-40 -46 -25 -40 Q-10 -50 5 -44 Q25 -50 50 -36 V44Z', rock) +
+      line('M-44 -10 q6 10 0 24 M42 -20 q-5 12 2 26', dk, 2) +
+      path('M-30 40 V2 H30 V40Z', lt) +
+      [-24, -12, 12, 24].map((x) => path(`M${x - 2.5} 40 V4 H${x + 2.5} V40Z`, pale)).join('') +
+      path('M-6 40 V16 H6 V40Z', '#6b3a2a') +
+      path('M-32 -2 H32 V3 H-32Z', dk) + path('M-30 -2 L0 -11 L30 -2Z', lt) +
+      path('M-27 -12 V-30 H-15 V-12Z', lt) + path('M15 -12 V-30 H27 V-12Z', lt) +
+      path('M-8 -12 V-30 H8 V-12Z', pale) + line('M-4 -12 V-30 M4 -12 V-30', dk, 1.2) +
+      path('M-10 -30 Q0 -40 10 -30Z', lt) + circle(0, -42, 2.6, lt);
+  },
+
+  // 杜拜哈里發塔：世界最高的大樓，一節一節往上變細，最上面是尖尖的天線
+  'burj-khalifa': () => {
+    const { path, line } = K;
+    const g = '#c5d6e6', dk = '#7f97ad', b = '#dbe3ea';
+    return path('M-50 44 V40 H50 V44Z', '#e3c98f') +
+      path('M-42 40 V22 H-30 V40Z', b) + path('M27 40 V14 H39 V40Z', b) + path('M-28 40 V30 H-18 V40Z', b) +
+      path('M-14 40 V16 H-10 V-4 H-7 V-20 H-4 V-34 H-2 L0 -52 L2 -34 H4 V-20 H7 V-4 H10 V16 H14 V40Z', g) +
+      line('M0 -34 V40', dk, 1.2) + line('M-14 28 H14 M-10 6 H10 M-7 -12 H7 M-4 -27 H4', dk, 1.2);
+  },
+
   registan: () => {
     const { path, circle, flatPath, line } = K;
     const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';
