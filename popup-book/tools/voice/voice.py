@@ -34,6 +34,8 @@ LINES = [
     "Crop Duster", "Windmill", "Pickup Truck", "Hay Baler", "Tractor", "Combine Harvester", "Quad Bike",
     # 🚛 貨運卡車
     "Semi Truck", "Garbage Truck", "Delivery Van", "Ice Cream Truck", "Car Carrier", "Monster Truck", "Street Sweeper",
+    # 🚇 隧道工程
+    "Tunnel Boring Machine", "Shotcrete Sprayer", "Mining Locomotive", "Drill Jumbo", "Underground Loader",
     # 🚚 超大運輸
     "Road Train", "Wind Turbine Blade Truck", "Modular Transporter", "Heavy Haul Truck", "Log Truck", "Tank Truck", "Escort Truck", "Oversize load!", "Double-Deck Car Carrier",
     # 🏢 蓋大樓

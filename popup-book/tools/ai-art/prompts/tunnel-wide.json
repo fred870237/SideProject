@@ -1,0 +1,17 @@
+{
+  "name": "t1w",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64
+  ],
+  "w": 1792,
+  "h": 640,
+  "style": "Flat 2D side elevation illustration from a children's picture book about digging a tunnel. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "tbm": "A single giant tunnel boring machine, seen from the side facing right: a very long round steel cylinder lying horizontally with many machines, pipes, walkways and a conveyor belt behind it, and at the right front end a huge round yellow cutterhead disc covered with cutting teeth, the cutterhead is turned to face the viewer so it looks like a big round wheel"
+  }
+}

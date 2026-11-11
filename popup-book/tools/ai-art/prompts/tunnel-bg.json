@@ -1,0 +1,17 @@
+{
+  "name": "t3bg",
+  "seeds": [
+    71,
+    72,
+    73,
+    74
+  ],
+  "w": 1536,
+  "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A cross-section side view of a big rocky hill like a cutaway diagram, NO vehicles and NO people: brown and grey rock layers fill the lower two thirds, and through the rock runs one long straight horizontal tunnel from the left edge to near the right edge, the inside of the tunnel is a plain light grey arched space with a flat floor and thin rails along the floor, the right end of the tunnel is a rough rock wall. Green grass and a few trees on top of the hill. The sky is plain white paper."
+  },
+  "init": "tunnel-sketch2.png",
+  "denoise": 0.62
+}

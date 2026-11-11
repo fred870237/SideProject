@@ -1,0 +1,18 @@
+{
+  "name": "t1",
+  "seeds": [
+    7,
+    8,
+    61,
+    62
+  ],
+  "w": 1024,
+  "h": 640,
+  "style": "Flat 2D side elevation illustration from a children's picture book about digging a tunnel. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+  "items": {
+    "jumbo": "A single yellow drill jumbo tunnel drilling rig, seen from the side facing right: a low yellow vehicle on four big black tyres with a small cab, and at the front two long grey hydraulic booms reaching forward, each ending in a long thin rock drill",
+    "shotcrete": "A single orange shotcrete spraying machine, seen from the side facing right: a low orange truck on four black tyres with a small cab, a long folding grey boom reaching up and forward ending in a spray nozzle, a round concrete hopper at the back",
+    "loader": "A single low-profile underground mining loader, seen from the side facing right: a very long and flat yellow machine on four big black tyres, the driver's seat on the side, a big grey bucket at the front, it is much lower than a normal loader",
+    "loco": "A single small red narrow-gauge mining locomotive, seen from the side facing right, pulling two small grey open mine cars full of brown rocks, small black wheels on thin rails, no rails beyond the train"
+  }
+}

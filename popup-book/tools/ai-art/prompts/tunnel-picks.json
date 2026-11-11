@@ -1,0 +1,7 @@
+{
+  "tbm": ["D:/AI/ComfyUI/output/t1w/tbm_61_00001_.png", false, [], {"noline": true}],
+  "jumbo": ["D:/AI/ComfyUI/output/t1/jumbo_8_00001_.png", false, [], {"noline": true}],
+  "shotcrete": ["D:/AI/ComfyUI/output/t1/shotcrete_62_00001_.png", false, [], {"noline": true}],
+  "lhd": ["D:/AI/ComfyUI/output/t1/loader_61_00001_.png", false, [], {"noline": true}],
+  "loco": ["D:/AI/ComfyUI/output/t1/loco_8_00001_.png", false, [], {"noline": true}]
+}
