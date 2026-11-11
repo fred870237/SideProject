@@ -235,6 +235,23 @@ Object.assign(ART, {
       eyes(18, 17.5, 2.4, 1.5) + smile(18, 21, 1.6);
   },
 
+  // 撒馬爾罕的雷吉斯坦：沙色的大門上貼滿藍色磁磚，後面一個藍色有條紋的圓頂，兩邊是高高的宣禮塔
+  registan: () => {
+    const { path, circle, flatPath, line } = K;
+    const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';
+    const minaret = (x) => path(`M${x - 4} 40 V-14 H${x + 4} V40Z`, sand) + line(`M${x - 4} -2 H${x + 4} M${x - 4} 12 H${x + 4} M${x - 4} 26 H${x + 4}`, blue, 2.2) + path(`M${x - 5} -14 H${x + 5} V-18 H${x - 5}Z`, turq);
+    return path('M-50 44 V40 H50 V44Z', '#d9b27a') +
+      path('M-10 -2 Q-10 -30 10 -30 Q30 -30 30 -2Z', turq) +
+      line('M0 -29 Q-2 -16 -2 -2 M10 -30 V-2 M20 -29 Q22 -16 22 -2', '#1f7fa8', 1.6) +
+      minaret(-38) + minaret(38) +
+      path('M-30 40 V-6 H30 V40Z', sand) +
+      path('M-18 40 V8 Q-18 -8 0 -8 Q18 -8 18 8 V40Z', blue) +
+      path('M-11 40 V12 Q-11 2 0 2 Q11 2 11 12 V40Z', '#6b4b33') +
+      flatPath('M-30 -6 H30 V0 H-30Z', blue, 0.9) +
+      line('M-26 4 v32 M26 4 v32', turq, 2.4) +
+      circle(10, -32, 2, '#f2c94c');
+  },
+
   // 大笨鐘：米黃色的鐘塔，大大的白色時鐘，屋頂是尖尖的灰綠色塔頂
   'big-ben': () => {
     const { path, circle, flatPath, line } = K;

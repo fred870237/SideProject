@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=53`;
+script.src = `regions/${regionId}.js?v=54`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -355,6 +355,14 @@ function start(R) {
       body = '<rect width="30" height="20" fill="#012169"/><g transform="scale(.5)"><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/></g>' +
         red(22.5, 4.5, 1.5) + red(19, 9.5, 1.5) + red(26, 8.5, 1.3) + red(22.5, 16, 1.7);
     }
+    // 哈薩克：天藍色，中間一個金色的太陽（簡化，沒畫老鷹）
+    else if (kind === 'kz') body = '<rect width="30" height="20" fill="#00AFCA"/><circle cx="15" cy="9" r="3.4" fill="#FEC50C"/>' +
+      [...Array(16)].map((_, k) => { const a = (k * Math.PI) / 8; return `<path d="M${(15 + 4 * Math.cos(a)).toFixed(1)} ${(9 + 4 * Math.sin(a)).toFixed(1)}L${(15 + 5.6 * Math.cos(a)).toFixed(1)} ${(9 + 5.6 * Math.sin(a)).toFixed(1)}" stroke="#FEC50C" stroke-width=".8"/>`; }).join('') +
+      '<rect x="1.5" y="1" width="1.6" height="18" fill="#FEC50C" opacity=".8"/>';
+    // 吉爾吉斯：紅底，中間一個黃色的太陽
+    else if (kind === 'kg') body = '<rect width="30" height="20" fill="#E8112D"/>' +
+      [...Array(20)].map((_, k) => { const a = (k * Math.PI) / 10; return `<path d="M15 10L${(15 + 6.2 * Math.cos(a)).toFixed(1)} ${(10 + 6.2 * Math.sin(a)).toFixed(1)}" stroke="#FFEF00" stroke-width="1.1"/>`; }).join('') +
+      '<circle cx="15" cy="10" r="3.6" fill="#FFEF00"/><circle cx="15" cy="10" r="2.4" fill="#E8112D"/>';
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }

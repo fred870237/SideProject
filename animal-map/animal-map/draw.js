@@ -39,9 +39,9 @@ const lctx = lines.getContext('2d');
 const state = {
   page: BLANK,
   color: COLORS[0],
-  tool: 'fill',
-  size: 24,
-  inside: true,
+  tool: 'brush',
+  size: 10,
+  inside: false,
   walls: new Uint8Array(SIZE * SIZE), // 1 = 線（油漆桶的邊界）
   hasWalls: false,                    // 白紙或線稿還沒載入時是 false
   undo: [],                           // 每一步存一張畫布（複製畫布比 getImageData 快很多）
@@ -570,7 +570,7 @@ function buildPalette() {
       state.color = c;
       box.querySelectorAll('.paint-dot').forEach((el) => el.classList.toggle('on', el === b));
       document.documentElement.style.setProperty('--cur', c.hex);
-      if (state.tool === 'eraser') setTool(document.querySelector('.tool[data-tool="fill"]'));
+      if (state.tool === 'eraser') setTool(document.querySelector('.tool.brush.s'));
       bubble(`${c.en}<small>${c.zh}</small>`, c.hex); // 只顯示顏色名字，不唸
     });
     box.appendChild(b);
