@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=47`;
+script.src = `regions/${regionId}.js?v=48`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -60,6 +60,8 @@ function start(R) {
   // 左右多留一點海；很寬的地方（美國）少留一點，地圖才不會被縮得太小
   const PADX = VW > VH * 1.4 ? VW * 0.06 : VW * 0.25;
   const HOME_VB = [-PADX, -60, VW + PADX * 2, VH + 120];
+  // 很寬的地方（加拿大、美國）整張地圖會被縮得很小，車站和火車跟著放大一點，小朋友才點得到
+  const ICON = Math.min(2.6, Math.max(1, VW / VH / 1.8));
   const setVB = ([x, y, w, h]) => $('map').setAttribute('viewBox', `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
   setVB(HOME_VB);
 
@@ -175,7 +177,7 @@ function start(R) {
   const stations = R.stops.map((s, i) => {
     const [x, y] = P(s.marker || s.at);
     const { art, emoji: icon } = stopIcon(s);
-    return `<g class="station" data-i="${i}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">
+    return `<g class="station" data-i="${i}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${ICON.toFixed(2)})">
       <circle class="ring" r="36"/>
       ${art ? `<use href="#art-${art}" x="-30" y="-30" width="60" height="60"/>` : `<text font-size="38">${icon}</text>`}
       <text class="label" y="52">${s.zh}</text>
@@ -227,7 +229,7 @@ function start(R) {
   let trainFlip = 1;
   function placeTrain([x, y], dx = 0) {
     if (dx > 1) trainFlip = -1; else if (dx < -1) trainFlip = 1; // 火車頭朝左；往右開就翻過來
-    train.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${trainFlip} 1)`);
+    train.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${(trainFlip * ICON).toFixed(2)} ${ICON.toFixed(2)})`);
   }
   placeTrain(P(R.stops[prog.at].at));
   // 停在要坐船才到得了的站（沖繩），就停一艘船；站自己寫了 vehicle 就停那個
@@ -353,7 +355,7 @@ function start(R) {
   const twChip = (s) => `<button class="name-chip tw" data-lang="tw"><span class="tag">台語</span><b>${s.tw}</b><small>${s.twRom}</small></button>`;
   const jaChip = (s) => `<button class="name-chip ja" data-lang="ja"><span class="tag">日本語</span><b>${s.ja}</b><small>${s.jaRom}</small></button>`;
   // 歐洲：這一站是哪一國（國旗＋國名），用當地的語言打招呼、唸站名
-  const localChip = (s) => { const c = countryOf(s); return c ? `<button class="name-chip local" data-lang="local"><span class="tag">${flagSvg(c.flag, 22, 15)} ${c.zh}</span><b>${c.hello}!</b><small>${s.local || ''}</small></button>` : ''; };
+  const localChip = (s) => { const c = countryOf(s); return c ? `<button class="name-chip local" data-lang="local"><span class="tag">${flagSvg(c.flag, 22, 15)} ${c.zh}</span><b>${s.hello || c.hello}!</b><small>${s.local || ''}</small></button>` : ''; };
   const chip3 = (s) => (LANG3 === 'ja' ? jaChip(s) : LANG3 === 'tw' ? twChip(s) : LANG3 === 'local' ? localChip(s) : '');
   let curStop = null; // 現在這一站（歐洲的東西要知道是哪一國的語言）
   const line3 = (it) => (LANG3 === 'local' ? (it.local ? `<span class="local">${it.local}</span>` : '') : LANG3 === 'ja' ? `<span class="ja">${it.ja}<br><small>${it.jaRom}</small></span>` : LANG3 === 'tw' ? `<span class="tw">${it.tw}<br><small>${it.twRom}</small></span>` : '');
@@ -382,7 +384,7 @@ function start(R) {
     if (stamp) confetti();
     // 到站廣播：「臺中到了！」＋英文（日本再加日文站名）
     const c = countryOf(s);
-    sayLines([[`${s.zh}到了！`, 'zh-TW'], [s.en, 'en-US'], ...(LANG3 === 'ja' ? [[s.ja, 'ja-JP']] : []), ...(LANG3 === 'local' && c ? [[`${c.hello}! ${s.local || ''}`, c.lang]] : [])]);
+    sayLines([[`${s.zh}到了！`, 'zh-TW'], [s.en, 'en-US'], ...(LANG3 === 'ja' ? [[s.ja, 'ja-JP']] : []), ...(LANG3 === 'local' && c ? [[`${s.hello || c.hello}! ${s.local || ''}`, s.lang || c.lang]] : [])]);
   }
 
   /* ---------- 說話：中文、英文用系統語音；台語用家長錄音（錄音室的 key：<id>_tw）；日語用系統的日文語音 ---------- */
@@ -421,13 +423,14 @@ function start(R) {
     }
   }
   const twLine = (x) => (Recs.has(`${x.id}_tw`) ? [[Recs.url(`${x.id}_tw`), 'rec']] : []);
-  const localLang = () => (countryOf(curStop || {}) || {}).lang || 'en-US';
+  // 這一站自己的語言（加拿大的魁北克說法文：stop.lang、stop.hello）優先，沒有就用那一國的
+  const localLang = () => (curStop && curStop.lang) || (countryOf(curStop || {}) || {}).lang || 'en-US';
   const line3Say = (x) => (LANG3 === 'local' ? (x.local ? [[x.local, localLang()]] : []) : LANG3 === 'ja' ? [[x.ja, 'ja-JP']] : LANG3 === 'tw' ? twLine(x) : []);
   function sayIn(s, lang) {
     if (lang === 'zh') sayLines([[s.zh, 'zh-TW']]);
     else if (lang === 'en') sayLines([[s.en, 'en-US']]);
     else if (lang === 'ja') sayLines([[s.ja, 'ja-JP']]);
-    else if (lang === 'local') { const c = countryOf(s); if (c) sayLines([[`這裡是${c.zh}`, 'zh-TW'], [`${c.hello}! ${s.local || ''}`, c.lang]]); }
+    else if (lang === 'local') { const c = countryOf(s); if (c) sayLines([[`這裡是${c.zh}`, 'zh-TW'], [`${s.hello || c.hello}! ${s.local || ''}`, s.lang || c.lang]]); }
     else sayLines(twLine(s).length ? twLine(s) : [[`台語唸作：${s.twRom}`, 'zh-TW']]);
   }
   function sayItem(it) {
