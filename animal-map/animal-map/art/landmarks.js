@@ -70,6 +70,22 @@ Object.assign(ART, {
       wheel(-28) + wheel(22);
   },
 
+  // 泰國的嘟嘟車（車頭朝左）：三個輪子，前面一個、後面兩個，上面一片彩色的車篷
+  'tuk-tuk': () => {
+    const { path, circle, line, flat } = K;
+    const body = '#2f8fd6', roof = '#ffcf3f';
+    const wheel = (x) => circle(x, 36, 8, '#3b3640') + circle(x, 36, 3.6, '#d6dbe1');
+    return path('M-30 -18 Q-30 -26 -20 -26 H34 Q42 -26 42 -18 V-14 H-30Z', roof) +
+      line('M-26 -14 V10 M38 -14 V12 M12 -14 V12', '#5a5560', 2.4) +
+      path('M-44 30 V18 Q-44 8 -34 6 L-24 4 V30Z', body) +
+      path('M-24 30 V12 H44 V30Z', body) +
+      path('M0 12 V0 Q0 -4 4 -4 H36 Q40 -4 40 0 V12Z', '#e53935') +
+      flat(-34, 12, 4, 2, '#fff', -20, 0.8) + circle(-41, 22, 2.6, '#ffe066') +
+      line('M-20 4 L-12 -6', '#5a5560', 2) +
+      wheel(-34) + wheel(28) +
+      line('M-40 -18 h10 M36 -22 h4', '#fff', 1.4);
+  },
+
   // 埃及的金字塔：沙漠裡三座金黃色的金字塔，旁邊一棵椰子樹
   pyramid: () => {
     const { path, flatPath, line } = K;

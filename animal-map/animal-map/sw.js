@@ -1,6 +1,6 @@
 // 離線快取：第一次開啟後，地圖、程式和音檔都會存在 iPad 上
 // 修改程式後把版本號 +1，iPad 下次開啟就會更新
-const CACHE = 'animal-map-v61';
+const CACHE = 'animal-map-v62';
 importScripts('voices.js'); // VOICE_CLIPS：預先生成的語音清單（audio/voice/<語言>/<名稱>.mp3）
 const CORE = [
   './',
@@ -39,6 +39,7 @@ const CORE = [
   'regions/india.js',
   'regions/korea.js',
   'regions/canada.js',
+  'regions/thailand.js',
   'record.html',
   'record.css',
   'record.js',
