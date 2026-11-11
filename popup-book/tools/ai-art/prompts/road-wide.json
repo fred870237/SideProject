@@ -1,0 +1,15 @@
+{
+  "name": "rp1w",
+  "seeds": [
+    7,
+    8,
+    61,
+    62
+  ],
+  "w": 1792,
+  "h": 640,
+  "style": "Flat 2D side elevation illustration from a children's picture book about building a new road. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery, no road.",
+  "items": {
+    "milling": "A single big yellow cold milling machine for removing old asphalt, seen from the side facing right: a long low yellow machine on four black crawler tracks with a driver's platform and roof canopy in the middle, a cutting drum housing low between the tracks, and a long grey conveyor belt sticking out from the right front end going up diagonally to the upper right, carrying small grey asphalt chunks"
+  }
+}

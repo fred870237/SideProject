@@ -1,0 +1,19 @@
+{
+  "name": "rp2bg",
+  "seeds": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "w": 1536,
+  "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side-view landscape like a theatre backdrop, absolutely no perspective, NO vehicles and NO people: gentle green hills with a few small houses with red roofs and round trees, a green grass strip with a row of orange and white traffic cones, below it a wide straight horizontal road running from the left edge to the right edge: the upper lane is freshly paved smooth dark asphalt without markings, a thin light concrete strip, and the lower lane is unpaved light brown gravel road base. The sky is plain white paper."
+  },
+  "init": "road-sketch.png",
+  "denoise": 0.62
+}

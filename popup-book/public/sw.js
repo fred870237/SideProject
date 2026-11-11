@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v38';
+const CACHE = 'popup-book-v39';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -9,6 +9,7 @@ const CORE = [
   ...['bg', 'pump', 'piledriver', 'crane', 'boomlift', 'skidsteer', 'skidsteer-w1', 'skidsteer-w2', 'skidsteer-front'].map((n) => `art/img/building/${n}.webp`),
   'art/giant-mine.js', ...['bg', 'bwe', 'dragline', 'shovel', 'drill', 'haultruck', 'loader-body', 'loader-w1', 'loader-w2', 'loader-w3', 'loader-front', 'loader-bucket'].map((n) => `art/img/giant-mine/${n}.webp`),
   'art/tunnel.js', ...['bg', 'tbm', 'shotcrete', 'shotcrete-w1', 'shotcrete-w2', 'shotcrete-front', 'loco', 'loco-w1', 'loco-w2', 'loco-w3', 'loco-w4', 'loco-w5', 'loco-w6', 'loco-front', 'jumbo', 'jumbo-w1', 'jumbo-w2', 'jumbo-front', 'lhd', 'lhd-w1', 'lhd-w2', 'lhd-front'].map((n) => `art/img/tunnel/${n}.webp`),
+  'art/paving.js', ...['bg', 'milling', 'painter', 'painter-w1', 'painter-w2', 'painter-w3', 'painter-front', 'paver', 'roller', 'asphalt'].map((n) => `art/img/paving/${n}.webp`),
   'art/farm.js', 'art/trucks.js',
   ...['bg', 'crane', 'mixer', 'bulldozer', 'toilet', 'excavator', 'dumptruck', 'forklift', 'roller', 'roller-w1', 'roller-front', 'worker']
     .map((n) => `art/img/construction/${n}.webp`),

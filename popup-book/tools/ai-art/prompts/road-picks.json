@@ -1,0 +1,7 @@
+{
+  "milling": ["D:/AI/ComfyUI/output/rp1w/milling_62_00001_.png", false, [], {"noline": true}],
+  "paver": ["D:/AI/ComfyUI/output/rp1/paver_61_00001_.png", false, [], {"noline": true}],
+  "roller": ["D:/AI/ComfyUI/output/rp1/roller_62_00001_.png", false, [], {"noline": true}],
+  "painter": ["D:/AI/ComfyUI/output/rp1/painter_7_00001_.png", false, [], {"noline": true}],
+  "asphalt": ["D:/AI/ComfyUI/output/rp1/asphalt_7_00001_.png", false, [], {"noline": true}]
+}

@@ -36,6 +36,8 @@ LINES = [
     "Semi Truck", "Garbage Truck", "Delivery Van", "Ice Cream Truck", "Car Carrier", "Monster Truck", "Street Sweeper",
     # 🚇 隧道工程
     "Tunnel Boring Machine", "Shotcrete Sprayer", "Mining Locomotive", "Drill Jumbo", "Underground Loader",
+    # 🛣️ 鋪馬路（壓路機跟工地那頁共用 "Road Roller"）
+    "Milling Machine", "Line Painting Truck", "Asphalt Paver", "Asphalt Truck",
     # 🚚 超大運輸
     "Road Train", "Wind Turbine Blade Truck", "Modular Transporter", "Heavy Haul Truck", "Log Truck", "Tank Truck", "Escort Truck", "Oversize load!", "Double-Deck Car Carrier",
     # 🏢 蓋大樓

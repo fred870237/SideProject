@@ -1,0 +1,18 @@
+{
+  "name": "rp1",
+  "seeds": [
+    7,
+    8,
+    61,
+    62
+  ],
+  "w": 1024,
+  "h": 640,
+  "style": "Flat 2D side elevation illustration from a children's picture book about building a new road. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, ladders, railings and lights. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery, no road.",
+  "items": {
+    "roller": "A single yellow tandem vibratory road roller, seen from the side facing right: two big smooth grey steel drum rollers, one at the front and one at the back, a yellow body between them with a small open driver's seat with a roof canopy on top",
+    "paver": "A single yellow asphalt paver machine, seen from the side facing right: a low yellow machine on black crawler tracks, a wide open hopper at the right front to receive asphalt, a driver's platform with a roof canopy on top, and at the left back a flat grey screed plate close to the ground",
+    "painter": "A single small white road line painting truck, seen from the side facing right: a small white flatbed truck with orange stripes and four black tyres, carrying paint tanks and a hose on its back, and a small spray arm sticking out low behind the back wheels",
+    "asphalt": "A single orange dump truck, seen from the side facing right, its tipper body at the back is full of black hot asphalt, four big black tyres, a short cab at the front"
+  }
+}
