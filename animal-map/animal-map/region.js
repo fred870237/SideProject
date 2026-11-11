@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=55`;
+script.src = `regions/${regionId}.js?v=56`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -272,7 +272,7 @@ function start(R) {
     stopSpeech();
     // 交通工具的聲音：用輕柔的「旅行版」（不叭喇叭、不鳴汽笛，小小聲），坐船、坐飛機、坐車、坐火車各一種
     const ROAD = ['jeep', 'camper-van', 'bus', 'tuk-tuk', 'car', 'taxi'];
-    const soundOf = (v) => (['ship', 'sailboat'].includes(v) ? 'ride-boat' : v === 'airplane' ? 'ride-air' : ROAD.includes(v) ? 'ride-road' : 'ride-rail');
+    const soundOf = (v) => (['ship', 'sailboat', 'speedboat', 'fishing-boat'].includes(v) ? 'ride-boat' : v === 'airplane' ? 'ride-air' : ROAD.includes(v) ? 'ride-road' : 'ride-rail');
     const use = train.querySelector('use');
     let riding = null;
     const t0 = performance.now();
@@ -323,6 +323,12 @@ function start(R) {
     else if (kind === 'za') body = '<rect width="30" height="10" fill="#E03C31"/><rect y="10" width="30" height="10" fill="#001489"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#fff" stroke-width="7"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#007749" stroke-width="4.2"/><path d="M0 3.5L7.5 10L0 16.5Z" fill="#000"/>';
     // 肯亞（簡化）：黑、紅、綠，中間有白線，再加一個盾牌
     else if (kind === 'ke') body = '<rect width="30" height="7" fill="#000"/><rect y="6.5" width="30" height="7" fill="#fff"/><rect y="7.6" width="30" height="4.8" fill="#BB0000"/><rect y="13" width="30" height="7" fill="#006600"/><ellipse cx="15" cy="10" rx="3.2" ry="6.5" fill="#BB0000" stroke="#000" stroke-width="1"/>';
+    // 墨西哥：綠、白、紅，中間一個咖啡色的老鷹圖案（簡化成圓圈）
+    else if (kind === 'mx') body = '<rect width="10" height="20" fill="#006847"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#CE1126"/><circle cx="15" cy="10" r="2.6" fill="#8C5A2B"/><path d="M12.6 11.6q2.4 2.2 4.8 0" stroke="#006847" stroke-width=".8" fill="none"/>';
+    // 貝里斯：藍底，上下各一條紅邊，中間白色圓圈
+    else if (kind === 'bz') body = '<rect width="30" height="20" fill="#003F87"/><rect width="30" height="2" fill="#CE1126"/><rect y="18" width="30" height="2" fill="#CE1126"/><circle cx="15" cy="10" r="5" fill="#fff"/><circle cx="15" cy="10" r="4" fill="none" stroke="#4a8a3a" stroke-width="1"/>';
+    // 巴拿馬：四格，左上白底藍星、右上紅、左下藍、右下白底紅星
+    else if (kind === 'pa') body = '<rect width="30" height="20" fill="#fff"/><rect x="15" width="15" height="10" fill="#DA121A"/><rect y="10" width="15" height="10" fill="#072357"/>' + star5(7.5, 5.2, 3, '#072357') + star5(22.5, 15.2, 3, '#DA121A');
     // 越南：紅底，中間一顆黃色大星星
     else if (kind === 'vn') body = '<rect width="30" height="20" fill="#DA251D"/>' + star5(15, 10.4, 6, '#FFFF00');
     // 馬來西亞（簡化）：紅白條紋，左上角深藍底、黃色月亮和星星

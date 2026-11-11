@@ -258,6 +258,16 @@ Object.assign(ART, {
       path('M-14 3 V-3 H14 V3Z', lt) + stupa(-9, -3, 3.4) + stupa(9, -3, 3.4) + stupa(0, -3, 9);
   },
 
+  // 馬雅金字塔（奇琴伊察的庫庫爾坎金字塔）：一層一層的石頭台階，中間一條長樓梯，最上面一間小神殿
+  'maya-pyramid': () => {
+    const { path, line } = K;
+    const st = '#cbbd9a', dk = '#8e7f5f', lt = '#ddd1b2';
+    let s = path('M-50 44 V40 H50 V44Z', '#7fb35a');
+    for (let i = 0; i < 6; i++) { const y0 = 40 - i * 9, w = 46 - i * 6.5; s += path(`M${-w} ${y0} V${y0 - 9} H${w} V${y0}Z`, i % 2 ? lt : st); }
+    s += path('M-10 40 L-6 -14 H6 L10 40Z', lt) + [...Array(12)].map((_, k) => line(`M${-10 + k * 0.33} ${40 - k * 4.5} H${10 - k * 0.33}`, dk, 1)).join('');
+    return s + path('M-11 -14 V-30 H11 V-14Z', st) + path('M-13 -30 H13 V-34 H-13Z', dk) + path('M-4 -14 V-24 H4 V-14Z', '#5a4a3a');
+  },
+
   registan: () => {
     const { path, circle, flatPath, line } = K;
     const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';

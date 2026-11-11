@@ -87,6 +87,18 @@ Object.assign(ART, (() => {
         circle(-18, -23, 5.5, '#ffb020') + flatPath('M-18 -28 q4 -4 7 -2 q-3 3 -7 2z', '#6cc04a');
     },
 
+    // 墨西哥鈍口螈（六角恐龍）：粉紅色，頭兩邊各有三根毛毛的鰓，一直在笑
+    axolotl: () => {
+      const p = '#f7b6c8', g = '#e5577f';
+      const gill = (s, k) => thick(`M${-14 + s * 12} ${2 + k * 6} q${s * 7} ${-3 + k * 2} ${s * 13} ${-5 + k * 5}`, g, 5);
+      return path('M28 18 Q42 8 49 8 Q47 24 32 32Z', '#fbd0dc') + thick('M28 26 Q42 24 47 14', p, 9) +
+        ell(28, 39, 4.5, 5, shade(p)) + ell(2, 39, 4.5, 5, shade(p)) +
+        ell(10, 26, 24, 11, p) + flat(10, 31, 16, 4, '#fde3ea') +
+        ell(20, 39, 4.5, 5, p) + ell(-6, 39, 4.5, 5, p) +
+        [-1, 0, 1].map((k) => gill(1, k) + gill(-1, k)).join('') +
+        ell(-14, 8, 17, 13, p) + eyes(-14, 5, 8, 3.4) + smile(-14, 12, 6) + blush(-14, 11, 12, 3);
+    },
+
     frog: () => {
       const blue = '#2f8cf0', spot = '#1c1c2a';
       return both((s) => ell(s * 20, 33, 12, 9, blue) +
