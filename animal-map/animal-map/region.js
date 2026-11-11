@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=49`;
+script.src = `regions/${regionId}.js?v=50`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -346,6 +346,13 @@ function start(R) {
       const bars = (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-2.6" y="-2" width="5.2" height=".9" fill="#000"/><rect x="-2.6" y="-.45" width="5.2" height=".9" fill="#000"/><rect x="-2.6" y="1.1" width="5.2" height=".9" fill="#000"/></g>`;
       body = '<rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="5" fill="#0047A0"/><path d="M10 10a5 5 0 0 1 10 0a2.5 2.5 0 0 1 -5 0a2.5 2.5 0 0 0 -5 0z" fill="#CD2E3A"/>' +
         bars(6, 4.4, -56) + bars(24, 4.4, 56) + bars(6, 15.6, 56) + bars(24, 15.6, -56);
+    }
+    // 紐西蘭：深藍色，左上角是英國國旗，右邊四顆白邊的紅星星（南十字星）
+    else if (kind === 'nz') {
+      const star = (x, y, r, fill) => `<path d="${[...Array(10)].map((_, k) => { const a = (k * Math.PI) / 5 - Math.PI / 2, rr = k % 2 ? r * 0.45 : r; return `${k ? 'L' : 'M'}${(x + rr * Math.cos(a)).toFixed(1)} ${(y + rr * Math.sin(a)).toFixed(1)}`; }).join('')}Z" fill="${fill}"/>`;
+      const red = (x, y, r) => star(x, y, r + 0.5, '#fff') + star(x, y, r, '#C8102E');
+      body = '<rect width="30" height="20" fill="#012169"/><g transform="scale(.5)"><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/></g>' +
+        red(22.5, 4.5, 1.5) + red(19, 9.5, 1.5) + red(26, 8.5, 1.3) + red(22.5, 16, 1.7);
     }
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
