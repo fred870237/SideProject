@@ -58,6 +58,20 @@ Object.assign(ART, (() => {
         eyes(-14, -10, 6, 2.6, '#fff') + nose(-14, -2, k) + wmouth(-14, 2) + blush(-14, -1, 11);
     },
 
+    // 眼鏡猴：好小好小的猴子，眼睛超大、耳朵圓圓，抱在樹枝上，尾巴細細長長
+    tarsier: () => {
+      const b = '#b8936a', d = '#8f6c4a', f = '#ecd5b0';
+      return path('M-48 38 H48 V44 H-48Z', '#8a5a34') +
+        line('M10 30 Q30 34 33 14 Q35 -4 40 -12', d, 2.4) + ell(40, -15, 3.5, 5, d) +
+        ell(2, 22, 13, 15, b) + flat(2, 25, 7, 9, f) +
+        both((s) => ell(s * 10, 34, 6.5, 5, b)) + both((s) => circle(s * 14, 38.5, 2.6, f)) +
+        both((s) => line(`M${s * 8} 12 Q${s * 13} 18 ${s * 10} 24`, b, 5)) + both((s) => circle(s * 10, 25, 2.6, f)) +
+        roundEars(0, -23, 15, 7.5, b, '#efb8a2') + circle(0, -9, 17, b) +
+        flat(0, -5, 12, 10, f) +
+        eyes(0, -11, 8, 6.5, '#d9a13a') +
+        flat(0, -1.5, 1.6, 1.2, LINE) + smile(0, 1, 2.4) + blush(0, -2, 12, 3);
+    },
+
     orangutan: () => {
       const b = '#d4743a', d = '#b4561f', f = '#f2c49b';
       const arm = (s) => tail(`M${s * 12} 10 Q${s * 25} 20 ${s * 22} 37`, b, 6.5) + circle(s * 22, 39, 4.5, f);

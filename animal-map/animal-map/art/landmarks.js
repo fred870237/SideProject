@@ -236,6 +236,28 @@ Object.assign(ART, {
   },
 
   // 撒馬爾罕的雷吉斯坦：沙色的大門上貼滿藍色磁磚，後面一個藍色有條紋的圓頂，兩邊是高高的宣禮塔
+  // 吉隆坡雙子星塔：兩座一模一樣的銀色尖塔，中間有一座天橋連起來
+  petronas: () => {
+    const { path, line } = K;
+    const steel = '#cdd6df', dk = '#8796a5';
+    const tower = (x) => path(`M${x - 8} 40 V-6 L${x - 6.5} -10 V-20 L${x - 5} -24 V-32 L${x - 3} -35 V-40 L${x} -49 L${x + 3} -40 V-35 L${x + 5} -32 V-24 L${x + 6.5} -20 V-10 L${x + 8} -6 V40Z`, steel) +
+      line(`M${x - 8} 4 H${x + 8} M${x - 8} 14 H${x + 8} M${x - 8} 24 H${x + 8} M${x - 8} 33 H${x + 8} M${x - 6.5} -15 H${x + 6.5} M${x - 5} -28 H${x + 5}`, dk, 1.3) +
+      line(`M${x} -6 V40`, dk, 1.1);
+    return path('M-50 44 V40 H50 V44Z', '#9aa5ae') + tower(-15) + tower(15) + path('M-7 -3 H7 V2 H-7Z', dk) + line('M-7 2 L-2 8 M7 2 L2 8', dk, 1.6);
+  },
+
+  // 婆羅浮屠：一層一層的石頭大佛塔，上面排著鐘形的小佛塔，最頂端一個大佛塔
+  borobudur: () => {
+    const { path, line } = K;
+    const stone = '#9b8f80', lt = '#b8ad9e', dk = '#6f6559';
+    const stupa = (x, y, r) => path(`M${x - r} ${y} Q${x - r} ${y - r * 1.4} ${x} ${y - r * 1.5} Q${x + r} ${y - r * 1.4} ${x + r} ${y}Z`, lt) + line(`M${x} ${y - r * 1.5} v${-r * 0.7}`, dk, 1.8);
+    return path('M-50 44 V40 H50 V44Z', '#7fb35a') +
+      path('M-46 40 V30 H46 V40Z', stone) + path('M-40 30 V20 H40 V30Z', stone) + path('M-33 20 V11 H33 V20Z', stone) + path('M-26 11 V3 H26 V11Z', lt) +
+      line('M-46 35 H46 M-40 25 H40 M-33 15.5 H33', dk, 1.2) +
+      [-20, -10, 10, 20].map((x) => stupa(x, 3, 4)).join('') +
+      path('M-14 3 V-3 H14 V3Z', lt) + stupa(-9, -3, 3.4) + stupa(9, -3, 3.4) + stupa(0, -3, 9);
+  },
+
   registan: () => {
     const { path, circle, flatPath, line } = K;
     const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';

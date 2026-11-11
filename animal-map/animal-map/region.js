@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=54`;
+script.src = `regions/${regionId}.js?v=55`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -305,6 +305,7 @@ function start(R) {
     if (!f) return '';
     const [kind, ...c] = f;
     let body = '';
+    const star5 = (x, y, r, col) => `<path d="${[...Array(10)].map((_, k) => { const a = (k * Math.PI) / 5 - Math.PI / 2, rr = k % 2 ? r * 0.42 : r; return `${k ? 'L' : 'M'}${(x + rr * Math.cos(a)).toFixed(2)} ${(y + rr * Math.sin(a)).toFixed(2)}`; }).join('')}Z" fill="${col}"/>`;
     if (kind === 'v') body = c.map((col, i) => `<rect x="${(i * 30) / c.length}" width="${30 / c.length + 0.5}" height="20" fill="${col}"/>`).join('');
     else if (kind === 'h') body = c.map((col, i) => `<rect y="${(i * 20) / c.length}" width="30" height="${20 / c.length + 0.5}" fill="${col}"/>`).join('');
     else if (kind === 'swiss') body = `<rect width="30" height="20" fill="${c[0]}"/><path d="M13 4h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="#fff"/>`;
@@ -322,6 +323,19 @@ function start(R) {
     else if (kind === 'za') body = '<rect width="30" height="10" fill="#E03C31"/><rect y="10" width="30" height="10" fill="#001489"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#fff" stroke-width="7"/><path d="M0 0L12 10L0 20M12 10H30" fill="none" stroke="#007749" stroke-width="4.2"/><path d="M0 3.5L7.5 10L0 16.5Z" fill="#000"/>';
     // 肯亞（簡化）：黑、紅、綠，中間有白線，再加一個盾牌
     else if (kind === 'ke') body = '<rect width="30" height="7" fill="#000"/><rect y="6.5" width="30" height="7" fill="#fff"/><rect y="7.6" width="30" height="4.8" fill="#BB0000"/><rect y="13" width="30" height="7" fill="#006600"/><ellipse cx="15" cy="10" rx="3.2" ry="6.5" fill="#BB0000" stroke="#000" stroke-width="1"/>';
+    // 越南：紅底，中間一顆黃色大星星
+    else if (kind === 'vn') body = '<rect width="30" height="20" fill="#DA251D"/>' + star5(15, 10.4, 6, '#FFFF00');
+    // 馬來西亞（簡化）：紅白條紋，左上角深藍底、黃色月亮和星星
+    else if (kind === 'my') {
+      body = '<rect width="30" height="20" fill="#fff"/>' + [...Array(7)].map((_, k) => `<rect y="${(k * 20) / 7}" width="30" height="${10 / 7}" fill="#CC0001"/>`).join('');
+      body += '<rect width="15" height="11.4" fill="#010066"/><circle cx="5.8" cy="5.7" r="3.8" fill="#FFCC00"/><circle cx="7" cy="5.7" r="3.2" fill="#010066"/>' + star5(11, 5.7, 2.4, '#FFCC00');
+    }
+    // 新加坡：上紅下白，左上角白色月亮和五顆小星星
+    else if (kind === 'sg') body = '<rect width="30" height="20" fill="#fff"/><rect width="30" height="10" fill="#EF3340"/><circle cx="5.6" cy="5" r="3.4" fill="#fff"/><circle cx="6.8" cy="5" r="3.1" fill="#EF3340"/>' +
+      [0, 1, 2, 3, 4].map((k) => { const a = (k * 2 * Math.PI) / 5 - Math.PI / 2; return star5(9.6 + 1.8 * Math.cos(a), 5 + 1.8 * Math.sin(a), 0.8, '#fff'); }).join('');
+    // 菲律賓：上藍下紅，左邊白色三角形，裡面一個黃色太陽
+    else if (kind === 'ph') body = '<rect width="30" height="10" fill="#0038A8"/><rect y="10" width="30" height="10" fill="#CE1126"/><path d="M0 0L17.3 10L0 20Z" fill="#fff"/><circle cx="5.8" cy="10" r="2.4" fill="#FCD116"/>' +
+      star5(1.8, 2.6, 1, '#FCD116') + star5(1.8, 17.4, 1, '#FCD116') + star5(14.2, 10, 1, '#FCD116');
     // 澳洲：深藍色，左上角是英國國旗，下面一顆大星星，右邊是南十字星
     else if (kind === 'au') {
       const star = (x, y, r) => `<path d="${[...Array(10)].map((_, k) => { const a = (k * Math.PI) / 5 - Math.PI / 2, rr = k % 2 ? r * 0.45 : r; return `${k ? 'L' : 'M'}${(x + rr * Math.cos(a)).toFixed(1)} ${(y + rr * Math.sin(a)).toFixed(1)}`; }).join('')}Z" fill="#fff"/>`;
