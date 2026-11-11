@@ -4,9 +4,12 @@
 // 英文用開源的 Qwen3-TTS 生成（跟機關書是同一個旁白聲音），中文用 BreezyVoice；工具在 tools/voice/（不會部署）
 // 每一頁原本用系統語音唸的地方，先問這裡有沒有音檔：有就播音檔，沒有就照舊用系統語音
 const VoiceClips = (() => {
+  // 先關掉的語言：中文的 AI 語音有一些開頭有雜音或拖太長，重新生成之前先全部改用系統語音（音檔和清單都留著）
+  // 重新生成好以後，把 'zh' 拿掉就會恢復（sw.js 也有一份一樣的清單）
+  const OFF = new Set(['zh']);
   const have = {};
   if (typeof VOICE_CLIPS !== 'undefined') {
-    for (const [lang, list] of Object.entries(VOICE_CLIPS)) have[lang] = new Set(list);
+    for (const [lang, list] of Object.entries(VOICE_CLIPS)) if (!OFF.has(lang)) have[lang] = new Set(list);
   }
   // 檔名規則：英文跟 tools/voice/voice.py 的 slug() 一樣（小寫、非英數字換成 -）；
   // 中文跟 breezy.py 的 key() 一樣（去掉標點和空白，只留文字和數字）

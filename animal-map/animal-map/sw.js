@@ -1,6 +1,6 @@
 // 離線快取：第一次開啟後，地圖、程式和音檔都會存在 iPad 上
 // 修改程式後把版本號 +1，iPad 下次開啟就會更新
-const CACHE = 'animal-map-v64';
+const CACHE = 'animal-map-v65';
 importScripts('voices.js'); // VOICE_CLIPS：預先生成的語音清單（audio/voice/<語言>/<名稱>.mp3）
 const CORE = [
   './',
@@ -73,7 +73,8 @@ const CORE = [
   'icons/icon-512.png',
   'icons/apple-touch-icon.png',
   // 預先生成的語音也存起來，沒有網路也能播
-  ...Object.entries(VOICE_CLIPS).flatMap(([lang, list]) => list.map((s) => `audio/voice/${lang}/${s}.mp3`)),
+  // 中文的 AI 語音先關掉了（見 voice-clips.js 的 OFF），先不下載
+  ...Object.entries(VOICE_CLIPS).filter(([lang]) => lang !== 'zh').flatMap(([lang, list]) => list.map((s) => `audio/voice/${lang}/${s}.mp3`)),
   // 兒歌的人聲（tools/voice/soulx.py 生成）
   ...['abc', 'twinkle', 'old-macdonald', 'mary', 'row', 'baa-baa', 'itsy-bitsy', 'london-bridge'].map((id) => `audio/songs/${id}.mp3`),
 ];
