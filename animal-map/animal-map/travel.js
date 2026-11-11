@@ -21,6 +21,7 @@ const Travel = (() => {
     { id: 'china', icon: '🐼', zh: '中國', en: 'China', at: [104, 34], box: [73, 18, 135, 54], ready: true },
     { id: 'africa', icon: '🦁', zh: '非洲', en: 'Africa', at: [24, 2], box: [-18, -36, 52, 33], ready: true },
     { id: 'australia', icon: '🦘', zh: '澳洲', en: 'Australia', at: [134, -25], box: [111, -45.5, 156.5, -9.5], ready: true },
+    { id: 'usa', icon: '🗽', zh: '美國', en: 'USA', at: [-98, 39], box: [-126, 22.5, -65, 50], ready: true },
     { id: 'europe', icon: '🏰', zh: '歐洲', en: 'Europe', at: [10, 48.5], box: [-10.5, 36, 31.5, 70.5], ready: true },
   ];
   const trip = (id) => TRIPS.find((t) => t.id === id);

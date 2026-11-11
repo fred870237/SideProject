@@ -115,6 +115,35 @@ Object.assign(ART, {
       line('M-48 40 l3 -4 l3 4 M36 40 l3 -4 l3 4', '#7a9a3a', 1.8);
   },
 
+  // 紐約的自由女神：綠色的女神站在台座上，右手高高舉著火炬，頭上戴著尖尖的皇冠
+  'statue-of-liberty': () => {
+    const { path, circle, line, flatPath } = K;
+    const green = '#7fc8a9', dark = '#5aa58a';
+    return path('M-16 44 V30 H16 V44Z', '#c9b28a') + path('M-12 30 V22 H12 V30Z', '#d8c39c') +
+      path('M-11 22 Q-12 0 -6 -10 H6 Q12 0 11 22Z', green) +
+      flatPath('M2 -10 H6 Q12 0 11 22 H4Z', dark, 0.5) +
+      line('M-6 0 Q0 6 7 -2 M-8 12 Q0 16 9 10', dark, 1.6) +
+      path('M-4 -2 Q-12 2 -12 8 L-8 9 Q-8 4 -2 2Z', green) +
+      path('M5 -8 L9 -32 L13 -31 L9 -6Z', green) +
+      path('M7 -32 h8 l-1 -4 h-6z', '#d8c39c') + path('M11 -36 q-4 -6 0 -11 q4 5 0 11z', '#ffb347') +
+      circle(0, -16, 6.5, green) +
+      [-40, -15, 15, 40].map((a) => line(`M${(Math.sin((a * Math.PI) / 180) * 6.5).toFixed(1)} ${(-16 - Math.cos((a * Math.PI) / 180) * 6.5).toFixed(1)} L${(Math.sin((a * Math.PI) / 180) * 12).toFixed(1)} ${(-16 - Math.cos((a * Math.PI) / 180) * 12).toFixed(1)}`, dark, 2)).join('') +
+      line('M-2.5 -17 h1 M2 -17 h1', '#2a2226', 1.6);
+  },
+
+  // 舊金山的金門大橋：兩座橘紅色的高塔，中間垂下來大大的鋼索，橋下是海
+  'golden-gate': () => {
+    const { path, line } = K;
+    const red = '#e4572e';
+    const tower = (x) => path(`M${x - 4} 44 V-30 H${x + 4} V44Z`, red) + line(`M${x - 4} -18 H${x + 4} M${x - 4} -4 H${x + 4}`, '#b8401f', 1.6);
+    return path('M-50 44 V26 H50 V44Z', '#4aa3df') +
+      line('M-44 36 q4 -3 8 0 t8 0 M-4 38 q4 -3 8 0 t8 0 M30 36 q4 -3 8 0 t8 0', '#fff', 1.6) +
+      path('M-50 18 H50 V23 H-50Z', red) +
+      line('M-50 -6 Q-36 16 -22 -26 Q0 14 22 -26 Q36 16 50 -6', '#b8401f', 2.6) +
+      line('M-12 16 V2 M-4 16 V8 M4 16 V8 M12 16 V2 M-34 16 V6 M30 16 V2 M38 16 V8', '#b8401f', 1.2) +
+      tower(-22) + tower(22);
+  },
+
   // 大笨鐘：米黃色的鐘塔，大大的白色時鐘，屋頂是尖尖的灰綠色塔頂
   'big-ben': () => {
     const { path, circle, flatPath, line } = K;

@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=39`;
+script.src = `regions/${regionId}.js?v=40`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -43,7 +43,9 @@ function start(R) {
   const SC = 1000 / (EY - OY);
   const VW = (EX - OX) * SC, VH = 1000;
   const P = ([lon, lat]) => { const [x, y] = Travel.project(lon, lat); return [(x - OX) * SC, (y - OY) * SC]; };
-  const HOME_VB = [-VW * 0.25, -60, VW * 1.5, VH + 120];
+  // 左右多留一點海；很寬的地方（美國）少留一點，地圖才不會被縮得太小
+  const PADX = VW > VH * 1.4 ? VW * 0.06 : VW * 0.25;
+  const HOME_VB = [-PADX, -60, VW + PADX * 2, VH + 120];
   const setVB = ([x, y, w, h]) => $('map').setAttribute('viewBox', `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
   setVB(HOME_VB);
 
@@ -174,6 +176,12 @@ function start(R) {
       <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND}" fill="none" stroke="#fff" stroke-width="${(5 / SC).toFixed(3)}"/></g>` : ''}
     ${islands.map((o) => `<path d="${smooth(o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
     ${islands.map((o) => `<path d="${smooth(o)}" fill="${R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
+    ${(R.insets || []).map((b) => {
+      // 小框框：離太遠放不進來的地方（夏威夷）搬到旁邊畫，用虛線框起來，跟真的地圖一樣
+      const [x0, y0] = P([b.box[0], b.box[3]]), [x1, y1] = P([b.box[2], b.box[1]]);
+      return `<rect class="inset" x="${x0.toFixed(1)}" y="${y0.toFixed(1)}" width="${(x1 - x0).toFixed(1)}" height="${(y1 - y0).toFixed(1)}" rx="14"/>` +
+        `<text class="inset-label" x="${((x0 + x1) / 2).toFixed(1)}" y="${(y0 - 10).toFixed(1)}">${b.label}</text>`;
+    }).join('')}
     ${mountains}
     ${R.lines ? lineSea : seaRoutes}
     ${R.lines && lineRoad ? `<path class="road-bed" d="${lineRoad}"/><path class="road" d="${lineRoad}"/>` : ''}
@@ -296,6 +304,12 @@ function start(R) {
       const star = (x, y, r) => `<path d="${[...Array(10)].map((_, k) => { const a = (k * Math.PI) / 5 - Math.PI / 2, rr = k % 2 ? r * 0.45 : r; return `${k ? 'L' : 'M'}${(x + rr * Math.cos(a)).toFixed(1)} ${(y + rr * Math.sin(a)).toFixed(1)}`; }).join('')}Z" fill="#fff"/>`;
       body = '<rect width="30" height="20" fill="#012169"/><g transform="scale(.5)"><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/></g>' +
         star(7.5, 15, 2.6) + star(22.5, 4, 1.4) + star(19, 9, 1.4) + star(26, 8, 1.4) + star(22.5, 16, 1.4);
+    }
+    // 美國：紅白條紋，左上角藍底白點（星星）
+    else if (kind === 'us') {
+      body = [...Array(7)].map((_, k) => `<rect y="${(k * 20) / 6.5}" width="30" height="${10 / 6.5}" fill="#B22234"/>`).join('');
+      body = `<rect width="30" height="20" fill="#fff"/>${body}<rect width="13" height="10.8" fill="#3C3B6E"/>`;
+      for (let y = 1.6; y < 10; y += 2.2) for (let x = 1.4; x < 13; x += 2.2) body += `<circle cx="${x}" cy="${y}" r=".55" fill="#fff"/>`;
     }
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
