@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=52`;
+script.src = `regions/${regionId}.js?v=53`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -61,7 +61,7 @@ function start(R) {
   const PADX = VW > VH * 1.4 ? VW * 0.06 : VW * 0.25;
   const HOME_VB = [-PADX, -60, VW + PADX * 2, VH + 120];
   // 很寬的地方（加拿大、美國）整張地圖會被縮得很小，車站和火車跟著放大一點，小朋友才點得到
-  const ICON = Math.min(2.6, Math.max(1, VW / VH / 1.8));
+  const ICON = Math.min(3.2, Math.max(1, VW / VH / 1.8));
   const setVB = ([x, y, w, h]) => $('map').setAttribute('viewBox', `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
   setVB(HOME_VB);
 

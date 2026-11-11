@@ -201,6 +201,40 @@ Object.assign(ART, {
       path('M-24 0 Q-24 -8 -19 -10 Q-14 -8 -14 0Z', white) + path('M14 0 Q14 -8 19 -10 Q24 -8 24 0Z', white);
   },
 
+  // 莫斯科的聖瓦西里大教堂：好幾個彩色條紋的洋蔥形圓頂，像一盒糖果
+  'onion-church': () => {
+    const { path, circle, line } = K;
+    const onion = (x, y, s, c1, c2) => path(`M${x} ${y - 16 * s} Q${x + 11 * s} ${y - 6 * s} ${x + 8 * s} ${y + 2 * s} Q${x} ${y + 6 * s} ${x - 8 * s} ${y + 2 * s} Q${x - 11 * s} ${y - 6 * s} ${x} ${y - 16 * s}Z`, c1) +
+      line(`M${x - 6 * s} ${y - 4 * s} Q${x} ${y - 9 * s} ${x + 6 * s} ${y - 4 * s} M${x - 7 * s} ${y} Q${x} ${y - 5 * s} ${x + 7 * s} ${y}`, c2, 2) +
+      line(`M${x} ${y - 16 * s} V${y - 21 * s}`, '#d9a520', 1.6) + circle(x, y - 22 * s, 1.4 * s, '#f2c94c');
+    const tower = (x, top, w, c) => path(`M${x - w} 40 V${top} H${x + w} V40Z`, c);
+    return path('M-46 44 V36 H46 V44Z', '#c94c3c') +
+      tower(0, -8, 8, '#e8d9b8') + tower(-22, 6, 7, '#f0e2c4') + tower(22, 6, 7, '#f0e2c4') + tower(-36, 16, 5, '#e8d9b8') + tower(36, 16, 5, '#e8d9b8') +
+      path('M-8 -8 L0 -32 L8 -8Z', '#3f9b3a') +
+      onion(-22, 6, 0.9, '#2f8fd6', '#fff') + onion(22, 6, 0.9, '#f5a623', '#c94c3c') +
+      onion(-36, 16, 0.6, '#3f9b3a', '#ffd23f') + onion(36, 16, 0.6, '#c94c3c', '#fff') +
+      onion(0, -30, 0.75, '#e94b6a', '#ffd23f') +
+      path('M-4 40 V30 a4 4 0 0 1 8 0 V40Z', '#7a4a32');
+  },
+
+  // 俄羅斯娃娃：圓圓胖胖、穿著紅色花衣服的木頭娃娃，打開裡面還有一個更小的
+  matryoshka: () => {
+    const { path, circle, flat, line, eyes, smile, blush } = K;
+    // 一個娃娃：x 是中心，s 是大小（1 = 大約 70 高）
+    const doll = (x, s, c) => {
+      return path(`M${x} ${44 - 70 * s} Q${x + 18 * s} ${44 - 70 * s} ${x + 19 * s} ${44 - 44 * s} Q${x + 24 * s} ${44 - 18 * s} ${x + 18 * s} 44 H${x - 18 * s} Q${x - 24 * s} ${44 - 18 * s} ${x - 19 * s} ${44 - 44 * s} Q${x - 18 * s} ${44 - 70 * s} ${x} ${44 - 70 * s}Z`, c) +
+        `<ellipse cx="${x}" cy="${(44 - 47 * s).toFixed(1)}" rx="${(11 * s).toFixed(1)}" ry="${(11 * s).toFixed(1)}" fill="#ffe6cf"/>` +
+        flat(x, 44 - 20 * s, 12 * s, 9 * s, '#fff', 0, 0.9) +
+        circle(x, 44 - 20 * s, 4.5 * s, '#e94b6a') +
+        flat(x - 5 * s, 44 - 14 * s, 3 * s, 2 * s, '#3f9b3a') + flat(x + 5 * s, 44 - 14 * s, 3 * s, 2 * s, '#3f9b3a');
+    };
+    return doll(18, 0.55, '#3f8fd6') +
+      doll(-6, 0.95, '#d83a3a') +
+      eyes(-6, 1, 4, 2.4) + smile(-6, 6, 2.6) + blush(-6, 4, 7, 2.4) +
+      line('M-17 -12 Q-6 -20 5 -12', '#7a4a32', 2) +
+      eyes(18, 17.5, 2.4, 1.5) + smile(18, 21, 1.6);
+  },
+
   // 大笨鐘：米黃色的鐘塔，大大的白色時鐘，屋頂是尖尖的灰綠色塔頂
   'big-ben': () => {
     const { path, circle, flatPath, line } = K;
