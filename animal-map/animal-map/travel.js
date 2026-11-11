@@ -39,6 +39,7 @@ const Travel = (() => {
     { id: 'mongolia', icon: '🐎', zh: '蒙古', en: 'Mongolia', at: [104, 46.5], box: [87, 41, 120, 52.5], ready: true },
     { id: 'iceland', icon: '🌋', zh: '冰島環島', en: 'Around Iceland', at: [-19, 64.9], box: [-24.6, 63.0, -13.0, 66.8], ready: true },
     { id: 'himalaya', icon: '🏔️', zh: '喜馬拉雅山', en: 'Himalayas', at: [87.5, 31], box: [79.6, 25.4, 92.6, 30.8], ready: true },
+    { id: 'madagascar', icon: '🦎', zh: '馬達加斯加', en: 'Madagascar', at: [46.8, -19.5], box: [41.5, -26.2, 52, -11.4], ready: true },
     { id: 'europe', icon: '🏰', zh: '歐洲', en: 'Europe', at: [10, 48.5], box: [-10.5, 36, 31.5, 70.5], ready: true },
   ];
   const trip = (id) => TRIPS.find((t) => t.id === id);
