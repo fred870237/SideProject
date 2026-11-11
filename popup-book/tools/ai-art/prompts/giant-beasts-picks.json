@@ -1,0 +1,50 @@
+{
+  "paraceratherium": [
+    "D:/AI/ComfyUI/output/fix5p/paraceratherium_62_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "deinotherium": [
+    "D:/AI/ComfyUI/output/fix5d/deinotherium_61_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "andrewsarchus": [
+    "D:/AI/ComfyUI/output/gb1/andrewsarchus_61_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "entelodon": [
+    "D:/AI/ComfyUI/output/gb1/entelodon_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "chalicotherium": [
+    "D:/AI/ComfyUI/output/fix1/chalicotherium_64_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "gigantopithecus": [
+    "D:/AI/ComfyUI/output/fix3/gigantopithecus_62_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ]
+}

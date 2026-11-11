@@ -1,0 +1,19 @@
+{
+  "name": "mg1",
+  "seeds": [
+    7,
+    8,
+    61,
+    63
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about prehistoric sea animals. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no water, no bubbles, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "megalodon": "A single huge Megalodon shark swimming facing right seen from the side, a big friendly grey shark with a white belly, a big tall back fin, a wide smiling mouth with white triangle teeth",
+    "livyatan": "A single Livyatan prehistoric sperm whale swimming facing right seen from the side, a huge dark grey whale with a big blunt square head, a long jaw with big teeth, a lighter grey belly",
+    "basilosaurus": "A single Basilosaurus swimming facing right seen from the side, a very long thin snake-like early whale with a small head, a long jaw with teeth, tiny flippers, a long body ending in a small tail fluke, grey blue skin with a pale belly",
+    "aquatic-sloth": "A single aquatic sloth Thalassocnus swimming facing right seen from the side, a sloth with long brown fur, a long snout, long arms with curved claws and a long tail, swimming like an otter",
+    "giant-penguin": "A single giant prehistoric penguin swimming facing right seen from the side, a very tall penguin with a long sharp beak, dark grey back and white belly, short flippers"
+  }
+}

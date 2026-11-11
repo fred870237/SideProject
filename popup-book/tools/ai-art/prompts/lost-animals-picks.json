@@ -1,0 +1,50 @@
+{
+  "dodo": [
+    "D:/AI/ComfyUI/output/la1/dodo_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "thylacine": [
+    "D:/AI/ComfyUI/output/la1/thylacine_61_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "moa": [
+    "D:/AI/ComfyUI/output/la1/moa_7_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "passenger-pigeon": [
+    "D:/AI/ComfyUI/output/fix2/passenger-pigeon_61_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "great-auk": [
+    "D:/AI/ComfyUI/output/la1/great-auk_7_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "clouded-leopard": [
+    "D:/AI/ComfyUI/output/la1/clouded-leopard_8_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ]
+}

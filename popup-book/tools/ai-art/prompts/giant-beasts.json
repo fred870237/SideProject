@@ -1,0 +1,20 @@
+{
+  "name": "gb1",
+  "seeds": [
+    7,
+    8,
+    61,
+    63
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about giant prehistoric mammals. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "paraceratherium": "A single Paraceratherium standing on four legs facing right seen from the side, an enormous hornless rhinoceros with very long legs and a long neck, a long head with a short trunk-like lip, grey wrinkled skin",
+    "deinotherium": "A single Deinotherium standing on four legs facing right seen from the side, a huge elephant relative with a short trunk and two big curved tusks pointing down from its lower jaw, grey wrinkled skin, big ears",
+    "andrewsarchus": "A single Andrewsarchus standing on four legs facing right seen from the side, a big prehistoric mammal like a giant wolf with a very long big head and long jaws, short legs, a long tail, dark brown fur",
+    "entelodon": "A single Entelodon standing on four legs facing right seen from the side, a big prehistoric pig-like animal with long legs, a big long head with bony bumps on its cheeks, a hump on its shoulders, bristly dark brown fur",
+    "chalicotherium": "A single Chalicotherium standing facing right seen from the side, a strange horse-like animal with very long front legs with big curved claws and short back legs, a gorilla-like sloping back, a horse-like head, brown fur",
+    "megacerops": "A single Megacerops brontothere standing on four legs facing right seen from the side, a huge rhino-like animal with a big Y-shaped blunt horn on the end of its nose, a big hump on its shoulders, grey brown skin"
+  }
+}

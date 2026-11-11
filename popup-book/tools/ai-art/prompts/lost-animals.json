@@ -1,0 +1,20 @@
+{
+  "name": "la1",
+  "seeds": [
+    7,
+    8,
+    61,
+    63
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about animals that are now extinct. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "dodo": "A single Dodo bird standing on two short yellow legs facing right seen from the side, a plump round grey bird with a big hooked yellow and green beak, small wings and a curly white tuft of tail feathers",
+    "thylacine": "A single Thylacine Tasmanian tiger standing on four legs facing right seen from the side, a dog-like animal with a long stiff tail, sandy yellow brown fur with dark brown stripes across its back and rump",
+    "moa": "A single giant Moa standing on two long thick legs facing right seen from the side, a very tall flightless bird with a long neck, a small head, no wings, shaggy brown feathers",
+    "quagga": "A single Quagga standing on four legs facing right seen from the side, a zebra relative with brown and white stripes only on its head, neck and front, a plain brown back and white legs, a short dark mane",
+    "great-auk": "A single Great Auk standing upright on two short black legs facing right seen from the side, a penguin-like black and white seabird with a big deep black beak with thin white grooves and a white spot in front of its eye",
+    "clouded-leopard": "A single Formosan clouded leopard standing on four legs facing right seen from the side, a medium sized wild cat with a very long thick tail, short legs, golden tan fur with big dark cloud-shaped blotches"
+  }
+}

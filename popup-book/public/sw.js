@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v39';
+const CACHE = 'popup-book-v40';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -74,6 +74,21 @@ const CORE = [
   'art/ice-age.js',
   ...['bg', 'mammoth', 'woolly-rhino', 'sabertooth', 'cave-bear', 'giant-deer', 'bison', 'dire-wolf']
     .map((n) => `art/img/ice-age/${n}.webp`),
+  'art/sa-plains.js',
+  ...['bg', 'ground-sloth', 'glyptodon', 'macrauchenia', 'toxodon', 'terror-bird', 'short-faced-bear']
+    .map((n) => `art/img/sa-plains/${n}.webp`),
+  'art/ancient-australia.js',
+  ...['bg', 'diprotodon', 'giant-kangaroo', 'marsupial-lion', 'megalania', 'genyornis']
+    .map((n) => `art/img/ancient-australia/${n}.webp`),
+  'art/megalodon-sea.js',
+  ...['bg', 'megalodon', 'livyatan', 'basilosaurus', 'aquatic-sloth', 'giant-penguin']
+    .map((n) => `art/img/megalodon-sea/${n}.webp`),
+  'art/giant-beasts.js',
+  ...['bg', 'paraceratherium', 'deinotherium', 'andrewsarchus', 'entelodon', 'chalicotherium', 'gigantopithecus']
+    .map((n) => `art/img/giant-beasts/${n}.webp`),
+  'art/lost-animals.js',
+  ...['bg', 'dodo', 'thylacine', 'moa', 'passenger-pigeon', 'great-auk', 'clouded-leopard']
+    .map((n) => `art/img/lost-animals/${n}.webp`),
   ...['lion', 'elephant', 'rhino', 'macaque', 'parrot', 'tiger', 'anaconda', 'frog', 'chimpanzee',
     'cow', 'pig', 'sheep', 'horse', 'rooster', 'whale', 'dolphin', 'polar-bear', 'seal', 'fox', 'snowy-owl',
     'brown-bear', 'squirrel', 'wolf', 'dog', 'cat']

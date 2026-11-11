@@ -1,0 +1,23 @@
+{
+  "name": "fix1",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about strange prehistoric animals. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "toxodon": "A single big heavy prehistoric animal standing on four legs facing right seen from the side, shaped like a hippopotamus with a barrel body, a big blunt box-shaped head with NO horns at all, a wide flat mouth, short thick legs, grey brown skin",
+    "macrauchenia": "A single prehistoric animal standing on four legs facing right seen from the side, shaped like a llama with a long neck and long thin legs but NO hump, and its nose is a short droopy elephant-like trunk hanging down over its mouth, sandy brown fur",
+    "paraceratherium": "A single enormous prehistoric hornless rhinoceros standing on four legs facing right seen from the side, NO horn at all on its nose, very long pillar legs like a giraffe, a long thick neck held high like a horse, a long head, grey wrinkled skin",
+    "deinotherium": "A single huge prehistoric elephant standing on four legs facing right seen from the side, with two big curved tusks growing out of its LOWER jaw and curving DOWNWARD and backward toward its chest like hooks, a short trunk, grey wrinkled skin",
+    "megacerops": "A single huge prehistoric animal standing on four legs facing right seen from the side, a heavy rhino-like body with a big hump on its shoulders, and on the tip of its nose a pair of blunt rounded bony knobs side by side shaped like a big letter Y or a slingshot, grey brown skin",
+    "chalicotherium": "A single strange prehistoric animal facing right seen from the side, with very long front legs and very short back legs so its back slopes down steeply like a gorilla, a horse-like head, big curved claws on its front feet, it walks on its front knuckles, brown fur",
+    "quagga": "A single Quagga standing on four legs facing right seen from the side, a horse-like animal whose head and neck have brown and white zebra stripes but whose back, belly and hind legs are plain chestnut brown with NO stripes, white legs, a short dark mane"
+  }
+}

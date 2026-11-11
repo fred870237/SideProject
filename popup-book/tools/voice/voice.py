@@ -82,6 +82,16 @@ LINES = [
     "Boom!", "Bonk!",
     # 🐘 史前動物：冰河時期
     "Woolly Mammoth", "Woolly Rhino", "Saber-toothed Cat", "Cave Bear", "Giant Deer", "Steppe Bison", "Dire Wolf",
+    # 🌵 史前動物：南美洲草原
+    "Giant Ground Sloth", "Glyptodon", "Macrauchenia", "Toxodon", "Terror Bird", "Short-faced Bear",
+    # 🦘 史前動物：遠古澳洲
+    "Diprotodon", "Giant Kangaroo", "Marsupial Lion", "Megalania", "Genyornis",
+    # 🦈 史前動物：巨齒鯊海洋
+    "Megalodon", "Livyatan", "Basilosaurus", "Aquatic Sloth", "Giant Penguin",
+    # 🦏 史前動物：遠古巨獸
+    "Paraceratherium", "Deinotherium", "Andrewsarchus", "Entelodon", "Chalicotherium", "Gigantopithecus",
+    # 🐦 史前動物：消失的動物
+    "Dodo", "Thylacine", "Moa", "Passenger Pigeon", "Great Auk", "Clouded Leopard",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

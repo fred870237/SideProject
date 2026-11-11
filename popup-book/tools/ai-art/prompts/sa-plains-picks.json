@@ -1,0 +1,50 @@
+{
+  "ground-sloth": [
+    "D:/AI/ComfyUI/output/sa1/ground-sloth_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "glyptodon": [
+    "D:/AI/ComfyUI/output/sa1/glyptodon_7_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "macrauchenia": [
+    "D:/AI/ComfyUI/output/fix1/macrauchenia_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "toxodon": [
+    "D:/AI/ComfyUI/output/fix1/toxodon_7_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "terror-bird": [
+    "D:/AI/ComfyUI/output/sa1/terror-bird_7_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "short-faced-bear": [
+    "D:/AI/ComfyUI/output/sa1/short-faced-bear_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ]
+}

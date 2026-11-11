@@ -1,0 +1,42 @@
+{
+  "diprotodon": [
+    "D:/AI/ComfyUI/output/au1/diprotodon_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "giant-kangaroo": [
+    "D:/AI/ComfyUI/output/au1/giant-kangaroo_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "marsupial-lion": [
+    "D:/AI/ComfyUI/output/au1/marsupial-lion_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "megalania": [
+    "D:/AI/ComfyUI/output/au1/megalania_8_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "genyornis": [
+    "D:/AI/ComfyUI/output/au1/genyornis_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ]
+}

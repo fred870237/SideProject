@@ -1,0 +1,15 @@
+{
+  "name": "sa1bg",
+  "seeds": [
+    51,
+    52,
+    53,
+    54
+  ],
+  "w": 1536,
+  "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright cheerful colours, clean simple shapes, lots of calm open space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat side view of a sunny prehistoric South American grassland pampas like a stage set seen straight from the front with no perspective, with NO animals and NO people: a pale blue sky with a few soft white clouds, tall snowy Andes mountains far in the back, a few tall green cactus plants and some flat topped thorny trees at the left and right edges, some round rocks, and a wide flat golden yellow grassland across the whole bottom half of the picture."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "au1",
+  "seeds": [
+    7,
+    8,
+    61,
+    63
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about prehistoric animals of ancient Australia. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "diprotodon": "A single Diprotodon standing on four legs facing right seen from the side, a giant wombat the size of a hippo, a big round heavy body, a big head with a broad nose and small round ears, thick brown fur",
+    "giant-kangaroo": "A single giant short-faced kangaroo Procoptodon standing upright on its big hind feet facing right seen from the side, a very tall kangaroo with a short flat face, long arms, a thick tail, reddish brown fur with a cream belly",
+    "marsupial-lion": "A single Marsupial Lion Thylacoleo standing on four legs facing right seen from the side, a strong cat-like animal with a short face and powerful front legs, a long tail, tawny brown fur with faint darker stripes",
+    "megalania": "A single giant monitor lizard Megalania walking on four legs facing right seen from the side, a very long lizard with a long tail and a forked tongue, green and olive skin with yellow spots",
+    "genyornis": "A single Genyornis standing on two legs facing right seen from the side, a huge flightless bird like a heavy emu with a big deep yellow beak, thick legs, short wings, grey brown feathers"
+  }
+}

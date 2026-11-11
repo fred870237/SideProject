@@ -1,0 +1,17 @@
+{
+  "name": "fix3",
+  "seeds": [
+    7,
+    8,
+    61,
+    62,
+    63,
+    64
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about strange prehistoric animals. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "gigantopithecus": "A single Gigantopithecus giant prehistoric ape standing on four limbs walking on its knuckles facing right seen from the side, a huge friendly gorilla-like ape with long shaggy orange red fur like an orangutan, a big round face"
+  }
+}

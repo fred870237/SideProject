@@ -1,0 +1,20 @@
+{
+  "name": "sa1",
+  "seeds": [
+    7,
+    8,
+    61,
+    63
+  ],
+  "w": 1024,
+  "h": 768,
+  "style": "Flat 2D side view illustration from a children's picture book about prehistoric animals of South America. {subject}, the whole animal visible, cute and friendly with a happy face, isolated and centered on a solid uniform pure chroma-key magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Clean simple shapes. No pink, purple or magenta anywhere on the animal. No text, no ground, no grass, no shadow, no scenery.",
+  "items": {
+    "ground-sloth": "A single Giant Ground Sloth Megatherium standing up on its hind legs facing right seen from the side, a huge shaggy brown bear-like body leaning on its thick tail, long arms with big curved claws reaching up, a small friendly head",
+    "glyptodon": "A single Glyptodon standing on four legs facing right seen from the side, a giant armadillo relative with a big round domed shell made of many small hexagonal plates like a turtle, a small armoured cap on its head, a thick armoured tail with rings, short sturdy legs, tan and brown colours",
+    "macrauchenia": "A single Macrauchenia standing on four legs facing right seen from the side, a camel-like animal with a long neck, long thin legs and a short floppy trunk on its nose, sandy brown fur",
+    "toxodon": "A single Toxodon standing on four legs facing right seen from the side, a big heavy rhino-like animal without horns, a big broad head with a wide mouth, short thick legs, grey brown skin",
+    "terror-bird": "A single Terror Bird Phorusrhacos standing on two long legs facing right seen from the side, a tall flightless bird with a huge hooked yellow beak, small wings, grey and dark brown feathers",
+    "short-faced-bear": "A single giant South American short-faced bear Arctotherium standing on four legs facing right seen from the side, very long legs, a short round face, thick brown fur with a lighter tan muzzle and cream rings around the eyes"
+  }
+}

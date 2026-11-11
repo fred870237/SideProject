@@ -1,0 +1,42 @@
+{
+  "megalodon": [
+    "D:/AI/ComfyUI/output/mg1/megalodon_7_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "livyatan": [
+    "D:/AI/ComfyUI/output/mg1/livyatan_7_00001_.png",
+    true,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "basilosaurus": [
+    "D:/AI/ComfyUI/output/mg1/basilosaurus_61_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "aquatic-sloth": [
+    "D:/AI/ComfyUI/output/mg1/aquatic-sloth_63_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ],
+  "giant-penguin": [
+    "D:/AI/ComfyUI/output/mg1/giant-penguin_7_00001_.png",
+    false,
+    [],
+    {
+      "key": "magenta"
+    }
+  ]
+}
