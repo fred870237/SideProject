@@ -306,6 +306,19 @@ Object.assign(ART, {
       path('M1 -16 V-28 H5 V-16Z', '#777') + circle(6, -34, 2.6, '#e8e8e8') + circle(10, -40, 2, '#e8e8e8');
   },
 
+  // 雷克雅維克的哈爾格林姆教堂：中間一座尖尖的高塔，兩邊一階一階降下來，像火山的玄武岩石柱
+  hallgrimskirkja: () => {
+    const { path, line, circle } = K;
+    const c = '#ecebe6', dk = '#a9a59c';
+    let s = path('M-50 44 V40 H50 V44Z', '#9aa5ae');
+    for (let k = 6; k >= 1; k--) {
+      const x0 = 6 + (k - 1) * 5.5, top = -28 + k * 9;
+      s += path(`M${x0} 40 V${top} H${x0 + 5.5} V40Z`, c) + path(`M${-x0} 40 V${top} H${-x0 - 5.5} V40Z`, c);
+    }
+    return s + path('M-6 40 V-30 L0 -50 L6 -30 V40Z', c) + line('M-3 -26 V36 M3 -26 V36', dk, 1) +
+      circle(0, -22, 2.6, '#fff') + path('M-4 40 V31 Q0 26 4 31 V40Z', '#6b5a4a');
+  },
+
   registan: () => {
     const { path, circle, flatPath, line } = K;
     const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';

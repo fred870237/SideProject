@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america', 'middle-east', 'mongolia'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america', 'middle-east', 'mongolia', 'iceland'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=58`;
+script.src = `regions/${regionId}.js?v=59`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -187,8 +187,8 @@ function start(R) {
 
   $('world').innerHTML = `
     <rect x="-200000" y="-200000" width="400000" height="400000" fill="${R.sea}"/>${waves}
-    ${POLAR ? '' : `<g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND} ${MAP_TAIWAN}" fill="${R.landFar || '#b8de95'}"/></g>`}
-    ${COUNTRIES.length && !POLAR ? `<clipPath id="landClip"><path transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})" d="${MAP_LAND}"/></clipPath>
+    ${POLAR || R.ownLand ? '' : `<g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND} ${MAP_TAIWAN}" fill="${R.landFar || '#b8de95'}"/></g>`}
+    ${COUNTRIES.length && !POLAR && !R.ownLand ? `<clipPath id="landClip"><path transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})" d="${MAP_LAND}"/></clipPath>
       <g clip-path="url(#landClip)">${COUNTRIES.flatMap((c) => c.polys.map((o) => `<path d="${smooth(o)}" fill="${c.color}" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>`)).join('')}</g>
       <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND}" fill="none" stroke="#fff" stroke-width="${(5 / SC).toFixed(3)}"/></g>` : ''}
     ${islands.map((o) => `<path d="${smooth(o.pts || o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
