@@ -1,7 +1,7 @@
 'use strict';
 // 機關書：書架（主題）→ 一本書的目錄 → 一頁一個場景
 // 點場景裡的車子：先唸英文名字，再像機關書一樣動起來（每台車的動作寫在 art/<頁面>.js 的 act）
-// 網址：#/ 書架、#/vehicles 目錄、#/vehicles/construction 場景
+// 網址：#/ 書架、#/machines 目錄、#/machines/construction 場景
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 const app = document.getElementById('app');
@@ -601,6 +601,11 @@ function route() {
   const [themeId, pageId] = location.hash.replace(/^#\/?/, '').split('/');
   const theme = THEMES.find((t) => t.id === themeId);
   const page = theme && theme.pages.find((p) => p.id === pageId);
+  // 頁面搬到別本書了（例如工地從交通工具搬到大機器）：舊網址自動轉到新的位置
+  if (pageId && !page) {
+    const moved = THEMES.find((t) => t.pages.some((p) => p.id === pageId));
+    if (moved) { location.replace(`#/${moved.id}/${pageId}`); return; }
+  }
   stopSfx(); // 換頁的時候停掉還在響的警笛、垃圾車音樂
   if (page && isReady(page)) {
     const last = shown;

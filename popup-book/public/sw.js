@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v37';
+const CACHE = 'popup-book-v38';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',

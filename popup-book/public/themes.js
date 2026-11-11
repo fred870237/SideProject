@@ -6,20 +6,27 @@ const SCENES = {};
 
 const THEMES = [
   {
+    // 把人或貨物載到別的地方的車、船、飛機
     id: 'vehicles', icon: '🚚', en: 'Vehicles', zh: '交通工具', color: '#ffcf3f',
     pages: [
-      { id: 'construction', icon: '🏗️', en: 'Construction Site', zh: '工地' },
-      { id: 'building', icon: '🏢', en: 'Building Site', zh: '蓋大樓' },
-      { id: 'giant-mine', icon: '⛏️', en: 'Giant Mine', zh: '巨型礦場' },
-      { id: 'tunnel', icon: '🚇', en: 'Tunnel', zh: '隧道工程' },
       { id: 'rescue', icon: '🚒', en: 'Rescue', zh: '消防救援' },
-      { id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' },
       { id: 'trucks', icon: '🚛', en: 'Trucks', zh: '貨運卡車' },
       { id: 'giant-haulers', icon: '🚚', en: 'Giant Haulers', zh: '超大運輸' },
       { id: 'long-haul', icon: '🛣️', en: 'Long Haul', zh: '長途運輸' },
       { id: 'sea', icon: '🚢', en: 'Sea', zh: '海上' },
       { id: 'sky', icon: '✈️', en: 'Sky', zh: '天空' },
       { id: 'space', icon: '🚀', en: 'Space', zh: '太空' },
+    ],
+  },
+  {
+    // 挖、蓋、鑽、收割的工作機器（以前放在交通工具那本，舊網址 #/vehicles/<頁面> 會自動轉過來）
+    id: 'machines', icon: '🏗️', en: 'Big Machines', zh: '大機器', color: '#ffa94d',
+    pages: [
+      { id: 'construction', icon: '🏗️', en: 'Construction Site', zh: '工地' },
+      { id: 'building', icon: '🏢', en: 'Building Site', zh: '蓋大樓' },
+      { id: 'giant-mine', icon: '⛏️', en: 'Giant Mine', zh: '巨型礦場' },
+      { id: 'tunnel', icon: '🚇', en: 'Tunnel', zh: '隧道工程' },
+      { id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' },
     ],
   },
   {
