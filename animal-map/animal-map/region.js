@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan'];
+const REGION_FILES = ['taiwan', 'japan', 'china'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=30`;
+script.src = `regions/${regionId}.js?v=32`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -23,7 +23,7 @@ function start(R) {
   // 每個地方可以不一樣的設定（沒寫就用台灣環島的）
   const islands = R.islands || [R.outline]; // 好幾個島（日本）就寫 islands: [[...], [...]]
   const VEHICLE = R.vehicle || 'train'; // 坐什麼：ART 裡的名字，車頭要朝左
-  const LANG3 = R.lang3 || 'tw'; // 第三種語言：'tw' 台語（家長錄音）或 'ja' 日語（系統語音）
+  const LANG3 = R.lang3 || 'tw'; // 第三種語言：'tw' 台語（家長錄音）、'ja' 日語（系統語音）、'none' 只有中文和英文
   const loop = R.loop !== false; // 環島（最後一站接回第一站）；false = 從頭開到尾的一條線
   if (R.hint) $('hint').textContent = R.hint;
 
@@ -48,7 +48,8 @@ function start(R) {
     let d = `M${f(p[0][0])} ${f(p[0][1])}`;
     const last = closed ? n : n - 1;
     for (let i = 0; i < last; i++) {
-      const p0 = p[(i - 1 + n) % n], p1 = p[i], p2 = p[(i + 1) % n], p3 = p[(i + 2) % n];
+      const p0 = closed ? p[(i - 1 + n) % n] : p[Math.max(i - 1, 0)], p1 = p[i], p2 = p[(i + 1) % n];
+      const p3 = closed ? p[(i + 2) % n] : p[Math.min(i + 2, n - 1)];
       d += ` C${f(p1[0] + (p2[0] - p0[0]) / 6)} ${f(p1[1] + (p2[1] - p0[1]) / 6)} ${f(p2[0] - (p3[0] - p1[0]) / 6)} ${f(p2[1] - (p3[1] - p1[1]) / 6)} ${f(p2[0])} ${f(p2[1])}`;
     }
     return d + (closed ? 'Z' : '');
@@ -81,6 +82,49 @@ function start(R) {
     const [ax, ay] = P(R.stops[i - 1].at), [bx, by] = P(s.at);
     return `<path class="sea-route" d="M${ax.toFixed(1)} ${ay.toFixed(1)} Q${((ax + bx) / 2 + (by - ay) * 0.2).toFixed(1)} ${((ay + by) / 2 - (bx - ax) * 0.2).toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}"/>`;
   }).join('');
+  /* ---------- 真的鐵路路線（lines）：火車照著路線開，兩站之間走最短的那條路 ----------
+     lines: [{ name: '京滬高鐵', path: ['beijing', [117.0, 36.65], ..., 'shanghai'], by?: 'ship' }]
+     path 裡的字串是車站（stops 的 id）或轉乘站（junctions 的 id），[經度, 緯度] 是讓鐵路彎得像真的那樣的中間點
+     沒有 lines 的地方（台灣）照舊：環島或一條線 */
+  const NODES = { ...(R.junctions || {}) };
+  R.stops.forEach((s) => { NODES[s.id] = s.at; });
+  const EDGES = {}; // 車站 id → [{ to, pts（經緯度）, ship, len }]
+  const plen = (pts) => pts.reduce((sum, q, i) => (i ? sum + Math.hypot(...P(q).map((v, k) => v - P(pts[i - 1])[k])) : 0), 0);
+  (R.lines || []).forEach((line) => {
+    let last = null, buf = [];
+    line.path.forEach((n) => {
+      const ll = typeof n === 'string' ? NODES[n] : n;
+      if (!ll) throw new Error(`${R.id}：路線 ${line.name} 找不到 ${n}`);
+      buf.push(ll);
+      if (typeof n !== 'string') return;
+      if (last) {
+        const pts = buf, len = plen(pts), ship = !!line.by;
+        (EDGES[last] = EDGES[last] || []).push({ to: n, pts, ship, len });
+        (EDGES[n] = EDGES[n] || []).push({ to: last, pts: [...pts].reverse(), ship, len });
+      }
+      last = n; buf = [ll];
+    });
+  });
+  // 最短的路（Dijkstra）：回傳要經過的 [{ pts, ship }]
+  function findRoute(from, to) {
+    const dist = { [from]: 0 }, prev = {}, done = new Set();
+    for (;;) {
+      let u = null;
+      for (const k in dist) if (!done.has(k) && (u === null || dist[k] < dist[u])) u = k;
+      if (u === null || u === to) break;
+      done.add(u);
+      for (const e of EDGES[u] || []) {
+        if (dist[e.to] === undefined || dist[u] + e.len < dist[e.to]) { dist[e.to] = dist[u] + e.len; prev[e.to] = { from: u, e }; }
+      }
+    }
+    if (dist[to] === undefined) return null;
+    const legs = [];
+    for (let k = to; k !== from; k = prev[k].from) legs.unshift(prev[k].e);
+    return legs;
+  }
+  const lineRail = (R.lines || []).filter((l) => !l.by).map((l) => smooth(l.path.map((n) => (typeof n === 'string' ? NODES[n] : n)), false)).join(' ');
+  const lineSea = (R.lines || []).filter((l) => l.by).map((l) => `<path class="sea-route" d="${smooth(l.path.map((n) => (typeof n === 'string' ? NODES[n] : n)), false)}"/>`).join('');
+
   const pins = R.stops.filter((s) => s.marker).map((s) => {
     const [ax, ay] = P(s.at), [mx, my] = P(s.marker);
     return `<path class="pin" d="M${ax.toFixed(1)} ${ay.toFixed(1)} L${mx.toFixed(1)} ${my.toFixed(1)}"/><circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="5" fill="#fff"/>`;
@@ -98,12 +142,12 @@ function start(R) {
 
   $('world').innerHTML = `
     <rect x="-200000" y="-200000" width="400000" height="400000" fill="${R.sea}"/>${waves}
-    <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND}" fill="${R.landFar || '#b8de95'}"/></g>
+    <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND} ${MAP_TAIWAN}" fill="${R.landFar || '#b8de95'}"/></g>
     ${islands.map((o) => `<path d="${smooth(o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
     ${islands.map((o) => `<path d="${smooth(o)}" fill="${R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
     ${mountains}
-    ${seaRoutes}
-    <path class="rail-bed" d="${railD}"/><path class="rail" d="${railD}"/>
+    ${R.lines ? lineSea : seaRoutes}
+    <path class="rail-bed" d="${R.lines ? lineRail : railD}"/><path class="rail" d="${R.lines ? lineRail : railD}"/>
     ${pins}
     <g id="train"><use href="#art-${VEHICLE}" x="-44" y="-66" width="88" height="88"/></g>
     <g id="stations">${stations}</g>`; // 火車畫在車站下面，停靠時不會蓋住車站圖示
@@ -142,20 +186,29 @@ function start(R) {
     if (moving) return;
     const n = R.stops.length;
     if (to === prog.at) { arrive(to, false); return; }
-    // 經過的每一站：環島就照環島的方向開；一條線的就往前或往回開
-    const idx = [prog.at];
-    if (loop) for (let i = prog.at; i !== to;) { i = (i + 1) % n; idx.push(i); }
-    else for (let i = prog.at; i !== to;) { i += to > i ? 1 : -1; idx.push(i); }
-    // 每一段切成小點；坐船的那一段（by: 'ship' 的站和前一站之間）換成船
+    // 每一段切成小點；坐船的那一段換成船
     const seg = [], ship = [];
-    for (let k = 0; k < idx.length - 1; k++) {
-      const a = P(R.stops[idx[k]].at), b = P(R.stops[idx[k + 1]].at);
-      const bySea = !!R.stops[Math.max(idx[k], idx[k + 1])].by && Math.abs(idx[k] - idx[k + 1]) === 1;
-      for (let t = 0; t <= 1; t += 0.1) { seg.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); ship.push(bySea); }
+    const addLeg = (pts, bySea) => {
+      for (let k = 0; k < pts.length - 1; k++) {
+        const a = P(pts[k]), b = P(pts[k + 1]);
+        for (let t = 0; t <= 1; t += 0.1) { seg.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); ship.push(bySea); }
+      }
+    };
+    const legs = R.lines ? findRoute(R.stops[prog.at].id, R.stops[to].id) : null;
+    if (legs) legs.forEach((e) => addLeg(e.pts, e.ship));
+    else {
+      // 沒有路線網：環島就照環島的方向開；一條線的就往前或往回開
+      const idx = [prog.at];
+      if (loop) for (let i = prog.at; i !== to;) { i = (i + 1) % n; idx.push(i); }
+      else for (let i = prog.at; i !== to;) { i += to > i ? 1 : -1; idx.push(i); }
+      // by: 'ship' 的站和前一站之間坐船
+      for (let k = 0; k < idx.length - 1; k++) {
+        addLeg([R.stops[idx[k]].at, R.stops[idx[k + 1]].at], !!R.stops[Math.max(idx[k], idx[k + 1])].by && Math.abs(idx[k] - idx[k + 1]) === 1);
+      }
     }
     const lens = [0];
     for (let i = 1; i < seg.length; i++) lens.push(lens[i - 1] + Math.hypot(seg[i][0] - seg[i - 1][0], seg[i][1] - seg[i - 1][1]));
-    const total = lens[lens.length - 1], dur = Math.min(6000, Math.max(1200, total * 4));
+    const total = lens[lens.length - 1], dur = Math.min(7000, Math.max(1200, total * 4));
     moving = true;
     $('stop').classList.add('hidden');
     $('hint').classList.add('hidden');
@@ -192,8 +245,8 @@ function start(R) {
   const enChip = (s) => `<button class="name-chip en" data-lang="en"><span class="tag">English</span><b>${s.en}</b></button>`;
   const twChip = (s) => `<button class="name-chip tw" data-lang="tw"><span class="tag">台語</span><b>${s.tw}</b><small>${s.twRom}</small></button>`;
   const jaChip = (s) => `<button class="name-chip ja" data-lang="ja"><span class="tag">日本語</span><b>${s.ja}</b><small>${s.jaRom}</small></button>`;
-  const chip3 = (s) => (LANG3 === 'ja' ? jaChip(s) : twChip(s));
-  const line3 = (it) => (LANG3 === 'ja' ? `<span class="ja">${it.ja}<br><small>${it.jaRom}</small></span>` : `<span class="tw">${it.tw}<br><small>${it.twRom}</small></span>`);
+  const chip3 = (s) => (LANG3 === 'ja' ? jaChip(s) : LANG3 === 'tw' ? twChip(s) : '');
+  const line3 = (it) => (LANG3 === 'ja' ? `<span class="ja">${it.ja}<br><small>${it.jaRom}</small></span>` : LANG3 === 'tw' ? `<span class="tw">${it.tw}<br><small>${it.twRom}</small></span>` : '');
 
   function showStop(s, stamp) {
     $('stopStamp').textContent = stamp ? '🎫' : '🚉';
@@ -252,7 +305,7 @@ function start(R) {
     }
   }
   const twLine = (x) => (Recs.has(`${x.id}_tw`) ? [[Recs.url(`${x.id}_tw`), 'rec']] : []);
-  const line3Say = (x) => (LANG3 === 'ja' ? [[x.ja, 'ja-JP']] : twLine(x));
+  const line3Say = (x) => (LANG3 === 'ja' ? [[x.ja, 'ja-JP']] : LANG3 === 'tw' ? twLine(x) : []);
   function sayIn(s, lang) {
     if (lang === 'zh') sayLines([[s.zh, 'zh-TW']]);
     else if (lang === 'en') sayLines([[s.en, 'en-US']]);

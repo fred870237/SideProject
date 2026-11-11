@@ -5,7 +5,9 @@
 //   vehicle  坐什麼（ART 的名字，車頭朝左）：這裡是新幹線 high-speed-train
 //   lang3    第三種語言 'ja'：站名和東西寫 ja（日文）、jaRom（羅馬拼音），用系統的日文語音唸
 //   loop     false = 不是環島，是從北海道一路開到九州的一條線
-//   by       這一站要坐船過去（沖繩）：海上畫虛線，開到這一段會換成船
+//   by       這一站要坐船過去（沖繩）：停在這一站時畫一艘船
+//   lines    真的鐵路路線（新幹線、近鐵、渡輪）：火車照著路線開，兩站之間走最短的那條；
+//            path 裡的字串是車站或轉乘站（junctions），[經度, 緯度] 是讓鐵路彎得像真的那樣的中間點（大宮、仙台、盛岡、岡山…）
 window.REGIONS = window.REGIONS || {};
 
 REGIONS.japan = {
@@ -70,6 +72,17 @@ REGIONS.japan = {
       [128.00, 26.70], [127.80, 26.50], [127.70, 26.30],
     ],
   ],
+  junctions: { omiya: [139.62, 35.91] }, // 大宮：東北新幹線和北陸新幹線在這裡分開
+  lines: [
+    // 東北新幹線（東京→新青森）＋北海道新幹線（→新函館北斗），再坐特急到札幌
+    { name: '東北・北海道新幹線', path: ['tokyo', 'omiya', [139.90, 36.56], [140.39, 37.40], [140.88, 38.26], [141.15, 39.70], 'aomori', [140.65, 41.90], [140.37, 42.55], [141.00, 43.19], 'hokkaido'] },
+    { name: '北陸新幹線', path: ['omiya', [139.01, 36.32], 'nagano'] },
+    { name: '東海道新幹線', path: ['tokyo', [139.15, 35.26], 'fuji', [137.73, 34.70], 'nagoya', [136.29, 35.31], 'kyoto', 'osaka'] },
+    { name: '近鐵京都線', path: ['kyoto', 'nara'] },
+    { name: '山陽新幹線', path: ['osaka', [135.20, 34.68], [133.92, 34.67], 'hiroshima', [130.88, 33.89], 'fukuoka'] },
+    { name: '九州新幹線', path: ['fukuoka', [130.69, 32.79], 'kagoshima'] },
+    { name: '渡輪', by: 'ship', path: ['kagoshima', [129.6, 28.6], 'okinawa'] },
+  ],
   mountains: [[142.8, 43.6], [140.3, 39.6], [137.7, 36.2], [136.9, 36.9], [131.2, 32.9], [134.0, 33.75]],
   stops: [
     {
@@ -104,7 +117,7 @@ REGIONS.japan = {
       ],
     },
     {
-      id: 'fuji', zh: '富士山', en: 'Mount Fuji', ja: '富士山', jaRom: 'Fujisan', at: [138.73, 35.36], marker: [139.7, 33.5],
+      id: 'fuji', zh: '富士山', en: 'Mount Fuji', ja: '富士山', jaRom: 'Fujisan', at: [138.66, 35.14], marker: [139.7, 33.5],
       icon: { emoji: '🗻' },
       items: [
         { id: 'jp-fuji', emoji: '🗻', zh: '富士山', en: 'Mount Fuji', ja: 'ふじさん', jaRom: 'Fujisan', fact: '富士山是日本最高的山，山頂常常戴著白白的雪帽子！' },
