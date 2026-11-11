@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=45`;
+script.src = `regions/${regionId}.js?v=47`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -190,7 +190,7 @@ function start(R) {
       <g clip-path="url(#landClip)">${COUNTRIES.flatMap((c) => c.polys.map((o) => `<path d="${smooth(o)}" fill="${c.color}" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>`)).join('')}</g>
       <g transform="translate(${(-OX * SC).toFixed(1)} ${(-OY * SC).toFixed(1)}) scale(${SC.toFixed(3)})"><path d="${MAP_LAND}" fill="none" stroke="#fff" stroke-width="${(5 / SC).toFixed(3)}"/></g>` : ''}
     ${islands.map((o) => `<path d="${smooth(o.pts || o)}" fill="#000" opacity=".15" transform="translate(4 8)"/>`).join('')}
-    ${islands.map((o) => `<path d="${smooth(o.pts || o)}" fill="${o.fill || R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
+    ${islands.map((o) => `<path d="${smooth(o.pts || o)}" fill="${(!Array.isArray(o) && o.fill) || R.land}" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}
     ${(R.insets || []).map((b) => {
       // 小框框：離太遠放不進來的地方（夏威夷）搬到旁邊畫，用虛線框起來，跟真的地圖一樣
       const [x0, y0] = P([b.box[0], b.box[3]]), [x1, y1] = P([b.box[2], b.box[1]]);
@@ -339,6 +339,12 @@ function start(R) {
     else if (kind === 'ar') body = '<rect width="30" height="20" fill="#74ACDF"/><rect y="6.7" width="30" height="6.6" fill="#fff"/><circle cx="15" cy="10" r="2.2" fill="#F6B40E"/>';
     // 印度：橘、白、綠，中間一個藍色的法輪
     else if (kind === 'in') body = '<rect width="30" height="6.7" fill="#FF9933"/><rect y="6.6" width="30" height="6.8" fill="#fff"/><rect y="13.3" width="30" height="6.7" fill="#138808"/><circle cx="15" cy="10" r="2.6" fill="none" stroke="#000080" stroke-width=".7"/><circle cx="15" cy="10" r=".6" fill="#000080"/>';
+    // 韓國（簡化）：白底，中間上紅下藍的太極圓，四個角落各有一組黑色的卦
+    else if (kind === 'kr') {
+      const bars = (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-2.6" y="-2" width="5.2" height=".9" fill="#000"/><rect x="-2.6" y="-.45" width="5.2" height=".9" fill="#000"/><rect x="-2.6" y="1.1" width="5.2" height=".9" fill="#000"/></g>`;
+      body = '<rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="5" fill="#0047A0"/><path d="M10 10a5 5 0 0 1 10 0a2.5 2.5 0 0 1 -5 0a2.5 2.5 0 0 0 -5 0z" fill="#CD2E3A"/>' +
+        bars(6, 4.4, -56) + bars(24, 4.4, 56) + bars(6, 15.6, 56) + bars(24, 15.6, -56);
+    }
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }
