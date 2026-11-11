@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america', 'middle-east', 'mongolia', 'iceland'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america', 'middle-east', 'mongolia', 'iceland', 'himalaya'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=59`;
+script.src = `regions/${regionId}.js?v=60`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -271,7 +271,7 @@ function start(R) {
     $('hint').classList.add('hidden');
     stopSpeech();
     // 交通工具的聲音：用輕柔的「旅行版」（不叭喇叭、不鳴汽笛，小小聲），坐船、坐飛機、坐車、坐火車各一種
-    const ROAD = ['jeep', 'camper-van', 'bus', 'tuk-tuk', 'car', 'taxi', 'horse', 'camel'];
+    const ROAD = ['jeep', 'camper-van', 'bus', 'tuk-tuk', 'car', 'taxi', 'horse', 'camel', 'yak'];
     const soundOf = (v) => (['ship', 'sailboat', 'speedboat', 'fishing-boat'].includes(v) ? 'ride-boat' : v === 'airplane' ? 'ride-air' : ROAD.includes(v) ? 'ride-road' : 'ride-rail');
     const use = train.querySelector('use');
     let riding = null;
@@ -394,6 +394,14 @@ function start(R) {
     else if (kind === 'kg') body = '<rect width="30" height="20" fill="#E8112D"/>' +
       [...Array(20)].map((_, k) => { const a = (k * Math.PI) / 10; return `<path d="M15 10L${(15 + 6.2 * Math.cos(a)).toFixed(1)} ${(10 + 6.2 * Math.sin(a)).toFixed(1)}" stroke="#FFEF00" stroke-width="1.1"/>`; }).join('') +
       '<circle cx="15" cy="10" r="3.6" fill="#FFEF00"/><circle cx="15" cy="10" r="2.4" fill="#E8112D"/>';
+    // 尼泊爾：兩個疊起來的紅色三角旗，藍色的邊，上面是白色的月亮，下面是白色的太陽
+    else if (kind === 'np') body = '<path d="M4 1L24 11.5H11.5L24 19H4Z" fill="#DC143C" stroke="#003893" stroke-width="1.4" stroke-linejoin="round"/>' +
+      '<path d="M6.6 6.6a2.7 2.7 0 0 0 5.2 0a2.7 1.8 0 0 1 -5.2 0Z" fill="#fff"/>' +
+      [...Array(12)].map((_, k) => { const a = (k * Math.PI) / 6; return `<path d="M9.2 15.2L${(9.2 + 2.6 * Math.cos(a)).toFixed(1)} ${(15.2 + 2.6 * Math.sin(a)).toFixed(1)}" stroke="#fff" stroke-width=".8"/>`; }).join('') +
+      '<circle cx="9.2" cy="15.2" r="1.5" fill="#fff"/>';
+    // 不丹：左上黃色、右下橘色，中間一條白色的龍（簡化成彎彎的白線）
+    else if (kind === 'bt') body = '<path d="M0 0H30L0 20Z" fill="#FFD520"/><path d="M30 0V20H0Z" fill="#FF4E12"/>' +
+      '<path d="M6 15Q9 10 13 11Q17 12 19 8Q21 5 25 5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="24.5" cy="5" r="1.8" fill="#fff"/>';
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }

@@ -319,6 +319,45 @@ Object.assign(ART, {
       circle(0, -22, 2.6, '#fff') + path('M-4 40 V31 Q0 26 4 31 V40Z', '#6b5a4a');
   },
 
+  // 加德滿都的博達佛塔：白色的圓頂，金色的方塔上畫著一雙大眼睛，頂上掛著彩色的經幡
+  stupa: () => {
+    const { path, line, circle, flatPath } = K;
+    const gold = '#e9b64a', cols = ['#2f6fb3', '#ffffff', '#d9443a', '#3aa35a', '#f4c542'];
+    let flags = '';
+    [-1, 1].forEach((s) => {
+      flags += line(`M0 -34 Q${s * 22} -6 ${s * 46} 30`, '#8a7a6a', 0.8);
+      for (let k = 1; k <= 7; k++) {
+        const t = k / 8, x = 2 * (1 - t) * t * s * 22 + t * t * s * 46, y = (1 - t) * (1 - t) * -34 + 2 * (1 - t) * t * -6 + t * t * 30;
+        flags += flatPath(`M${x - 2.8} ${y} H${x + 2.8} L${x} ${y + 5.5}Z`, cols[k % 5]);
+      }
+    });
+    return path('M-50 44 V40 H50 V44Z', '#c9b48a') +
+      path('M-46 40 V34 H46 V40Z', '#e9e3d4') + path('M-38 34 V28 H38 V34Z', '#f3efe4') +
+      path('M-32 28 Q-32 -1 0 -2 Q32 -1 32 28Z', '#fbfaf5') +
+      path('M-10 -2 V-15 H10 V-2Z', gold) +
+      [-1, 1].map((s) => path(`M${s * 2} -8 Q${s * 4.5} -11 ${s * 7.5} -8 Q${s * 4.5} -6 ${s * 2} -8Z`, '#fff') + circle(s * 4.6, -8.2, 1.1, '#1d3c78') + line(`M${s * 2} -11 Q${s * 4.5} -13 ${s * 7.5} -11`, '#1d3c78', 0.9)).join('') +
+      line('M0 -7 q-1.6 1.8 0 3.6', '#1d3c78', 1.1) +
+      path('M-8 -15 L-2.5 -34 H2.5 L8 -15Z', gold) + line('M-6.6 -20 H6.6 M-5.2 -25 H5.2 M-3.8 -30 H3.8', '#b8862a', 0.9) +
+      path('M-6 -34 Q0 -39 6 -34Z', gold) + circle(0, -41, 2.2, '#f4c542') + flags;
+  },
+
+  // 不丹的虎穴寺：一座白牆紅邊、金色屋頂的小寺廟，貼在好高的懸崖上，下面是松樹林
+  'tigers-nest': () => {
+    const { path, line } = K;
+    const rock = '#9a8a78', wall = '#f7f3ea', red = '#8e2a26', gold = '#e7b33e';
+    const house = (x, y, w, h) => path(`M${x} ${y + h} V${y} H${x + w} V${y + h}Z`, wall) +
+      path(`M${x} ${y + 3} V${y} H${x + w} V${y + 3}Z`, red) +
+      path(`M${x - 2} ${y} L${x + w / 2} ${y - 5} L${x + w + 2} ${y}Z`, gold) +
+      path(`M${x + w / 2 - 1.6} ${y + h - 2} V${y + 6} H${x + w / 2 + 1.6} V${y + h - 2}Z`, '#6b4a30');
+    const pine = (x, y, s) => path(`M${x} ${y - 14 * s} L${x + 6 * s} ${y} H${x - 6 * s}Z`, '#3f7d4a');
+    return path('M-50 44 V40 H50 V44Z', '#7fb65a') +
+      path('M-4 44 L0 8 L6 -22 L14 -46 L30 -50 L46 -40 L50 -20 V44Z', rock) +
+      line('M8 -10 L4 30 M20 -34 L16 20 M34 -40 L30 30', '#7a6b5c', 1.2) +
+      path('M-26 16 L-4 14 L-2 20 L-24 22Z', '#857563') +
+      house(-24, 2, 12, 14) + house(-12, -6, 12, 16) + house(-2, -16, 10, 12) +
+      pine(-44, 40, 1.1) + pine(-34, 40, 0.9) + pine(-24, 40, 1.2) + pine(-14, 40, 0.8) + pine(-38, 40, 0.7);
+  },
+
   registan: () => {
     const { path, circle, flatPath, line } = K;
     const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';
