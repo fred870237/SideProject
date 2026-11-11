@@ -200,6 +200,11 @@ const Synth = (() => {
 
     // 鐵路
     train: (t) => { horn(t, 311, 392, 0.9, 0.15); pulses(t + 0.9, 1.8, 4, 1200, 0.25, 0.5); },
+    // 旅行（環遊地圖）坐車用的輕柔聲音：不叭喇叭、不鳴汽笛，小小聲的，只讓人知道「出發了」
+    'ride-rail': (t) => { pulses(t, 1.6, 3, 600, 0.07, 0.5); tone(t, 1.6, 70, { gain: 0.03, attack: 0.3, release: 0.6 }); },
+    'ride-road': (t) => { engine(t, 1.4, 45, 0.05); },
+    'ride-boat': (t) => { hiss(t, 1.8, 500, { gain: 0.1, type: 'lowpass', attack: 0.5, release: 0.9 }); },
+    'ride-air': (t) => { hiss(t, 2, [400, 1100], { gain: 0.09, q: 0.5, attack: 0.8, release: 0.9 }); },
     'high-speed-train': (t) => { hiss(t, 2.6, [200, 2500], { gain: 0.35, q: 0.7, attack: 1, release: 1.2 }); tone(t + 0.2, 2.2, [90, 160], { type: 'sawtooth', gain: 0.05, lp: 400 }); },
     metro: (t) => { melody(t, [76, 72, 76, 72], 0.3, 'sine', 0.25); tone(t + 1.3, 1.4, [300, 900], { type: 'sawtooth', gain: 0.05, lp: 1500 }); },
     'steam-train': (t) => { tone(t, 0.9, 880, { gain: 0.15 }); tone(t, 0.9, 1047, { gain: 0.12 }); hiss(t, 0.9, 2200, { gain: 0.08 }); pulses(t + 1, 2, 3.5, 1800, 0.35, 0.55); },

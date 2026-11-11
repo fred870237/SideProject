@@ -270,8 +270,9 @@ function start(R) {
     $('stop').classList.add('hidden');
     $('hint').classList.add('hidden');
     stopSpeech();
-    // 交通工具的聲音：有自己的聲音就用，沒有就用差不多的（吉普車用汽車的聲音）
-    const soundOf = (v) => (Synth.has(v) ? v : { jeep: 'car', sailboat: 'sailboat' }[v] || 'train');
+    // 交通工具的聲音：用輕柔的「旅行版」（不叭喇叭、不鳴汽笛，小小聲），坐船、坐飛機、坐車、坐火車各一種
+    const ROAD = ['jeep', 'camper-van', 'bus', 'tuk-tuk', 'car', 'taxi'];
+    const soundOf = (v) => (['ship', 'sailboat'].includes(v) ? 'ride-boat' : v === 'airplane' ? 'ride-air' : ROAD.includes(v) ? 'ride-road' : 'ride-rail');
     const use = train.querySelector('use');
     let riding = null;
     const t0 = performance.now();
