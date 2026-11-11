@@ -358,6 +358,20 @@ Object.assign(ART, {
       pine(-44, 40, 1.1) + pine(-34, 40, 0.9) + pine(-24, 40, 1.2) + pine(-14, 40, 0.8) + pine(-38, 40, 0.7);
   },
 
+  // 北愛爾蘭的巨人堤道：一根一根六角形的石柱，高高低低排到海裡
+  causeway: () => {
+    const { path, line } = K;
+    const top = '#b9b2a8', side = '#7d7670';
+    const hex = (x, y, r) => `M${x - r} ${y} L${x - r / 2} ${y - r * 0.55} H${x + r / 2} L${x + r} ${y} L${x + r / 2} ${y + r * 0.55} H${x - r / 2}Z`;
+    const col = (x, y, r) => path(`M${x - r} ${y} V40 H${x + r} V${y}Z`, side) + path(hex(x, y, r), top);
+    // 後面是長草的山坡，前面的石柱一階一階往右下走進海裡
+    let s = path('M-50 40 V-20 Q-30 -34 -6 -26 Q10 -20 20 4 V40Z', '#7fb65a');
+    for (let i = 0; i < 7; i++) s += col(-40 + i * 11, -10 + i * 7, 5.5);
+    for (let i = 0; i < 6; i++) s += col(-34 + i * 11, 2 + i * 6, 5.5);
+    return s + path('M-50 40 V36 H8 Q20 28 30 30 Q40 32 50 28 V44 H-50Z', '#3fa1d8') +
+      path('M-50 44 V40 H50 V44Z', '#3fa1d8') + line('M14 34 q5 -3 10 0 M32 36 q5 -3 10 0', '#fff', 1.6);
+  },
+
   registan: () => {
     const { path, circle, flatPath, line } = K;
     const sand = '#e7c58f', blue = '#2f8fd6', turq = '#3cc3c8';

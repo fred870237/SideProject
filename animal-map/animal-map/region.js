@@ -1,7 +1,7 @@
 // 🚂 環島地圖：通用的「地區地圖」引擎，資料放在 regions/<id>.js（格式見 regions/taiwan.js，日本的多島、新幹線、日語見 regions/japan.js）
 // 網址 region.html?r=taiwan；點車站 → 火車沿著鐵路開過去 → 到站卡片（中文、English、第三種語言：台語或日語）＋蓋護照印章
 // 想加新的國家或地區：新增 regions/<id>.js，並把 id 加進下面的 REGION_FILES（travel.js 的 TRIPS 也要設成 ready）
-const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america', 'middle-east', 'mongolia', 'iceland', 'himalaya', 'madagascar'];
+const REGION_FILES = ['taiwan', 'japan', 'china', 'europe', 'africa', 'australia', 'usa', 'south-america', 'arctic', 'antarctica', 'india', 'korea', 'canada', 'thailand', 'new-zealand', 'russia', 'silk-road', 'southeast-asia', 'central-america', 'middle-east', 'mongolia', 'iceland', 'himalaya', 'madagascar', 'caribbean', 'pacific', 'britain'];
 
 const $ = (id) => document.getElementById(id);
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=61`;
+script.src = `regions/${regionId}.js?v=62`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 
@@ -402,6 +402,30 @@ function start(R) {
     // 不丹：左上黃色、右下橘色，中間一條白色的龍（簡化成彎彎的白線）
     else if (kind === 'bt') body = '<path d="M0 0H30L0 20Z" fill="#FFD520"/><path d="M30 0V20H0Z" fill="#FF4E12"/>' +
       '<path d="M6 15Q9 10 13 11Q17 12 19 8Q21 5 25 5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="24.5" cy="5" r="1.8" fill="#fff"/>';
+    // 古巴、波多黎各：五條橫條紋，左邊一個三角形，裡面一顆白星星（兩國顏色剛好相反）
+    else if (kind === 'cu' || kind === 'pr') {
+      const [st, tri] = kind === 'cu' ? ['#002A8F', '#CF142B'] : ['#ED0000', '#0050F0'];
+      body = '<rect width="30" height="20" fill="#fff"/>' + [0, 2, 4].map((k) => `<rect y="${k * 4}" width="30" height="4" fill="${st}"/>`).join('') +
+        `<path d="M0 0L17.3 10L0 20Z" fill="${tri}"/>` + star5(5.8, 10.4, 3.2, '#fff');
+    }
+    // 牙買加：金色的叉叉，上下綠色、左右黑色
+    else if (kind === 'jm') body = '<rect width="30" height="20" fill="#009B3A"/><path d="M0 0L15 10L0 20ZM30 0L15 10L30 20Z" fill="#000"/><path d="M0 0L30 20M30 0L0 20" stroke="#FED100" stroke-width="3"/>';
+    // 巴哈馬：藍綠、金、藍綠三條，左邊黑色三角形
+    else if (kind === 'bs') body = '<rect width="30" height="20" fill="#00778B"/><rect y="6.67" width="30" height="6.67" fill="#FFC72C"/><path d="M0 0L13 10L0 20Z" fill="#000"/>';
+    // 多明尼加：白色十字，四格藍紅交錯，中間一個小國徽
+    else if (kind === 'do') body = '<rect width="30" height="20" fill="#fff"/><rect width="13" height="8" fill="#002D62"/><rect x="17" width="13" height="8" fill="#CE1126"/><rect y="12" width="13" height="8" fill="#CE1126"/><rect x="17" y="12" width="13" height="8" fill="#002D62"/><circle cx="15" cy="10" r="1.6" fill="#2a7a3a"/>';
+    // 斐濟：淺藍底，左上角英國國旗，右邊一個盾牌
+    else if (kind === 'fj') body = '<rect width="30" height="20" fill="#68BFE5"/><g transform="scale(.5)"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/></g>' +
+      '<path d="M19 5H27V11Q27 15 23 16.5Q19 15 19 11Z" fill="#fff" stroke="#CE1126" stroke-width=".5"/><path d="M19 5H27V7.5H19Z" fill="#CE1126"/>';
+    // 法屬玻里尼西亞：紅白紅，中間一個太陽和海浪的圓形圖案
+    else if (kind === 'pf') body = '<rect width="30" height="20" fill="#CE1126"/><rect y="5" width="30" height="10" fill="#fff"/><circle cx="15" cy="10" r="3.6" fill="#FFC72C"/><path d="M11.4 10.6Q13 9.6 15 10.6T18.6 10.6V12Q17 14 15 13.6Q13 14 11.4 12Z" fill="#083D9C"/>';
+    // 英格蘭：白底紅十字
+    else if (kind === 'en') body = '<rect width="30" height="20" fill="#fff"/><path d="M13 0h4v20h-4zM0 8h30v4H0z" fill="#CE1124"/>';
+    // 蘇格蘭：藍底白色叉叉
+    else if (kind === 'sct') body = '<rect width="30" height="20" fill="#005EB8"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/>';
+    // 威爾斯：上白下綠，中間一隻紅龍（簡化）
+    else if (kind === 'wls') body = '<rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00B140"/>' +
+      '<path d="M7 14Q9 8 14 9Q17 6 20 6.5L22.5 4.5L22.2 7.4Q24 9 21 10.4Q19.5 12 21.5 15L18.5 14.2L16.6 16.4L15.4 13.4L12 15.6L11 13.4Z" fill="#D30731"/>';
     else if (kind === 'uk') body = '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/>';
     return `<svg class="flag" viewBox="0 0 30 20" width="${w}" height="${h}">${body}</svg>`;
   }
