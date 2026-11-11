@@ -11,7 +11,7 @@ if (params.get('from') === 'city') $('backBtn').href = 'city.html';
 
 // 先載入地區的資料檔，再開始畫
 const script = document.createElement('script');
-script.src = `regions/${regionId}.js?v=62`;
+script.src = `regions/${regionId}.js?v=63`;
 script.onload = () => start(window.REGIONS[regionId]);
 document.body.append(script);
 

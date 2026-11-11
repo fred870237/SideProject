@@ -11,6 +11,7 @@ usage:
 lines-en.json：App 裡會用英文唸出來的所有句子（動物和車子的名字、找找看的問句、稱讚、ABC 字母探險、台灣環島）。
 這份清單是在瀏覽器裡開 abc.html，用頁面上的資料（ANIMALS、VEHICLES、MODES.abc、REGIONS）組出來的；
 新增動物或車子以後要重新產生清單（請 Claude 做），再跑 clone 和 pick。
+其中 travel 這組是旅行模式（regions/*.js）的站名、東西名稱和英語國家的問候，用 region.html 讀全部地區組出來，只收還沒有音檔的句子。
 
 環境：D:\\AI\\qwen-tts\\venv（Python 3.14、PyTorch cu128、pip install qwen-tts soundfile lameenc）
 跑之前先關掉 ComfyUI（8GB 顯卡記憶體不夠兩個一起用）

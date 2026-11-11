@@ -150,6 +150,7 @@ REGIONS['central-america'] = {
       id: 'panama', country: 'panama', zh: '巴拿馬市', en: 'Panama City', local: 'Ciudad de Panamá', at: [-79.52, 8.98], vehicle: 'airplane', marker: [-78.8, 8.0],
       items: [
         { id: 'ca-harpy', art: 'eagle', zh: '角鵰', en: 'Harpy Eagle', local: 'águila harpía', fact: '巴拿馬的國鳥是角鵰，爪子跟熊的爪子一樣大，可以抓樹上的樹懶！' },
+        { id: 'ca-iguana', art: 'iguana', zh: '綠鬣蜥', en: 'Green Iguana', local: 'iguana verde', fact: '綠鬣蜥住在巴拿馬的樹上，掉進水裡也不怕，牠是游泳高手！' },
         { id: 'ca-hat', emoji: '👒', zh: '巴拿馬草帽', en: 'Panama Hat', local: 'sombrero panamá', fact: '巴拿馬草帽是用草編的，以前蓋運河的工人都戴著它遮太陽！' },
       ],
     },
