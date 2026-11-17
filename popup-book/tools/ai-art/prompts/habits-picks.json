@@ -1,0 +1,30 @@
+{
+ "exercise": [
+  "D:/AI/ComfyUI/output/bd6/exercise_23_00001_.png",
+  false
+ ],
+ "sleep": [
+  "D:/AI/ComfyUI/output/bd6/sleep_23_00001_.png",
+  false
+ ],
+ "toilet": [
+  "D:/AI/ComfyUI/output/bd6/toilet_23_00001_.png",
+  false
+ ],
+ "wash": [
+  "D:/AI/ComfyUI/output/bd6/wash_22_00001_.png",
+  false
+ ],
+ "water": [
+  "D:/AI/ComfyUI/output/bd6/water_22_00001_.png",
+  false
+ ],
+ "veggies": [
+  "D:/AI/ComfyUI/output/bd6m/veggies_22_00001_.png",
+  false,
+  [],
+  {
+   "key": "magenta"
+  }
+ ]
+}

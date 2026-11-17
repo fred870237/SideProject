@@ -1,0 +1,19 @@
+{
+  "name": "bdbg",
+  "seeds": [
+    51,
+    52,
+    53,
+    54
+  ],
+  "w": 1536,
+  "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright soft colours, clean simple shapes, lots of calm open space. No people, no text, no letters, no numbers.",
+  "items": {
+    "parts": "A flat front view of a bright sunny kindergarten classroom wall like a stage set with no perspective: a pale mint-blue wall, a big window on the far left, a few colourful paper stars on the wall, a light wooden floor across the bottom fifth, a big empty open space in the middle",
+    "inside": "A flat front view of a friendly children's doctor's clinic wall like a stage set with no perspective: a soft light-blue wall, a big plain cream-coloured empty poster board filling the middle of the wall, a small plant in the far right corner, a light grey floor across the bottom fifth",
+    "senses": "A flat side view of a sunny park like a stage set: blue sky with a few white clouds, soft green rolling grass across the bottom third, a few round trees and flowers far at the edges, a big calm open space in the middle",
+    "teeth": "A flat front view of a bright children's bathroom like a stage set with no perspective: light blue tiled wall, a white sink on a pedestal in the middle with a round mirror above it, a small shelf on the left, a fluffy yellow towel on the right, a pale floor",
+    "habits": "A flat front view of a cosy family home cut in half like a doll's house with no perspective, showing two rooms side by side: a bedroom on the left with a window showing the night moon, and a kitchen on the right with a window showing the sun, warm wooden floors, lots of empty space in each room"
+  }
+}

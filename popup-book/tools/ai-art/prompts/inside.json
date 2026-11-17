@@ -1,0 +1,21 @@
+{
+  "name": "bd3",
+  "seeds": [
+    21,
+    22,
+    23,
+    24
+  ],
+  "w": 1024,
+  "h": 1024,
+  "style": "Flat 2D illustration from a children's picture book about the human body. {subject} The whole figure visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the subject. No text, no letters, no ground, no shadow, no scenery.",
+  "items": {
+    "heart": "A single cute cartoon human heart organ (simplified anatomical shape, not a love heart symbol) in red and dark red with a few short blue and red blood vessels on top, a happy smiling face",
+    "lungs": "A single pair of cute cartoon human lungs, two soft pink lobes joined by a light windpipe on top, simple and friendly with a happy smiling face",
+    "brain": "A single cute cartoon human brain in soft pink with wavy folds, seen from the side, with a happy smiling face",
+    "stomach": "A single cute cartoon human stomach organ, a soft orange-pink bean shaped bag, with a happy smiling face",
+    "intestines": "A single cute cartoon of human intestines, a long soft pink tube coiled in neat loops inside a frame of a thicker light orange tube, with a happy smiling face",
+    "skeleton": "A single cute friendly cartoon child skeleton standing and waving, white bones with light grey shading, big round friendly skull with a smile, not scary",
+    "muscle": "A single cartoon child's arm flexing a big strong muscle, the arm bent at the elbow with a tight fist, peach skin, a short yellow t-shirt sleeve at the shoulder, seen from the side"
+  }
+}

@@ -31,7 +31,7 @@ const Travel = (() => {
     { id: 'canada', icon: '🍁', zh: '加拿大', en: 'Canada', at: [-112, 60], box: [-127, 41.8, -66, 60], ready: true },
     { id: 'thailand', icon: '🐘', zh: '泰國', en: 'Thailand', at: [101, 15], box: [96.5, 6.2, 106, 20.6], ready: true },
     { id: 'new-zealand', icon: '🥝', zh: '紐西蘭', en: 'New Zealand', at: [172.5, -41], box: [165.8, -47.5, 179, -34.2], ready: true },
-    { id: 'russia', icon: '🐻', zh: '俄羅斯', en: 'Russia', at: [95, 61], box: [27, 41, 162, 72], ready: true },
+    { id: 'russia', icon: '🐻', zh: '俄羅斯', en: 'Russia', at: [58, 61], box: [27, 41, 162, 72], ready: true },
     { id: 'silk-road', icon: '🐫', zh: '絲路中亞', en: 'Silk Road', at: [66, 43], box: [52, 37.5, 82, 53], ready: true },
     { id: 'southeast-asia', icon: '🦧', zh: '東南亞', en: 'Southeast Asia', at: [114, 1], box: [96, -11, 127, 23.5], ready: true },
     { id: 'central-america', icon: '🌵', zh: '墨西哥中美洲', en: 'Mexico & Central America', at: [-96, 19], box: [-110, 7, -77, 31], ready: true },

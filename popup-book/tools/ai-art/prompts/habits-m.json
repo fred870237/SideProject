@@ -1,0 +1,15 @@
+{
+  "name": "bd6m",
+  "seeds": [
+    21,
+    22,
+    23,
+    24
+  ],
+  "w": 1024,
+  "h": 1024,
+  "style": "Flat 2D illustration from a children's picture book about the human body. {subject} The whole figure visible, isolated and centered on a solid uniform pure magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No magenta or pink anywhere on the subject. No text, no letters, no ground, no shadow, no scenery.",
+  "items": {
+    "veggies": "a cute cheerful 5-year-old East Asian girl with black hair with a straight fringe tied in two high bouncy pigtails with red bobbles, big round dark brown eyes, rosy cheeks, wearing a bright yellow t-shirt and a red skirt, sitting at a small table eating vegetables, holding a fork with a green broccoli floret, a plate with broccoli, carrots and peas in front of her, seen from the side facing right"
+  }
+}

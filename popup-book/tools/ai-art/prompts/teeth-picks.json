@@ -1,0 +1,30 @@
+{
+ "brushing": [
+  "D:/AI/ComfyUI/output/bd5/brushing_22_00001_.png",
+  false
+ ],
+ "smile": [
+  "D:/AI/ComfyUI/output/bd5/smile_23_00001_.png",
+  false
+ ],
+ "toothbrush": [
+  "D:/AI/ComfyUI/output/bd5/toothbrush_24_00001_.png",
+  false
+ ],
+ "toothpaste": [
+  "D:/AI/ComfyUI/output/bd5/toothpaste_23_00001_.png",
+  false
+ ],
+ "cup": [
+  "D:/AI/ComfyUI/output/bd5/cup_23_00001_.png",
+  false
+ ],
+ "tooth": [
+  "D:/AI/ComfyUI/output/bd5/tooth_23_00001_.png",
+  false
+ ],
+ "sweets": [
+  "D:/AI/ComfyUI/output/bd5/sweets_23_00001_.png",
+  false
+ ]
+}

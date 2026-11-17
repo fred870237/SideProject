@@ -1,0 +1,42 @@
+{
+ "see": [
+  "D:/AI/ComfyUI/output/bd4/see_21_00001_.png",
+  false,
+  [],
+  {
+   "thresh": 5
+  }
+ ],
+ "hear": [
+  "D:/AI/ComfyUI/output/bd4/hear_21_00001_.png",
+  false,
+  [],
+  {
+   "thresh": 5
+  }
+ ],
+ "taste": [
+  "D:/AI/ComfyUI/output/bd4/taste_21_00001_.png",
+  false,
+  [],
+  {
+   "thresh": 5
+  }
+ ],
+ "smell": [
+  "D:/AI/ComfyUI/output/bd4m/smell_21_00001_.png",
+  false,
+  [],
+  {
+   "key": "magenta"
+  }
+ ],
+ "touch": [
+  "D:/AI/ComfyUI/output/bd4m/touch_21_00001_.png",
+  false,
+  [],
+  {
+   "key": "magenta"
+  }
+ ]
+}

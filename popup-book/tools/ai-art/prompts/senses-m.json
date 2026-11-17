@@ -1,0 +1,16 @@
+{
+  "name": "bd4m",
+  "seeds": [
+    21,
+    22,
+    23,
+    24
+  ],
+  "w": 1024,
+  "h": 1024,
+  "style": "Flat 2D illustration from a children's picture book about the human body. {subject} The whole figure visible, isolated and centered on a solid uniform pure magenta (#FF00FF) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No magenta or pink anywhere on the subject. No text, no letters, no ground, no shadow, no scenery.",
+  "items": {
+    "smell": "Full body of a cute cheerful 5-year-old East Asian girl with black hair with a straight fringe tied in two high bouncy pigtails with red bobbles, big round dark brown eyes, rosy cheeks, wearing a bright yellow t-shirt and a red skirt, standing with eyes closed happily smelling a big yellow sunflower with a green stem held in both hands",
+    "touch": "Full body of a cute cheerful 5-year-old East Asian girl with black hair with a straight fringe tied in two high bouncy pigtails with red bobbles, big round dark brown eyes, rosy cheeks, wearing a bright yellow t-shirt and a red skirt, kneeling and gently stroking a fluffy orange kitten sitting next to her, the kitten looks happy"
+  }
+}

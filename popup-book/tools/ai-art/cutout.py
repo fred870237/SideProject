@@ -23,7 +23,8 @@ for name, (path, flip, *rest) in picks.items():
         greenness = np.minimum(r, b) - g      # 背景洋紅：r、b 都明顯大於 g（變數名稱沿用 greenness）
     else:
         greenness = g - np.maximum(r, b)      # 背景綠：g 明顯大於 r、b
-    bgish = greenness > 18
+    # 背景偏黃的綠（例如淡黃綠色）綠得不夠明顯，門檻可以調低：{"thresh": 6}
+    bgish = greenness > opts.get("thresh", 18)
     lab, _ = ndimage.label(bgish)
     edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
     bg = np.isin(lab, edge[edge > 0])

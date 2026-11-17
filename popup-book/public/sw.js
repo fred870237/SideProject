@@ -1,6 +1,6 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v40';
+const CACHE = 'popup-book-v41';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
@@ -89,6 +89,24 @@ const CORE = [
   'art/lost-animals.js',
   ...['bg', 'dodo', 'thylacine', 'moa', 'passenger-pigeon', 'great-auk', 'clouded-leopard']
     .map((n) => `art/img/lost-animals/${n}.webp`),
+  'art/face.js',
+  ...['bg', 'girl', 'boy']
+    .map((n) => `art/img/face/${n}.webp`),
+  'art/body-parts.js',
+  ...['bg', 'girl', 'boy']
+    .map((n) => `art/img/body-parts/${n}.webp`),
+  'art/inside-body.js',
+  ...['bg', 'brain', 'heart', 'lungs', 'stomach', 'intestines', 'skeleton', 'muscle']
+    .map((n) => `art/img/inside-body/${n}.webp`),
+  'art/senses.js',
+  ...['bg', 'see', 'hear', 'smell', 'taste', 'touch']
+    .map((n) => `art/img/senses/${n}.webp`),
+  'art/teeth.js',
+  ...['bg', 'brushing', 'smile', 'toothbrush', 'toothpaste', 'cup', 'tooth', 'sweets']
+    .map((n) => `art/img/teeth/${n}.webp`),
+  'art/habits.js',
+  ...['bg', 'sleep', 'toilet', 'exercise', 'water', 'wash', 'veggies']
+    .map((n) => `art/img/habits/${n}.webp`),
   ...['lion', 'elephant', 'rhino', 'macaque', 'parrot', 'tiger', 'anaconda', 'frog', 'chimpanzee',
     'cow', 'pig', 'sheep', 'horse', 'rooster', 'whale', 'dolphin', 'polar-bear', 'seal', 'fox', 'snowy-owl',
     'brown-bear', 'squirrel', 'wolf', 'dog', 'cat']

@@ -1,0 +1,30 @@
+{
+ "brain": [
+  "D:/AI/ComfyUI/output/bd3/brain_24_00001_.png",
+  false
+ ],
+ "heart": [
+  "D:/AI/ComfyUI/output/bd3/heart_22_00001_.png",
+  false
+ ],
+ "lungs": [
+  "D:/AI/ComfyUI/output/bd3/lungs_23_00001_.png",
+  false
+ ],
+ "stomach": [
+  "D:/AI/ComfyUI/output/bd3/stomach_23_00001_.png",
+  false
+ ],
+ "intestines": [
+  "D:/AI/ComfyUI/output/bd3/intestines_23_00001_.png",
+  false
+ ],
+ "skeleton": [
+  "D:/AI/ComfyUI/output/bd3/skeleton_21_00001_.png",
+  false
+ ],
+ "muscle": [
+  "D:/AI/ComfyUI/output/bd3/muscle_24_00001_.png",
+  false
+ ]
+}

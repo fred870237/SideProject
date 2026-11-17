@@ -92,6 +92,24 @@ LINES = [
     "Paraceratherium", "Deinotherium", "Andrewsarchus", "Entelodon", "Chalicotherium", "Gigantopithecus",
     # 🐦 史前動物：消失的動物
     "Dodo", "Thylacine", "Moa", "Passenger Pigeon", "Great Auk", "Clouded Leopard",
+    # 😊 我的身體：我的臉
+    "Hair", "Eyes", "Cheeks", "Eyebrows", "Ears", "Nose", "Mouth", "Tongue",
+    "Swish swish!", "Blink blink!", "Achoo!", "Ahh!",
+    # 🙆 我的身體：身體部位
+    "Head", "Arms", "Tummy", "Feet", "Hands", "Legs",
+    "Flap flap!", "Rumble rumble!", "Tap tap!", "Boing boing!", "Left, right, left, right!",
+    # 💓 我的身體：身體裡面
+    "Brain", "Heart", "Lungs", "Stomach", "Intestines", "Muscle", "Skeleton",
+    "I have an idea!", "Ba-dum, ba-dum!", "Breathe in, breathe out.", "Squish squish!", "So strong!", "Rattle rattle!",
+    # 👀 我的身體：五種感覺
+    "See", "Hear", "Smell", "Taste", "Touch",
+    "I can see you!", "Mmm, it smells nice!", "Yum yum!", "So soft!",
+    # 🦷 我的身體：牙齒和刷牙
+    "Brush Your Teeth", "Teeth", "Toothbrush", "Toothpaste", "Cup", "Healthy Tooth", "Sweets",
+    "Brush brush brush!", "Sparkle sparkle!", "Squeeze!", "Gargle gargle!", "Clean and healthy!", "Not too many sweets!",
+    # 🧼 我的身體：好習慣
+    "Sleep", "Use the Toilet", "Exercise", "Drink Water", "Wash Your Hands", "Eat Vegetables",
+    "Good night!", "Flush!", "Now wash your hands!", "Jump, jump, jump!", "Gulp gulp!", "Scrub scrub!", "Yummy!",
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",

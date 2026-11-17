@@ -1,0 +1,17 @@
+{
+  "name": "bd4",
+  "seeds": [
+    21,
+    22,
+    23,
+    24
+  ],
+  "w": 1024,
+  "h": 1024,
+  "style": "Flat 2D illustration from a children's picture book about the human body. {subject} The whole figure visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its shadow side, giving a simple two-tone shading. Bright warm colours, clean simple shapes. No green anywhere on the subject. No text, no letters, no ground, no shadow, no scenery.",
+  "items": {
+    "see": "Full body of a cute cheerful 5-year-old East Asian girl with black hair with a straight fringe tied in two high bouncy pigtails with red bobbles, big round dark brown eyes, rosy cheeks, wearing a bright yellow t-shirt and a red skirt, standing and looking through a pair of red binoculars held up to her eyes with both hands",
+    "hear": "Full body of a cute cheerful 5-year-old East Asian boy with short tousled dark brown hair, thick dark eyebrows, big round dark brown eyes, rosy cheeks, wearing a bright blue t-shirt and khaki shorts, standing and cupping one hand behind his ear to listen carefully, eyes looking up, mouth in a small o",
+    "taste": "Full body of a cute cheerful 5-year-old East Asian boy with short tousled dark brown hair, thick dark eyebrows, big round dark brown eyes, rosy cheeks, wearing a bright blue t-shirt and khaki shorts, standing and happily licking a big ice cream cone with a strawberry scoop and a vanilla scoop"
+  }
+}

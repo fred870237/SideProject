@@ -1,0 +1,9 @@
+{
+  "name": "bd1bg",
+  "seeds": [51, 52, 53, 54],
+  "w": 1536, "h": 960,
+  "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright soft colours, clean simple shapes, lots of calm open space. No text, no letters, no numbers.",
+  "items": {
+    "bg": "A flat front view of a cheerful children's bathroom wall like a stage set with no perspective, with NO people and NO mirror: soft pastel pink wall with a few white stars and small round bubbles, a row of light blue tiles along the bottom, a small shelf on the far left with a toothbrush cup and a rubber duck, a small towel hanging on the far right, a big empty calm open space across the whole middle"
+  }
+}

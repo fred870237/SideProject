@@ -64,5 +64,16 @@ const THEMES = [
       { id: 'lost-animals', icon: '🐦', en: 'Lost Animals', zh: '消失的動物' },
     ],
   },
-  { id: 'body', icon: '🦷', en: 'My Body', zh: '我的身體', color: '#ffb3c7', pages: [] },
+  {
+    // 認識自己的身體：五官、身體部位、身體裡面、五種感覺、牙齒、好習慣（同一個男生和女生）
+    id: 'body', icon: '🦷', en: 'My Body', zh: '我的身體', color: '#ffb3c7',
+    pages: [
+      { id: 'face', icon: '😊', en: 'My Face', zh: '我的臉' },
+      { id: 'body-parts', icon: '🙆', en: 'Body Parts', zh: '身體部位' },
+      { id: 'inside-body', icon: '💓', en: 'Inside My Body', zh: '身體裡面' },
+      { id: 'senses', icon: '👀', en: 'My Five Senses', zh: '五種感覺' },
+      { id: 'teeth', icon: '🦷', en: 'Brushing Teeth', zh: '牙齒和刷牙' },
+      { id: 'habits', icon: '🧼', en: 'Good Habits', zh: '好習慣' },
+    ],
+  },
 ];
