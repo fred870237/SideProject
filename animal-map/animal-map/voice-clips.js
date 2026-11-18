@@ -7,6 +7,11 @@ const VoiceClips = (() => {
   // 先關掉的語言：中文的 AI 語音有一些開頭有雜音或拖太長，重新生成之前先全部改用系統語音（音檔和清單都留著）
   // 重新生成好以後，把 'zh' 拿掉就會恢復（sw.js 也有一份一樣的清單）
   const OFF = new Set(['zh']);
+  // 旅行模式的當地語言（日、韓、法、德、義、西、葡、俄）：家長模式有總開關「當地語言用 AI 語音」，
+  // 關掉（localStorage「voice-local」= 'off'）就改回系統語音；英文和中文不受影響
+  const MAIN = new Set(['en', 'zh']);
+  const localOn = () => { try { return localStorage.getItem('voice-local') !== 'off'; } catch { return true; } };
+  const setLocal = (on) => { try { localStorage.setItem('voice-local', on ? 'on' : 'off'); } catch { /* 無痕模式 */ } };
   const have = {};
   if (typeof VOICE_CLIPS !== 'undefined') {
     for (const [lang, list] of Object.entries(VOICE_CLIPS)) if (!OFF.has(lang)) have[lang] = new Set(list);
@@ -19,6 +24,7 @@ const VoiceClips = (() => {
   function url(text, lang) {
     if (typeof text !== 'string' || !lang) return null;
     const l = lang.slice(0, 2).toLowerCase();
+    if (!MAIN.has(l) && !localOn()) return null;
     const s = l === 'en' ? slug(text) : key(text);
     return have[l] && have[l].has(s) ? `audio/voice/${l}/${encodeURIComponent(s)}.mp3` : null;
   }
@@ -34,5 +40,5 @@ const VoiceClips = (() => {
   }
   // 按鈕名字的音檔還在播嗎（換頁前要等它唸完）
   const busy = () => !!el.src && !el.paused && !el.ended;
-  return { url, play, busy };
+  return { url, play, busy, localOn, setLocal };
 })();

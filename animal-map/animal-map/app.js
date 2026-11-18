@@ -527,6 +527,10 @@ $('#timeBtn').addEventListener('click', () => PlayTimer.openSettings());
 const voiceLabel = () => { $('#voiceBtn').textContent = `🔈 按鈕會說話：${VoiceUI.enabled() ? '開' : '關'}`; };
 $('#voiceBtn').addEventListener('click', () => { VoiceUI.set(!VoiceUI.enabled()); voiceLabel(); });
 voiceLabel();
+// 🌏 旅行的當地語言用 AI 語音：開／關（關掉改回系統語音）
+const localLabel = () => { $('#localVoiceBtn').textContent = `🌏 當地 AI 語音：${VoiceClips.localOn() ? '開' : '關'}`; };
+$('#localVoiceBtn').addEventListener('click', () => { VoiceClips.setLocal(!VoiceClips.localOn()); localLabel(); });
+localLabel();
 
 function setParent(on) {
   state.parent = on;
