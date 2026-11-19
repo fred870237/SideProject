@@ -37,7 +37,7 @@
 |---|---|---|
 | cat | cat.mp3 | [Cat meow by freesound_community](https://pixabay.com/sound-effects/nature-cat-meow-85175/) |
 | chicken | chicken.mp3 | [Chickens clucking and rooster by freesound_community](https://pixabay.com/sound-effects/nature-chickens-clucking-and-rooster-with-cockadoodledoo-31734/) |
-| chimpanzee | chimpanzee.mp3 | [chimpanzee by freesound_community](https://pixabay.com/sound-effects/nature-chimpanzee-101055/) |
+| chimpanzee | chimpanzee.mp3 | [chimpanzee by freesound_community](https://pixabay.com/sound-effects/nature-chimpanzee-101055/) （去掉開頭空白、剪成前 3 秒）|
 | cow | cow.mp3 | [Cow Moo 2 by freesound_community](https://pixabay.com/sound-effects/nature-cow-moo-2-6893/) |
 | dog | dog.mp3 | [Dog Barking by freesound_community](https://pixabay.com/sound-effects/nature-dog-barking-70772/) |
 | horse | horse.mp3 | [delicate horse by freesound_community](https://pixabay.com/sound-effects/nature-delicate-horse-69688/) |
