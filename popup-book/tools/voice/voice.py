@@ -161,7 +161,9 @@ def clone(ref):
     m = load(MODELS / "Base")
     prompt = m.create_voice_clone_prompt(ref_audio=str(ref), ref_text=REF_TEXT)
     for t in range(TAKES):
-        wavs, sr = m.generate_voice_clone(text=todo, language=["English"] * len(todo), voice_clone_prompt=prompt)
+        # max_new_tokens：一句最多幾個 token（12 個 ≈ 1 秒）；預設 2048 遇到停不下來的句子會卡好幾個小時
+        wavs, sr = m.generate_voice_clone(text=todo, language=["English"] * len(todo), voice_clone_prompt=prompt,
+                                          max_new_tokens=240)
         for line, w in zip(todo, wavs):
             w = trim(np.asarray(w, dtype=np.float32), sr)
             sf.write(takes / f"{slug(line)}_{t}.wav", w, sr)
