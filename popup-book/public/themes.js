@@ -27,6 +27,7 @@ const THEMES = [
       { id: 'giant-mine', icon: '⛏️', en: 'Giant Mine', zh: '巨型礦場' },
       { id: 'tunnel', icon: '🚇', en: 'Tunnel', zh: '隧道工程' },
       { id: 'paving', icon: '🛣️', en: 'Road Paving', zh: '鋪馬路' },
+      { id: 'demolition', icon: '🏚️', en: 'Demolition', zh: '拆房子' },
       { id: 'farm', icon: '🚜', en: 'Farm', zh: '農場' },
     ],
   },

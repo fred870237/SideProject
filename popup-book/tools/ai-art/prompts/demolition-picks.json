@@ -1,0 +1,44 @@
+{
+ "wrecking": [
+  "D:/AI/ComfyUI/output/dm1/wrecking_61_00001_.png",
+  false,
+  [],
+  {
+   "erode": false
+  }
+ ],
+ "crusher": [
+  "D:/AI/ComfyUI/output/dm3t/crusher_105_00001_.png",
+  false,
+  [
+   [
+    1290,
+    292,
+    1450,
+    565
+   ],
+   [
+    1180,
+    560,
+    1460,
+    660
+   ]
+  ]
+ ],
+ "breaker": [
+  "D:/AI/ComfyUI/output/dm1/breaker_62_00001_.png",
+  false
+ ],
+ "shear": [
+  "D:/AI/ComfyUI/output/dm1/shear_61_00001_.png",
+  false
+ ],
+ "dust": [
+  "D:/AI/ComfyUI/output/dm1/dust_8_00001_.png",
+  false
+ ],
+ "dump": [
+  "D:/AI/ComfyUI/output/dm1/dump_8_00001_.png",
+  false
+ ]
+}

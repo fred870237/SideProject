@@ -1,0 +1,20 @@
+{
+ "name": "dm1",
+ "seeds": [
+  7,
+  8,
+  61,
+  62
+ ],
+ "w": 1024,
+ "h": 768,
+ "style": "Flat 2D side elevation illustration from a children's picture book about demolishing an old building. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, lights and hoses. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+ "items": {
+  "wrecking": "A single yellow crawler crane used for demolition, on dark grey caterpillar tracks with a cab, a long straight yellow lattice boom pointing up and to the right at about 55 degrees, a thin black steel cable hanging straight down from the boom tip to a huge round dark grey steel wrecking ball hanging in the air to the right of the tracks",
+  "crusher": "A single mobile jaw crusher machine on dark grey caterpillar tracks: a big orange square feed hopper high at the right end, a grey crushing box and engine housing in the middle, and a long straight black conveyor belt sloping down to the left. Not a truck, no cab, no wheels",
+  "breaker": "A single yellow crawler excavator with a hydraulic rock breaker hammer instead of a bucket: the boom and arm reach forward to the right and a long grey breaker hammer with a pointed steel chisel tip points straight down to the ground in front of the tracks",
+  "shear": "A single orange crawler demolition excavator with a big grey hydraulic crusher jaw attachment like giant open pincers with teeth at the end of the arm, the boom and arm reaching up and forward to the right, the jaws wide open",
+  "dust": "A single dust control water cannon truck: a white truck cab on the left, black tyres, a big blue water tank, and on the back a large round blue cylindrical fan mist cannon tilted up pointing to the right",
+  "dump": "A single red dump truck with black tyres, the cab on the right, the big tipping dump bed at the back full of broken grey concrete chunks and bricks"
+ }
+}

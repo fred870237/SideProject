@@ -42,6 +42,9 @@ LINES = [
     "Road Train", "Wind Turbine Blade Truck", "Modular Transporter", "Heavy Haul Truck", "Log Truck", "Tank Truck", "Escort Truck", "Oversize load!", "Double-Deck Car Carrier",
     # 🏢 蓋大樓
     "Concrete Pump Truck", "Pile Driver", "Mobile Crane", "Boom Lift", "Skid Steer Loader",
+    # 🏚️ 拆房子（砂石車跟工地那頁共用 "Dump Truck"，"Snip snap!"、"Whoosh!" 也是共用的）
+    "Wrecking Ball Crane", "Rock Crusher", "Hydraulic Breaker", "Demolition Shear", "Dust Control Truck",
+    "Swing!", "Crash!", "Crunch crunch!", "Rat-a-tat-tat!", "Dump it out!",
     # ⛏️ 巨型礦場
     "Bagger", "Dragline Excavator", "Mining Shovel", "Drill Rig", "Mining Dump Truck", "Giant Wheel Loader",
     # 🚢 海上

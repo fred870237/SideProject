@@ -1,11 +1,12 @@
 // 離線用的 service worker：網路優先（有網路時永遠拿最新的檔案），沒網路時用存起來的版本
 // 新增檔案（例如新的一頁 art/<id>.js）要加進 CORE，並把版本號 +1
-const CACHE = 'popup-book-v43';
+const CACHE = 'popup-book-v44';
 importScripts('voices.js'); // self.VOICES：預先錄好的英文語音清單
 const CORE = [
   './', 'index.html', 'style.css', 'app.js', 'themes.js', 'voices.js',
   ...self.VOICES.map((s) => `audio/en/${s}.mp3`),
-  'art/kit.js', 'art/construction.js', 'art/building.js', 'art/rescue.js',
+  'art/kit.js', 'art/construction.js', 'art/building.js', 'art/demolition.js', 'art/rescue.js',
+  ...['bg', 'wrecking', 'crusher', 'breaker', 'shear', 'dust', 'dump'].map((n) => `art/img/demolition/${n}.webp`),
   ...['bg', 'pump', 'piledriver', 'crane', 'boomlift', 'skidsteer', 'skidsteer-w1', 'skidsteer-w2', 'skidsteer-front'].map((n) => `art/img/building/${n}.webp`),
   'art/giant-mine.js', ...['bg', 'bwe', 'dragline', 'shovel', 'drill', 'haultruck', 'loader-body', 'loader-w1', 'loader-w2', 'loader-w3', 'loader-front', 'loader-bucket'].map((n) => `art/img/giant-mine/${n}.webp`),
   'art/tunnel.js', ...['bg', 'tbm', 'shotcrete', 'shotcrete-w1', 'shotcrete-w2', 'shotcrete-front', 'loco', 'loco-w1', 'loco-w2', 'loco-w3', 'loco-w4', 'loco-w5', 'loco-w6', 'loco-front', 'jumbo', 'jumbo-w1', 'jumbo-w2', 'jumbo-front', 'lhd', 'lhd-w1', 'lhd-w2', 'lhd-front'].map((n) => `art/img/tunnel/${n}.webp`),

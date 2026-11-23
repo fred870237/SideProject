@@ -1,0 +1,15 @@
+{
+ "name": "dm1bg",
+ "seeds": [
+  51,
+  52,
+  53,
+  54
+ ],
+ "w": 1536,
+ "h": 960,
+ "style": "Flat 2D illustration, a wide double-page spread from a children's picture book. {subject} No black outlines: shapes are flat colour fills only, every colour with a slightly darker flat shade for simple two-tone shading. Bright saturated colours, clean shapes, lots of calm white space. Unbranded, no text, no letters, no numbers.",
+ "items": {
+  "bg": "An old house being demolished, seen from the side, with NO vehicles and NO people: on the right half an old two-storey red brick house with a grey tiled roof, its left end already broken open with jagged broken brick edges showing the inside rooms with patterned wallpaper and a hanging lamp, piles of broken bricks and grey concrete rubble at its base; on the far left a yellow and black striped temporary site fence; a flat light brown dirt ground across the whole bottom third of the picture. The upper part of the picture is plain white paper (no sky colour)."
+ }
+}

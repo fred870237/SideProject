@@ -1,0 +1,19 @@
+{
+ "name": "dm3t",
+ "seeds": [
+  101,
+  102,
+  103,
+  104,
+  105,
+  106,
+  107,
+  108
+ ],
+ "w": 1536,
+ "h": 768,
+ "style": "Flat 2D side elevation illustration from a children's picture book about demolishing an old building. {subject}, seen exactly from the side, the whole thing visible, isolated and centered on a solid uniform pure chroma-key green (#00FF00) background. No black outlines: shapes are flat colour fills only. Every colour has a second, slightly darker flat shade on its lower or shadow side, giving a simple two-tone shading. Bright saturated colours, sturdy slightly chunky proportions, many small mechanical details such as bolts, pistons, pipes, lights and hoses. No green anywhere on the subject. Unbranded, no logos, no text, no letters, no numbers, no ground, no shadow, no scenery.",
+ "items": {
+  "crusher": "A single mobile jaw crusher machine on long dark grey caterpillar tracks, seen from the side facing right: a big orange square feed hopper high at the LEFT rear end, a grey crushing box with a round flywheel and an orange engine housing in the middle, and a long straight black discharge conveyor belt coming out from under the machine at the RIGHT front end and going up diagonally to the upper right, carrying small grey gravel stones. Not a truck, no cab, no wheels"
+ }
+}
