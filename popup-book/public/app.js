@@ -328,6 +328,7 @@ function showScene(theme, page) {
         <a class="round" href="#/${theme.id}" aria-label="回目錄">⬅</a>
         <h2>${page.en}<small>${page.zh}</small></h2>
         <span class="spacer"></span>
+        ${scene.items.some((it) => it.focus !== false) ? '<button class="round" id="puzzleBtn" aria-label="拼拼看">🧩</button>' : ''}
         ${prev ? `<a class="round" href="#/${theme.id}/${prev.id}" aria-label="上一頁">◀</a>` : ''}
         ${next ? `<a class="round" href="#/${theme.id}/${next.id}" aria-label="下一頁">▶</a>` : ''}
       </header>
@@ -580,7 +581,8 @@ function pageTurn(book, oldSvg, dir) {
 // 在場景上左右滑也可以翻頁（滑動不算點車子）
 let swipe = null;
 document.addEventListener('pointerdown', (e) => {
-  swipe = e.target.closest('.stage') ? { x: e.clientX, y: e.clientY, moved: false } : null;
+  swipe = e.target.closest('.stage') && !e.target.closest('.puzzle') ? { // 拖拼圖塊不算滑動翻頁
+    x: e.clientX, y: e.clientY, moved: false } : null;
 });
 document.addEventListener('pointerup', (e) => {
   if (!swipe) return;

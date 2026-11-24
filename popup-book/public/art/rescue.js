@@ -198,6 +198,8 @@ const firetruck = {
   hint: [300, -315],
   // 焦點模式放大的範圍：消防車＋那一小塊公寓（巢狀 svg 的 getBBox 會算成整張背景，所以自己指定）
   box: [0, AY - 340, Math.max(896, AX2), 340 - AY],
+  // 🧩 拼拼看只拼消防車本身：那塊公寓和火藏起來
+  puzzle: { hide: 'svg, [id$="-flame"]', box: [0, -340, 896, 340] },
   art(p) {
     const ladder = RECT(0, 0, 615, 50);
     return '<g transform="translate(0 -340)">' +
