@@ -116,6 +116,8 @@ LINES = [
     # 動作音效
     "Three, two, one, blast off!", "Beep boop!", "Yawn!", "Peekaboo!",
     "Hello!", "Beep beep!", "Honk honk!", "Ice cream!", "Toot toot!", "Splash!", "Whoosh!", "Ready for takeoff!",
+    # 🔍 找找看（find.js）：問句的開頭（後面接車名的語音）和答對、答錯
+    "Where is the", "Where are the", "Can you find", "Try again!", "You found it!", "You found them all!",
 ]
 
 

@@ -328,6 +328,7 @@ function showScene(theme, page) {
         <a class="round" href="#/${theme.id}" aria-label="回目錄">⬅</a>
         <h2>${page.en}<small>${page.zh}</small></h2>
         <span class="spacer"></span>
+        <button class="round" id="findBtn" aria-label="找找看">🔍</button>
         ${scene.items.some((it) => it.focus !== false) ? '<button class="round" id="puzzleBtn" aria-label="拼拼看">🧩</button>' : ''}
         ${prev ? `<a class="round" href="#/${theme.id}/${prev.id}" aria-label="上一頁">◀</a>` : ''}
         ${next ? `<a class="round" href="#/${theme.id}/${next.id}" aria-label="下一頁">▶</a>` : ''}
@@ -367,7 +368,13 @@ function showScene(theme, page) {
     const el = document.getElementById(it.id);
     const c = makeCtx(it, el, fx);
     if (it.setup) it.setup(c);
-    el.addEventListener('click', () => play(it, el, c, scene));
+    el.addEventListener('click', async () => {
+      // 🔍 找找看（find.js）進行中：點錯的不表演，點對的表演完再問下一台
+      const f = window.Find ? Find.tap(it) : null;
+      if (f === 'wrong') return;
+      await play(it, el, c, scene);
+      if (f === 'right') Find.after();
+    });
   });
   placeTags(scene);
 }
