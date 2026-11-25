@@ -761,7 +761,7 @@ document.addEventListener('dblclick', (e) => e.preventDefault());
 /* ================= 📒 貼紙收集 ================= */
 
 // 存在這台 iPad 的瀏覽器裡：{ lion: { seen: 3, found: 1, colored: 1 }, ... }
-// seen = 在地圖上點過、found = 找找看找到、colored = 著色本畫好（著色本也會寫進同一個地方）
+// seen = 在地圖上點過、found = 找找看找到、colored = 著色本畫好（著色本也會寫進同一個地方）、fed = 餵過（feed.js）
 const Stickers = {
   data: {},
   load() {
@@ -799,7 +799,7 @@ function openBook() {
     b.className = 'sticker' + (rec ? '' : ' locked');
     b.innerHTML = `<svg viewBox="-50 -50 100 100"><use href="#art-${a.id}" x="-50" y="-50" width="100" height="100"/></svg>
       <span class="sticker-name">${rec ? a.en : '?'}</span>
-      <span class="sticker-badges">${rec && rec.found ? '⭐' : ''}${rec && rec.colored ? '🎨' : ''}${rec && rec.said ? '🗣️' : ''}</span>`;
+      <span class="sticker-badges">${rec && rec.found ? '⭐' : ''}${rec && rec.colored ? '🎨' : ''}${rec && rec.said ? '🗣️' : ''}${rec && rec.fed ? '🍽️' : ''}</span>`;
     b.addEventListener('click', () => {
       if (!rec) { toast('還沒找到喔～到地圖上點點看！'); return; }
       b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
